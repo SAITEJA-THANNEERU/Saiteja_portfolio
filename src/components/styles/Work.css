@@ -1,0 +1,707 @@
+/* =========================================
+   WORK SECTION
+========================================= */
+
+.work-section {
+  position: relative;
+  width: 100%;
+  padding: 120px 0 160px;
+  overflow: hidden;
+}
+
+.work-container {
+  width: min(1200px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.work-header {
+  text-align: center;
+  margin-bottom: 70px;
+}
+
+.work-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border: 1px solid rgba(160, 90, 255, 0.35);
+  border-radius: 999px;
+  color: #d8b8ff;
+  background: rgba(120, 40, 255, 0.08);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+}
+
+.work-eyebrow span {
+  color: var(--accentColor);
+}
+
+.work-header h2 {
+  margin: 18px 0 12px;
+  font-size: clamp(48px, 6vw, 78px);
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: -3px;
+}
+
+.work-header h2 span {
+  color: var(--accentColor);
+}
+
+.work-header p {
+  max-width: 650px;
+  margin: 0 auto;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+/* =========================================
+   PROJECT CONTAINER
+========================================= */
+
+.work-projects {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* =========================================
+   EVERY PROJECT
+========================================= */
+
+.work-project-card {
+  position: relative;
+  width: 100%;
+  transition:
+    height 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.4s ease,
+    opacity 0.4s ease;
+}
+
+/* =========================================
+   ACTIVE PROJECT
+========================================= */
+
+.work-project-card.is-active {
+  z-index: 5;
+}
+
+.active-project {
+  position: relative;
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 45px;
+
+  min-height: 520px;
+
+  padding: 38px;
+
+  border: 1px solid rgba(170, 100, 255, 0.42);
+  border-radius: 24px;
+
+  background:
+    radial-gradient(
+      circle at 82% 30%,
+      rgba(130, 40, 255, 0.14),
+      transparent 38%
+    ),
+    rgba(8, 6, 13, 0.9);
+
+  box-shadow:
+    0 0 80px rgba(130, 40, 255, 0.08),
+    inset 0 0 50px rgba(130, 40, 255, 0.025);
+
+  overflow: hidden;
+
+  animation: activeProjectAppear 0.55s ease;
+}
+
+.active-project::before {
+  content: "";
+
+  position: absolute;
+
+  width: 350px;
+  height: 350px;
+
+  right: -120px;
+  top: -130px;
+
+  background: rgba(145, 70, 255, 0.12);
+
+  filter: blur(110px);
+
+  pointer-events: none;
+}
+
+@keyframes activeProjectAppear {
+  from {
+    opacity: 0.75;
+    transform: scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* =========================================
+   ACTIVE CONTENT
+========================================= */
+
+.active-project-content {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.featured-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  width: fit-content;
+
+  margin-bottom: 16px;
+  padding: 8px 15px;
+
+  border-radius: 999px;
+
+  background: rgba(105, 40, 220, 0.18);
+
+  color: #d9b7ff;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  letter-spacing: 1px;
+}
+
+.featured-label span {
+  color: var(--accentColor);
+}
+
+.project-number {
+  margin-bottom: 3px;
+
+  color: var(--accentColor);
+
+  font-size: 17px;
+  font-weight: 600;
+
+  letter-spacing: 2px;
+}
+
+.active-project-title h3 {
+  margin: 0;
+
+  font-size: clamp(38px, 4vw, 58px);
+
+  font-weight: 600;
+
+  letter-spacing: -2px;
+}
+
+.active-project-title span {
+  display: block;
+
+  margin-top: 8px;
+
+  color: var(--accentColor);
+
+  font-size: 14px;
+  font-weight: 500;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+}
+
+.active-project-description {
+  max-width: 520px;
+
+  margin: 18px 0 25px;
+
+  color: rgba(255, 255, 255, 0.68);
+
+  font-size: 15px;
+
+  line-height: 1.7;
+}
+
+/* =========================================
+   FEATURES
+========================================= */
+
+.project-features {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 12px;
+
+  margin-bottom: 24px;
+}
+
+.project-feature {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 8px;
+
+  color: rgba(255, 255, 255, 0.82);
+
+  font-size: 11px;
+
+  line-height: 1.4;
+}
+
+.feature-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 20px;
+  height: 20px;
+
+  border: 1px solid rgba(170, 90, 255, 0.6);
+
+  border-radius: 50%;
+
+  color: var(--accentColor);
+
+  font-size: 10px;
+}
+
+/* =========================================
+   TECH STACK
+========================================= */
+
+.project-stack {
+  margin-top: 3px;
+}
+
+.stack-label {
+  display: block;
+
+  margin-bottom: 9px;
+
+  color: var(--accentColor);
+
+  font-size: 11px;
+
+  font-weight: 600;
+}
+
+.stack-list {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 7px;
+}
+
+.stack-pill {
+  padding: 7px 11px;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  border-radius: 8px;
+
+  background: rgba(255, 255, 255, 0.035);
+
+  color: rgba(255, 255, 255, 0.8);
+
+  font-size: 10px;
+}
+
+/* =========================================
+   GITHUB BUTTON
+========================================= */
+
+.project-actions {
+  margin-top: 25px;
+}
+
+.github-button {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 12px 18px;
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  border-radius: 10px;
+
+  color: #fff;
+
+  background: rgba(255, 255, 255, 0.035);
+
+  text-decoration: none;
+
+  font-size: 13px;
+
+  transition: 0.3s ease;
+}
+
+.github-button:hover {
+  border-color: var(--accentColor);
+
+  background: rgba(140, 60, 255, 0.12);
+
+  transform: translateY(-2px);
+}
+
+/* =========================================
+   ACTIVE IMAGE
+========================================= */
+
+.active-project-image {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 420px;
+}
+
+.active-project-image::after {
+  content: "";
+
+  position: absolute;
+
+  width: 75%;
+  height: 30%;
+
+  bottom: 5%;
+
+  background: rgba(130, 50, 255, 0.28);
+
+  filter: blur(70px);
+
+  z-index: 0;
+}
+
+.active-project-image img {
+  position: relative;
+
+  z-index: 1;
+
+  width: 100%;
+
+  max-height: 460px;
+
+  object-fit: contain;
+
+  border-radius: 14px;
+
+  transition: transform 0.5s ease;
+}
+
+.active-project:hover .active-project-image img {
+  transform: scale(1.025);
+}
+
+/* =========================================
+   INACTIVE PROJECT
+========================================= */
+
+.inactive-project {
+  display: grid;
+
+  grid-template-columns: 65px 165px 1fr 50px;
+
+  align-items: center;
+
+  gap: 22px;
+
+  min-height: 145px;
+
+  padding: 20px 24px;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  border-radius: 16px;
+
+  background: rgba(8, 6, 13, 0.65);
+
+  transition:
+    transform 0.35s ease,
+    border-color 0.35s ease,
+    background 0.35s ease;
+}
+
+.inactive-project:hover {
+  transform: translateX(5px);
+
+  border-color: rgba(160, 80, 255, 0.35);
+
+  background: rgba(120, 50, 220, 0.05);
+}
+
+.inactive-number {
+  color: var(--accentColor);
+
+  font-size: 30px;
+
+  font-weight: 500;
+}
+
+/* =========================================
+   INACTIVE IMAGE
+========================================= */
+
+.inactive-image {
+  width: 165px;
+  height: 105px;
+
+  overflow: hidden;
+
+  border-radius: 10px;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.inactive-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: transform 0.4s ease;
+}
+
+.inactive-project:hover .inactive-image img {
+  transform: scale(1.05);
+}
+
+/* =========================================
+   INACTIVE INFO
+========================================= */
+
+.inactive-info h3 {
+  margin: 0 0 4px;
+
+  font-size: 22px;
+
+  font-weight: 600;
+}
+
+.inactive-category {
+  color: var(--accentColor);
+
+  font-size: 10px;
+
+  font-weight: 500;
+
+  letter-spacing: 0.8px;
+
+  text-transform: uppercase;
+}
+
+.inactive-info p {
+  max-width: 600px;
+
+  margin: 8px 0 0;
+
+  color: rgba(255, 255, 255, 0.55);
+
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+
+/* =========================================
+   INACTIVE GITHUB
+========================================= */
+
+.inactive-github {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 42px;
+  height: 42px;
+
+  border: 1px solid rgba(150, 70, 255, 0.4);
+
+  border-radius: 50%;
+
+  color: var(--accentColor);
+
+  text-decoration: none;
+
+  font-size: 18px;
+
+  transition: 0.3s ease;
+}
+
+.inactive-github:hover {
+  color: #fff;
+
+  background: var(--accentColor);
+
+  transform: scale(1.08);
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media only screen and (max-width: 1000px) {
+
+  .active-project {
+    grid-template-columns: 1fr;
+
+    gap: 25px;
+  }
+
+  .active-project-image {
+    min-height: 300px;
+
+    order: -1;
+  }
+
+  .project-features {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .inactive-project {
+    grid-template-columns: 55px 130px 1fr 45px;
+
+    gap: 15px;
+  }
+
+  .inactive-image {
+    width: 130px;
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media only screen and (max-width: 700px) {
+
+  .work-section {
+    padding: 80px 0 100px;
+  }
+
+  .work-container {
+    width: min(100% - 24px, 600px);
+  }
+
+  .work-header {
+    margin-bottom: 40px;
+  }
+
+  .work-header h2 {
+    font-size: 45px;
+
+    letter-spacing: -2px;
+  }
+
+  .work-header p {
+    font-size: 14px;
+  }
+
+  /* ACTIVE */
+
+  .active-project {
+    grid-template-columns: 1fr;
+
+    gap: 20px;
+
+    min-height: auto;
+
+    padding: 20px;
+
+    border-radius: 18px;
+  }
+
+  .active-project-image {
+    min-height: 210px;
+
+    order: -1;
+  }
+
+  .active-project-title h3 {
+    font-size: 38px;
+  }
+
+  .active-project-description {
+    font-size: 14px;
+  }
+
+  .project-features {
+    grid-template-columns: 1fr;
+  }
+
+  /* INACTIVE */
+
+  .inactive-project {
+    grid-template-columns: 42px 95px 1fr;
+
+    gap: 12px;
+
+    min-height: 110px;
+
+    padding: 14px;
+  }
+
+  .inactive-number {
+    font-size: 22px;
+  }
+
+  .inactive-image {
+    width: 95px;
+
+    height: 75px;
+  }
+
+  .inactive-info h3 {
+    font-size: 17px;
+  }
+
+  .inactive-info p {
+    display: none;
+  }
+
+  .inactive-github {
+    position: absolute;
+
+    right: 12px;
+    bottom: 12px;
+
+    width: 30px;
+    height: 30px;
+
+    font-size: 14px;
+  }
+
+  .inactive-project {
+    position: relative;
+
+    padding-right: 52px;
+  }
+}

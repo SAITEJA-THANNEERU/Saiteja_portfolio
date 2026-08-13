@@ -1,0 +1,499 @@
+/* =========================================
+   CTA SECTION
+========================================= */
+
+.cta-section {
+  width: 100%;
+  padding: 100px 30px;
+
+  background-color: var(--backgroundColor);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* =========================================
+   MAIN CTA ROW
+========================================= */
+
+.cta-buttons {
+  width: 100%;
+  max-width: 1200px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 70px;
+}
+
+
+/* =========================================
+   EACH CTA GROUP
+========================================= */
+
+.cta-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 18px;
+
+  flex: 1;
+}
+
+
+/* =========================================
+   PLAY GROUP
+
+   BIG ANIMATION → BUTTON
+========================================= */
+
+.cta-item-play {
+  flex-direction: row;
+}
+
+
+/* =========================================
+   HIRE GROUP
+
+   BUTTON → BIG ANIMATION
+========================================= */
+
+.cta-item-hire {
+  flex-direction: row;
+}
+
+
+/* =========================================
+   ANIMATION CONTAINER
+========================================= */
+
+.cta-animation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   BIG GAMING ANIMATION
+========================================= */
+
+.cta-animation-play {
+  width: 210px;
+  height: 210px;
+
+  animation: ctaFloatPlay 3.5s ease-in-out infinite;
+}
+
+
+/* =========================================
+   BIG HIRE ANIMATION
+========================================= */
+
+.cta-animation-hire {
+  width: 220px;
+  height: 220px;
+
+  animation: ctaFloatHire 3.8s ease-in-out infinite;
+}
+
+
+/* =========================================
+   BUTTON BASE
+========================================= */
+
+.cta-btn {
+  position: relative;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  min-width: 205px;
+
+  padding: 17px 25px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.8px;
+
+  text-decoration: none;
+
+  border-radius: 14px;
+
+  cursor: pointer;
+
+  overflow: hidden;
+
+  flex-shrink: 0;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease,
+    border-color 0.3s ease;
+}
+
+
+/* =========================================
+   ICON
+========================================= */
+
+.cta-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+
+  line-height: 1;
+
+  transition: transform 0.3s ease;
+}
+
+
+/* =========================================
+   TEXT
+========================================= */
+
+.cta-text {
+  position: relative;
+
+  z-index: 2;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   ARROW
+========================================= */
+
+.cta-arrow {
+  display: inline-flex;
+
+  align-items: center;
+
+  font-size: 20px;
+
+  line-height: 1;
+
+  transition: transform 0.3s ease;
+}
+
+
+/* =========================================
+   PLAY WITH ME
+========================================= */
+
+.cta-btn-play {
+  color: #ffffff;
+
+  background: rgba(255, 255, 255, 0.06);
+
+  border: 1px solid rgba(255, 255, 255, 0.16);
+
+  box-shadow:
+    0 0 0 rgba(160, 100, 255, 0),
+    inset 0 0 20px rgba(255, 255, 255, 0.02);
+}
+
+
+.cta-btn-play:hover {
+  transform: translateY(-5px);
+
+  background: rgba(145, 90, 255, 0.12);
+
+  border-color: rgba(180, 130, 255, 0.55);
+
+  box-shadow:
+    0 12px 40px rgba(130, 70, 255, 0.3),
+    0 0 30px rgba(160, 100, 255, 0.15);
+}
+
+
+.cta-btn-play:hover .cta-icon {
+  transform: rotate(-8deg) scale(1.1);
+}
+
+
+.cta-btn-play:hover .cta-arrow {
+  transform: translateX(6px);
+}
+
+
+/* =========================================
+   HIRE ME
+========================================= */
+
+.cta-btn-hire {
+  color: #08040f;
+
+  background: linear-gradient(
+    135deg,
+    #c8a7ff 0%,
+    #a875ff 50%,
+    #8b5cf6 100%
+  );
+
+  border: 1px solid rgba(205, 170, 255, 0.8);
+
+  box-shadow:
+    0 8px 25px rgba(139, 92, 246, 0.25),
+    0 0 20px rgba(139, 92, 246, 0.08);
+}
+
+
+.cta-btn-hire:hover {
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 16px 45px rgba(139, 92, 246, 0.45),
+    0 0 35px rgba(180, 130, 255, 0.25);
+
+  background: linear-gradient(
+    135deg,
+    #d8c0ff 0%,
+    #b88cff 50%,
+    #9868ff 100%
+  );
+}
+
+
+.cta-btn-hire:hover .cta-icon {
+  transform: scale(1.1);
+}
+
+
+.cta-btn-hire:hover .cta-arrow {
+  transform: translateX(6px);
+}
+
+
+/* =========================================
+   SHINE
+========================================= */
+
+.cta-btn::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: -120%;
+
+  width: 80%;
+  height: 100%;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.15),
+    transparent
+  );
+
+  transform: skewX(-20deg);
+
+  transition: left 0.6s ease;
+}
+
+
+.cta-btn:hover::before {
+  left: 140%;
+}
+
+
+/* =========================================
+   FLOATING ANIMATIONS
+========================================= */
+
+@keyframes ctaFloatPlay {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-12px) rotate(-1deg);
+  }
+
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+
+@keyframes ctaFloatHire {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-14px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================
+   FOCUS
+========================================= */
+
+.cta-btn:focus-visible {
+  outline: 2px solid rgba(190, 150, 255, 0.9);
+
+  outline-offset: 4px;
+}
+
+
+/* =========================================
+   LARGE SCREENS
+========================================= */
+
+@media only screen and (min-width: 1400px) {
+
+  .cta-buttons {
+    max-width: 1300px;
+
+    gap: 90px;
+  }
+
+  .cta-animation-play {
+    width: 250px;
+    height: 250px;
+  }
+
+  .cta-animation-hire {
+    width: 250px;
+    height: 250px;
+  }
+
+  .cta-btn {
+    min-width: 215px;
+  }
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media only screen and (max-width: 1000px) {
+
+  .cta-section {
+    padding: 80px 20px;
+  }
+
+  .cta-buttons {
+    gap: 30px;
+  }
+
+  .cta-item {
+    gap: 8px;
+  }
+
+  .cta-animation-play {
+    width: 150px;
+    height: 150px;
+  }
+
+  .cta-animation-hire {
+    width: 160px;
+    height: 160px;
+  }
+
+  .cta-btn {
+    min-width: 175px;
+
+    padding: 15px 18px;
+
+    font-size: 13px;
+  }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media only screen and (max-width: 700px) {
+
+  .cta-section {
+    padding: 70px 20px;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+
+    gap: 55px;
+  }
+
+  .cta-item {
+    width: 100%;
+
+    flex-direction: column;
+
+    gap: 8px;
+  }
+
+  .cta-item-play,
+  .cta-item-hire {
+    flex-direction: column;
+  }
+
+  .cta-animation-play {
+    width: 190px;
+    height: 190px;
+  }
+
+  .cta-animation-hire {
+    width: 200px;
+    height: 200px;
+  }
+
+  .cta-btn {
+    width: 210px;
+
+    min-width: 0;
+
+    padding: 15px 20px;
+  }
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media only screen and (max-width: 400px) {
+
+  .cta-animation-play {
+    width: 160px;
+    height: 160px;
+  }
+
+  .cta-animation-hire {
+    width: 170px;
+    height: 170px;
+  }
+
+  .cta-btn {
+    width: 190px;
+  }
+}

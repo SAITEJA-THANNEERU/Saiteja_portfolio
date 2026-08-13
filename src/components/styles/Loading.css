@@ -1,0 +1,1485 @@
+/* ==========================================================
+   CREATIVE LOADING SCREEN
+   ULTRA-REALISTIC FUTURISTIC ENERGY ORB
+   ========================================================== */
+
+.loading-screen {
+  position: fixed;
+  inset: 0;
+
+  width: 100vw;
+  height: var(--vh);
+
+  z-index: 999999999;
+
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    radial-gradient(
+      circle at 50% 40%,
+      rgba(125, 65, 255, 0.075),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 50% 55%,
+      rgba(70, 30, 150, 0.035),
+      transparent 48%
+    ),
+    #030207;
+
+  color: #ffffff;
+}
+
+
+/* ==========================================================
+   BACKGROUND
+   ========================================================== */
+
+.loading-stars {
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  background-image:
+    radial-gradient(
+      circle,
+      rgba(205, 180, 255, 0.5) 0.8px,
+      transparent 1px
+    );
+
+  background-size: 120px 120px;
+
+  opacity: 0.1;
+
+  animation: starsMove 24s linear infinite;
+}
+
+@keyframes starsMove {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(120px);
+  }
+}
+
+
+/* ==========================================================
+   TOP HEADER
+   ========================================================== */
+
+.loading-header {
+  position: fixed;
+
+  top: 0;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: var(--cWidth);
+  max-width: var(--cMaxWidth);
+
+  padding: 30px 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  z-index: 20;
+
+  box-sizing: border-box;
+}
+
+.loader-title {
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.15em;
+
+  opacity: 0.9;
+}
+
+.loader-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  color: rgba(255, 255, 255, 0.65);
+
+  font-size: 10px;
+
+  letter-spacing: 0.2em;
+
+  transition: opacity 0.5s ease;
+}
+
+.loader-status-dot {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: #a87cff;
+
+  box-shadow:
+    0 0 7px #a87cff,
+    0 0 14px rgba(168, 124, 255, 0.45);
+
+  animation: statusPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes statusPulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.loader-out {
+  opacity: 0;
+}
+
+
+/* ==========================================================
+   MAIN WRAPPER
+   ========================================================== */
+
+.loading-wrap {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  background: transparent;
+
+  transition:
+    transform 0.9s cubic-bezier(0.33, 0.11, 1, 0.72),
+    opacity 0.6s ease;
+}
+
+
+/* ==========================================================
+   MOUSE GLOW
+   ========================================================== */
+
+.loading-hover {
+  position: absolute;
+
+  width: 220px;
+  height: 220px;
+
+  left: var(--mouse-x);
+  top: var(--mouse-y);
+
+  transform: translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(180, 135, 255, 0.08),
+      rgba(140, 80, 255, 0.025) 45%,
+      transparent 72%
+    );
+
+  filter: blur(50px);
+
+  pointer-events: none;
+
+  opacity: 0;
+
+  transition: opacity 0.5s ease;
+}
+
+.loading-wrap:hover .loading-hover {
+  opacity: 1;
+}
+
+
+/* ==========================================================
+   ORB AREA
+   ========================================================== */
+
+.loading-orb-area {
+  position: absolute;
+
+  top: 15%;
+
+  left: 50%;
+
+  width: min(900px, 80vw);
+  height: min(500px, 48vw);
+
+  transform: translateX(-50%);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  pointer-events: none;
+
+  perspective: 1000px;
+}
+
+
+/* ==========================================================
+   FUTURISTIC ENERGY ORB
+   ========================================================== */
+
+.energy-orb {
+  position: relative;
+
+  width: clamp(210px, 23vw, 350px);
+  height: clamp(210px, 23vw, 350px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  z-index: 5;
+
+  animation:
+    orbFloat 5s ease-in-out infinite,
+    orbMicroRotate 18s linear infinite;
+
+  transform-style: preserve-3d;
+
+  isolation: isolate;
+}
+
+
+/* ==========================================================
+   ORB FLOAT
+   ========================================================== */
+
+@keyframes orbFloat {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-7px) scale(1.012);
+  }
+}
+
+@keyframes orbMicroRotate {
+  0% {
+    filter: brightness(1);
+  }
+
+  50% {
+    filter: brightness(1.04);
+  }
+
+  100% {
+    filter: brightness(1);
+  }
+}
+
+
+/* ==========================================================
+   OUTER ATMOSPHERE
+   ========================================================== */
+
+.orb-glow {
+  position: absolute;
+
+  width: 155%;
+  height: 155%;
+
+  left: 50%;
+  top: 50%;
+
+  transform: translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(177, 117, 255, 0.18) 0%,
+      rgba(126, 61, 238, 0.11) 27%,
+      rgba(91, 40, 190, 0.055) 46%,
+      transparent 70%
+    );
+
+  filter: blur(25px);
+
+  opacity: 0.82;
+
+  animation:
+    orbAtmosphere 4.5s ease-in-out infinite;
+
+  z-index: -5;
+
+  pointer-events: none;
+}
+
+@keyframes orbAtmosphere {
+  0%,
+  100% {
+    transform:
+      translate(-50%, -50%)
+      scale(0.94);
+
+    opacity: 0.55;
+  }
+
+  50% {
+    transform:
+      translate(-50%, -50%)
+      scale(1.06);
+
+    opacity: 0.95;
+  }
+}
+
+
+/* ==========================================================
+   OUTER AURA
+   ========================================================== */
+
+.energy-orb::before {
+  content: "";
+
+  position: absolute;
+
+  width: 82%;
+  height: 82%;
+
+  left: 50%;
+  top: 50%;
+
+  transform: translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      rgba(255, 255, 255, 0.09),
+      transparent 10%
+    ),
+    radial-gradient(
+      circle at 48% 48%,
+      rgba(154, 83, 255, 0.1),
+      transparent 55%
+    ),
+    transparent;
+
+  filter: blur(14px);
+
+  opacity: 0.9;
+
+  z-index: 1;
+
+  pointer-events: none;
+}
+
+
+/* ==========================================================
+   MAIN SPHERE
+   REALISTIC MULTI-LIGHTING MATERIAL
+   ========================================================== */
+
+.orb-core {
+  position: absolute;
+
+  width: 60%;
+  height: 60%;
+
+  left: 50%;
+  top: 50%;
+
+  transform: translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  overflow: hidden;
+
+  background:
+
+    /* Sharp specular reflection */
+    radial-gradient(
+      ellipse 28% 18% at 31% 23%,
+      rgba(255, 255, 255, 0.92),
+      rgba(239, 222, 255, 0.35) 24%,
+      transparent 58%
+    ),
+
+    /* Secondary purple reflection */
+    radial-gradient(
+      ellipse 48% 42% at 70% 36%,
+      rgba(160, 91, 255, 0.42),
+      transparent 67%
+    ),
+
+    /* Internal plasma */
+    radial-gradient(
+      ellipse 65% 70% at 50% 54%,
+      rgba(123, 55, 226, 0.52),
+      rgba(52, 16, 112, 0.62) 48%,
+      transparent 78%
+    ),
+
+    /* Deep shadow */
+    radial-gradient(
+      circle at 74% 76%,
+      #030107 0%,
+      #08020f 26%,
+      #120625 58%,
+      #24104b 100%
+    );
+
+  border: 1px solid rgba(230, 214, 255, 0.86);
+
+  box-shadow:
+
+    /* Internal lighting */
+    inset 15px 10px 30px rgba(255, 255, 255, 0.08),
+
+    inset -22px -25px 45px rgba(0, 0, 0, 0.65),
+
+    inset 0 0 38px rgba(170, 100, 255, 0.3),
+
+    inset 0 0 80px rgba(86, 34, 180, 0.2),
+
+    /* Sharp rim */
+    0 0 7px rgba(235, 218, 255, 0.95),
+
+    /* Bloom */
+    0 0 25px rgba(164, 96, 255, 0.55),
+
+    0 0 65px rgba(112, 52, 235, 0.24);
+
+  z-index: 3;
+
+  animation:
+    coreBreath 3.8s ease-in-out infinite;
+
+  transform-style: preserve-3d;
+}
+
+
+/* ==========================================================
+   SPHERICAL LIGHT FALL-OFF
+   ========================================================== */
+
+.orb-core::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  border-radius: 50%;
+
+  background:
+
+    /* White key-light */
+    radial-gradient(
+      ellipse 35% 25% at 30% 22%,
+      rgba(255, 255, 255, 0.72),
+      transparent 60%
+    ),
+
+    /* Purple light */
+    radial-gradient(
+      ellipse 60% 60% at 50% 50%,
+      transparent 35%,
+      rgba(80, 24, 150, 0.12) 63%,
+      rgba(0, 0, 0, 0.68) 100%
+    );
+
+  z-index: 5;
+
+  pointer-events: none;
+
+  mix-blend-mode: screen;
+
+  opacity: 0.8;
+}
+
+
+/* ==========================================================
+   SPHERICAL SHADOW
+   ========================================================== */
+
+.orb-core::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 78% 78%,
+      rgba(0, 0, 0, 0.78),
+      transparent 55%
+    );
+
+  z-index: 6;
+
+  pointer-events: none;
+
+  opacity: 0.7;
+}
+
+
+@keyframes coreBreath {
+  0%,
+  100% {
+    box-shadow:
+
+      inset 15px 10px 30px rgba(255, 255, 255, 0.07),
+
+      inset -22px -25px 45px rgba(0, 0, 0, 0.62),
+
+      inset 0 0 38px rgba(170, 100, 255, 0.28),
+
+      inset 0 0 80px rgba(86, 34, 180, 0.18),
+
+      0 0 7px rgba(235, 218, 255, 0.9),
+
+      0 0 25px rgba(164, 96, 255, 0.5),
+
+      0 0 60px rgba(112, 52, 235, 0.22);
+  }
+
+  50% {
+    box-shadow:
+
+      inset 15px 10px 34px rgba(255, 255, 255, 0.1),
+
+      inset -22px -25px 48px rgba(0, 0, 0, 0.68),
+
+      inset 0 0 44px rgba(182, 112, 255, 0.36),
+
+      inset 0 0 90px rgba(96, 42, 198, 0.24),
+
+      0 0 9px rgba(245, 232, 255, 1),
+
+      0 0 32px rgba(174, 107, 255, 0.65),
+
+      0 0 75px rgba(125, 58, 245, 0.3);
+  }
+}
+
+
+/* ==========================================================
+   INTERNAL PLASMA FIELD
+   ========================================================== */
+
+.orb-core-inner {
+  position: absolute;
+
+  inset: -18%;
+
+  border-radius: 50%;
+
+  background:
+
+    conic-gradient(
+      from 0deg,
+
+      transparent 0deg,
+
+      rgba(135, 59, 255, 0.18) 28deg,
+
+      rgba(228, 191, 255, 0.3) 50deg,
+
+      transparent 82deg,
+
+      rgba(105, 42, 220, 0.2) 122deg,
+
+      transparent 165deg,
+
+      rgba(203, 139, 255, 0.22) 205deg,
+
+      transparent 244deg,
+
+      rgba(118, 50, 244, 0.28) 286deg,
+
+      rgba(231, 199, 255, 0.18) 312deg,
+
+      transparent 345deg
+    );
+
+  opacity: 0.72;
+
+  mix-blend-mode: screen;
+
+  animation:
+    orbInnerRotate 11s linear infinite,
+    orbInnerPulse 4s ease-in-out infinite;
+
+  pointer-events: none;
+
+  z-index: 4;
+}
+
+
+@keyframes orbInnerRotate {
+  from {
+    transform: rotate(0deg) scale(1);
+  }
+
+  to {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+
+@keyframes orbInnerPulse {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+
+  50% {
+    opacity: 0.82;
+  }
+}
+
+
+/* ==========================================================
+   SECOND INTERNAL ENERGY LAYER
+   ========================================================== */
+
+.orb-core-inner::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 15%;
+
+  border-radius: 50%;
+
+  background:
+    repeating-conic-gradient(
+      from 45deg,
+      transparent 0deg,
+      rgba(195, 133, 255, 0.13) 12deg,
+      transparent 25deg,
+      rgba(122, 54, 245, 0.12) 42deg,
+      transparent 62deg
+    );
+
+  filter: blur(5px);
+
+  opacity: 0.75;
+
+  animation: plasmaRotation 7s linear infinite reverse;
+
+  pointer-events: none;
+}
+
+@keyframes plasmaRotation {
+  from {
+    transform: rotate(0deg) scale(1);
+  }
+
+  to {
+    transform: rotate(360deg) scale(1.08);
+  }
+}
+
+
+/* ==========================================================
+   INNER ENERGY RING
+   ========================================================== */
+
+.energy-orb::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 17.5%;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(244, 229, 255, 0.7);
+
+  box-shadow:
+    0 0 5px rgba(218, 181, 255, 0.5),
+    0 0 14px rgba(153, 87, 255, 0.25);
+
+  opacity: 0.75;
+
+  z-index: 12;
+
+  pointer-events: none;
+
+  animation: innerRingPulse 3.4s ease-in-out infinite;
+}
+
+
+@keyframes innerRingPulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.99);
+  }
+
+  50% {
+    opacity: 0.9;
+    transform: scale(1.015);
+  }
+}
+
+
+/* ==========================================================
+   ORB EDGE LIGHT
+   ========================================================== */
+
+.orb-core {
+  isolation: isolate;
+}
+
+
+/* ==========================================================
+   ORBIT RINGS
+   ========================================================== */
+
+.orb-ring {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  border-radius: 50%;
+
+  background: transparent;
+
+  transform-style: preserve-3d;
+
+  pointer-events: none;
+
+  will-change: transform;
+}
+
+
+/* ==========================================================
+   RING 1
+   CLOSE / BRIGHT
+   ========================================================== */
+
+.orb-ring-1 {
+  width: 78%;
+  height: 29%;
+
+  border:
+    1px solid rgba(223, 193, 255, 0.82);
+
+  transform:
+    translate(-50%, -50%)
+    rotateX(65deg);
+
+  animation:
+    orbitOne 5.2s linear infinite;
+
+  z-index: 20;
+
+  box-shadow:
+    0 0 5px rgba(183, 112, 255, 0.5),
+    0 0 12px rgba(133, 67, 242, 0.2);
+}
+
+
+/* ==========================================================
+   RING 2
+   VERTICAL ORBIT
+   ========================================================== */
+
+.orb-ring-2 {
+  width: 88%;
+  height: 36%;
+
+  border:
+    1px solid rgba(166, 111, 255, 0.56);
+
+  transform:
+    translate(-50%, -50%)
+    rotateY(65deg);
+
+  animation:
+    orbitTwo 7.2s linear infinite;
+
+  z-index: 18;
+
+  box-shadow:
+    0 0 8px rgba(138, 67, 255, 0.2);
+}
+
+
+/* ==========================================================
+   RING 3
+   WIDE ATMOSPHERIC ORBIT
+   ========================================================== */
+
+.orb-ring-3 {
+  width: 102%;
+  height: 45%;
+
+  border:
+    1px solid rgba(210, 181, 255, 0.3);
+
+  transform:
+    translate(-50%, -50%)
+    rotateX(72deg)
+    rotateY(20deg);
+
+  animation:
+    orbitThree 9.5s linear infinite;
+
+  z-index: 16;
+}
+
+
+/* ==========================================================
+   ORBIT ANIMATIONS
+   ========================================================== */
+
+@keyframes orbitOne {
+  from {
+    transform:
+      translate(-50%, -50%)
+      rotateX(65deg)
+      rotateZ(0deg);
+  }
+
+  to {
+    transform:
+      translate(-50%, -50%)
+      rotateX(65deg)
+      rotateZ(360deg);
+  }
+}
+
+
+@keyframes orbitTwo {
+  from {
+    transform:
+      translate(-50%, -50%)
+      rotateY(65deg)
+      rotateZ(0deg);
+  }
+
+  to {
+    transform:
+      translate(-50%, -50%)
+      rotateY(65deg)
+      rotateZ(-360deg);
+  }
+}
+
+
+@keyframes orbitThree {
+  from {
+    transform:
+      translate(-50%, -50%)
+      rotateX(72deg)
+      rotateY(20deg)
+      rotateZ(0deg);
+  }
+
+  to {
+    transform:
+      translate(-50%, -50%)
+      rotateX(72deg)
+      rotateY(20deg)
+      rotateZ(360deg);
+  }
+}
+
+
+/* ==========================================================
+   ENERGY PARTICLE SYSTEM
+   ========================================================== */
+
+.orb-energy {
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+
+  left: 0;
+  top: 0;
+
+  border-radius: 50%;
+
+  z-index: 25;
+
+  pointer-events: none;
+
+  background:
+
+    radial-gradient(
+      circle at 18% 45%,
+      rgba(255, 255, 255, 0.9) 0 1px,
+      transparent 2px
+    ),
+
+    radial-gradient(
+      circle at 76% 25%,
+      rgba(205, 160, 255, 0.85) 0 1px,
+      transparent 2px
+    ),
+
+    radial-gradient(
+      circle at 83% 66%,
+      rgba(183, 125, 255, 0.7) 0 1px,
+      transparent 2px
+    ),
+
+    radial-gradient(
+      circle at 25% 78%,
+      rgba(234, 215, 255, 0.7) 0 1px,
+      transparent 2px
+    );
+
+  filter:
+    drop-shadow(0 0 4px rgba(180, 115, 255, 0.7));
+
+  animation:
+    energyParticles 5s ease-in-out infinite;
+}
+
+@keyframes energyParticles {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.98);
+  }
+
+  50% {
+    opacity: 0.9;
+    transform: scale(1.02);
+  }
+}
+
+
+/* ==========================================================
+   ORBITAL PARTICLE HIGHLIGHT
+   ========================================================== */
+
+.orb-energy::before {
+  content: "";
+
+  position: absolute;
+
+  width: 6px;
+  height: 6px;
+
+  left: 18%;
+  top: 42%;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 0 5px #ffffff,
+    0 0 12px rgba(190, 130, 255, 0.9),
+    0 0 24px rgba(140, 70, 255, 0.55);
+
+  animation: particleOrbit 4.5s linear infinite;
+
+  opacity: 0.85;
+}
+
+@keyframes particleOrbit {
+  0% {
+    transform:
+      rotate(0deg)
+      translateX(70px)
+      rotate(0deg);
+  }
+
+  100% {
+    transform:
+      rotate(360deg)
+      translateX(70px)
+      rotate(-360deg);
+  }
+}
+
+
+/* ==========================================================
+   REDUCED MOTION
+   ========================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .energy-orb,
+  .orb-glow,
+  .orb-core,
+  .orb-core-inner,
+  .orb-ring,
+  .orb-energy,
+  .energy-orb::before,
+  .energy-orb::after,
+  .orb-core-inner::after {
+    animation: none !important;
+  }
+}
+
+
+/* ==========================================================
+   MAIN CONTENT
+   ========================================================== */
+
+.loading-button {
+  position: fixed;
+
+  left: 50vw;
+  top: 68%;
+
+  transform: translateX(-50%);
+
+  width: min(850px, 70vw);
+
+  margin: 0;
+  padding: 0;
+
+  background: transparent;
+
+  z-index: 10;
+
+  transition:
+    opacity 0.5s ease,
+    transform 0.8s ease;
+}
+
+
+/* ==========================================================
+   TITLE
+   ========================================================== */
+
+.loading-title {
+  text-align: center;
+
+  color: rgba(255, 255, 255, 0.94);
+
+  font-size: clamp(20px, 2vw, 30px);
+
+  font-weight: 400;
+
+  letter-spacing: 0.18em;
+
+  white-space: nowrap;
+
+  margin-bottom: 35px;
+}
+
+.loading-title span {
+  color: #a87cff;
+
+  text-shadow:
+    0 0 12px rgba(168, 124, 255, 0.45);
+}
+
+
+/* ==========================================================
+   PROGRESS AREA
+   ========================================================== */
+
+.progress-area {
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 22px;
+
+  box-sizing: border-box;
+}
+
+
+/* ==========================================================
+   PROGRESS TRACK
+   ========================================================== */
+
+.progress-track {
+  position: relative;
+
+  width: min(900px, 70vw);
+
+  height: 4px;
+
+  flex: 0 0 auto;
+
+  background: rgba(130, 70, 220, 0.14);
+
+  border-radius: 999px;
+
+  box-shadow:
+    0 0 7px rgba(140, 70, 255, 0.12);
+
+  overflow: visible;
+}
+
+
+/* ==========================================================
+   PROGRESS FILL
+   ========================================================== */
+
+.progress-fill {
+  position: relative;
+
+  height: 100%;
+
+  border-radius: 100px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #713cff,
+      #a87cff,
+      #d5b8ff
+    );
+
+  box-shadow:
+    0 0 7px rgba(145, 80, 255, 0.85),
+    0 0 16px rgba(145, 80, 255, 0.4);
+
+  transition:
+    width 0.4s ease;
+}
+
+
+/* ==========================================================
+   PROGRESS END DOT
+   ========================================================== */
+
+.progress-fill::after {
+  content: "";
+
+  position: absolute;
+
+  right: 0;
+  top: 50%;
+
+  width: 8px;
+  height: 8px;
+
+  transform:
+    translate(50%, -50%);
+
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 0 6px #ffffff,
+    0 0 13px #a87cff,
+    0 0 22px rgba(168, 124, 255, 0.75);
+
+  z-index: 5;
+
+  animation: progressDotPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes progressDotPulse {
+  0%,
+  100% {
+    transform:
+      translate(50%, -50%)
+      scale(0.85);
+
+    opacity: 0.75;
+  }
+
+  50% {
+    transform:
+      translate(50%, -50%)
+      scale(1.15);
+
+    opacity: 1;
+  }
+}
+
+
+/* ==========================================================
+   MOVING SHINE
+   ========================================================== */
+
+.progress-shine {
+  position: absolute;
+
+  top: 0;
+  left: -60px;
+
+  width: 45px;
+  height: 100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.85),
+      transparent
+    );
+
+  opacity: 0;
+
+  animation:
+    progressShine 2.8s linear infinite;
+}
+
+@keyframes progressShine {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+
+  35% {
+    opacity: 1;
+  }
+
+  65% {
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(900px);
+    opacity: 0;
+  }
+}
+
+
+/* ==========================================================
+   OLD DOT
+   ========================================================== */
+
+.progress-dot {
+  display: none;
+}
+
+
+/* ==========================================================
+   PERCENTAGE
+   ========================================================== */
+
+.progress-percent {
+  min-width: 50px;
+
+  color: #a87cff;
+
+  font-size: 18px;
+
+  font-weight: 500;
+
+  letter-spacing: 0.08em;
+}
+
+
+/* ==========================================================
+   MESSAGE
+   ========================================================== */
+
+.loading-message {
+  margin-top: 25px;
+
+  text-align: center;
+
+  color: #a87cff;
+
+  font-size: 13px;
+
+  letter-spacing: 0.25em;
+
+  text-transform: none;
+
+  opacity: 0.9;
+
+  animation:
+    messagePulse 2.5s ease-in-out infinite;
+}
+
+@keyframes messagePulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+
+/* ==========================================================
+   FOOTER
+   ========================================================== */
+
+.loading-footer {
+  position: fixed;
+
+  bottom: 30px;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: var(--cWidth);
+  max-width: var(--cMaxWidth);
+
+  display: flex;
+
+  justify-content: space-between;
+
+  color: rgba(255, 255, 255, 0.45);
+
+  font-size: 10px;
+
+  letter-spacing: 0.2em;
+
+  text-transform: uppercase;
+
+  z-index: 10;
+}
+
+
+/* ==========================================================
+   LOADING COMPLETE
+   ========================================================== */
+
+.loading-complete {
+  transition:
+    opacity 0.5s ease,
+    transform 0.8s ease;
+}
+
+
+/* ==========================================================
+   EXIT
+   ========================================================== */
+
+.loading-clicked {
+  pointer-events: none;
+
+  animation:
+    loadingExit 0.9s
+    cubic-bezier(0.33, 0.11, 1, 0.72)
+    forwards;
+}
+
+@keyframes loadingExit {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.25);
+    opacity: 0;
+  }
+}
+
+
+/* ==========================================================
+   TABLET
+   ========================================================== */
+
+@media only screen and (max-width: 900px) {
+  .loading-orb-area {
+    top: 25%;
+
+    width: 90vw;
+  }
+
+  .loading-button {
+    width: 78vw;
+
+    top: 63%;
+  }
+
+  .loading-title {
+    font-size: 18px;
+  }
+}
+
+
+/* ==========================================================
+   MOBILE
+   ========================================================== */
+
+@media only screen and (max-width: 768px) {
+  .loading-screen {
+    display: none;
+  }
+}
+
+
+/* ==========================================================
+   LARGE DESKTOP
+   ========================================================== */
+
+@media only screen and (min-width: 1400px) {
+  .loading-header {
+    padding: 35px 0;
+  }
+
+  .loader-title {
+    font-size: 16px;
+  }
+
+  .loading-button {
+    width: 780px;
+  }
+}
+
+
+/* ==========================================================
+   FINAL REDUCED MOTION SAFETY
+   ========================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-stars,
+  .energy-orb,
+  .orb-glow,
+  .orb-core-inner,
+  .orb-ring,
+  .orb-energy,
+  .loader-status-dot,
+  .progress-shine,
+  .progress-fill::after,
+  .loading-message {
+    animation: none !important;
+  }
+}

@@ -1,0 +1,586 @@
+/* =========================================
+   CAREER / EXPERIENCE
+   Clean Editorial Timeline
+========================================= */
+
+.career-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  opacity: 1;
+  height: auto;
+  margin: auto;
+  margin-bottom: 250px;
+  padding: 120px 0;
+}
+
+.career-container {
+  width: min(1200px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+
+/* =========================================
+   HEADING
+========================================= */
+
+.career-section h2 {
+  font-size: clamp(52px, 6vw, 78px);
+  line-height: 0.98;
+  font-weight: 400;
+  text-align: center;
+
+  background: linear-gradient(
+    0deg,
+    #7f40ff,
+    #ffffff
+  );
+
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  color: transparent;
+
+  margin-top: 50px;
+  margin-bottom: 100px;
+
+  letter-spacing: -3px;
+}
+
+.career-section h2 > span {
+  font-family: "Geist", sans-serif;
+  font-weight: 300;
+}
+
+
+/* =========================================
+   MAIN TIMELINE AREA
+========================================= */
+
+.career-info {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  margin: 0 auto;
+}
+
+
+/* =========================================
+   EXPERIENCE ITEM
+========================================= */
+
+.career-info-box {
+  position: relative;
+
+  display: flex;
+  justify-content: space-between;
+
+  width: 100%;
+
+  margin-bottom: 110px;
+
+  min-height: 170px;
+}
+
+
+/* =========================================
+   LEFT CONTENT
+========================================= */
+
+.career-info-in {
+  display: flex;
+  align-items: flex-start;
+
+  width: 43%;
+
+  gap: 28px;
+}
+
+
+/* Experience number */
+
+.career-index {
+  flex-shrink: 0;
+
+  padding-top: 4px;
+
+  color: var(--accentColor);
+
+  font-size: 14px;
+  font-weight: 600;
+
+  letter-spacing: 1.5px;
+}
+
+
+/* =========================================
+   ROLE
+========================================= */
+
+.career-role {
+  display: flex;
+  flex-direction: column;
+
+  max-width: 320px;
+}
+
+.career-info h4 {
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.94);
+
+  font-size: clamp(28px, 3vw, 42px);
+
+  line-height: 1.02;
+
+  letter-spacing: -1.5px;
+
+  font-weight: 500;
+}
+
+.career-info h5 {
+  margin: 12px 0 14px;
+
+  color: var(--accentColor);
+
+  font-size: 17px;
+
+  font-weight: 400;
+
+  letter-spacing: 0.4px;
+
+  text-transform: none;
+}
+
+
+/* =========================================
+   DATE
+========================================= */
+
+.career-period {
+  display: inline-block;
+
+  color: rgba(255, 255, 255, 0.5);
+
+  font-size: 13px;
+
+  font-weight: 500;
+
+  letter-spacing: 0.7px;
+
+  text-transform: uppercase;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   RIGHT DESCRIPTION
+========================================= */
+
+.career-description {
+  width: 40%;
+
+  padding-top: 5px;
+}
+
+.career-description-label {
+  display: block;
+
+  margin-bottom: 14px;
+
+  color: rgba(255, 255, 255, 0.9);
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  letter-spacing: 1.8px;
+
+  text-transform: uppercase;
+}
+
+.career-info-box p {
+  width: 100%;
+
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.62);
+
+  font-size: 15px;
+
+  font-weight: 300;
+
+  line-height: 1.75;
+}
+
+
+/* =========================================
+   SUBTLE DIVIDER
+   NOT A CARD
+========================================= */
+
+.career-info-box:not(:last-child)::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+
+  bottom: -55px;
+
+  width: 42%;
+
+  height: 1px;
+
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+}
+
+
+/* =========================================
+   EXISTING CENTRAL TIMELINE
+   KEEPING ORIGINAL IMPLEMENTATION
+========================================= */
+
+.career-timeline {
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 3px;
+  height: 100%;
+
+  background-image: linear-gradient(
+    to top,
+    #aa42ff 20%,
+    var(--accentColor) 50%,
+    transparent 95%
+  );
+
+  max-height: 0%;
+}
+
+.career-dot {
+  position: absolute;
+
+  bottom: 0;
+  left: 50%;
+
+  transform: translate(-50%, 50%);
+
+  background-color: #aa42ff;
+
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50px;
+
+  box-shadow:
+    0px 0px 5px 2px #d29bff,
+    0px 0px 15px 8px #d097ff,
+    0px 0px 110px 20px #f2c0ff;
+
+  animation:
+    timeline 0.8s linear infinite forwards;
+}
+
+
+/* =========================================
+   EXISTING TIMELINE ANIMATION
+   KEEPING ORIGINAL
+========================================= */
+
+@keyframes timeline {
+
+  10%,
+  20%,
+  50%,
+  70%,
+  90% {
+    box-shadow:
+      0px 0px 5px 2px #d29bff;
+  }
+
+  10%,
+  30%,
+  0%,
+  100%,
+  64%,
+  80% {
+    box-shadow:
+      0px 0px 5px 2px #d29bff,
+      0px 0px 15px 5px #d097ff,
+      0px 0px 110px 20px #f2c0ff;
+  }
+}
+
+@keyframes timeline2 {
+
+  0% {
+    box-shadow:
+      0px 0px 5px 2px #d29bff;
+  }
+
+  100% {
+    box-shadow:
+      0px 0px 5px 2px #d29bff,
+      0px 0px 15px 5px #d097ff,
+      0px 0px 110px 20px #f2c0ff;
+  }
+}
+
+
+/* =========================================
+   LARGE TABLETS / SMALL DESKTOP
+========================================= */
+
+@media only screen and (max-width: 1400px) {
+
+  .career-section h2 {
+    font-size: 60px;
+    line-height: 60px;
+  }
+
+  .career-info-in {
+    width: 44%;
+    gap: 20px;
+  }
+
+  .career-description {
+    width: 42%;
+  }
+
+  .career-info h4 {
+    font-size: 32px;
+  }
+
+  .career-info h5 {
+    font-size: 16px;
+  }
+
+  .career-info-box p {
+    font-size: 14px;
+  }
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media only screen and (max-width: 1025px) {
+
+  .career-section {
+    padding: 90px 0;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .career-container {
+    width: calc(100% - 50px);
+  }
+
+  .career-section h2 {
+    font-size: 50px;
+    line-height: 50px;
+
+    margin-bottom: 80px;
+  }
+
+  .career-info-box {
+    margin-bottom: 90px;
+  }
+
+  .career-info h4 {
+    font-size: 28px;
+  }
+
+  .career-description {
+    width: 41%;
+  }
+}
+
+
+/* =========================================
+   TABLET PORTRAIT
+========================================= */
+
+@media only screen and (min-width: 768px)
+  and (max-width: 1024px) {
+
+  .career-section h2 {
+    font-size: 48px;
+    line-height: 48px;
+  }
+
+  .career-info h4 {
+    font-size: 25px;
+  }
+
+  .career-info-in {
+    width: 44%;
+  }
+
+  .career-description {
+    width: 42%;
+  }
+}
+
+
+/* =========================================
+   MOBILE / SMALL TABLET
+========================================= */
+
+@media only screen and (max-width: 900px) {
+
+  .career-info-box {
+    flex-direction: column;
+
+    gap: 25px;
+
+    margin-bottom: 90px;
+
+    padding-left: 8%;
+  }
+
+  .career-info-in,
+  .career-description {
+    width: 100%;
+  }
+
+  /*
+     IMPORTANT:
+     Keep the existing timeline on the left
+     on smaller screens.
+  */
+
+  .career-timeline {
+    left: 0%;
+  }
+
+  .career-container {
+    width: calc(100% - 50px);
+  }
+
+  .career-info-box:not(:last-child)::after {
+    left: 8%;
+
+    width: 70%;
+  }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media only screen and (max-width: 600px) {
+
+  .career-section {
+    padding-top: 90px;
+
+    margin-top: 0;
+  }
+
+  .career-container {
+    width: calc(100% - 30px);
+  }
+
+  .career-section h2 {
+    width: 100%;
+
+    font-size: 45px;
+
+    line-height: 45px;
+
+    letter-spacing: -2px;
+
+    margin-top: 0;
+
+    margin-bottom: 65px;
+  }
+
+  .career-info {
+    margin: 0;
+  }
+
+  .career-info-box {
+    padding-left: 8%;
+
+    margin-bottom: 75px;
+
+    gap: 22px;
+  }
+
+  .career-info-in {
+    gap: 14px;
+  }
+
+  .career-index {
+    font-size: 12px;
+  }
+
+  .career-info h4 {
+    font-size: 27px;
+
+    line-height: 1.05;
+  }
+
+  .career-info h5 {
+    font-size: 15px;
+
+    margin: 8px 0 10px;
+  }
+
+  .career-period {
+    font-size: 11px;
+
+    letter-spacing: 0.5px;
+
+    white-space: normal;
+  }
+
+  .career-description {
+    padding-left: 0;
+  }
+
+  .career-description-label {
+    font-size: 10px;
+
+    margin-bottom: 10px;
+  }
+
+  .career-info-box p {
+    font-size: 13px;
+
+    line-height: 1.7;
+  }
+
+  .career-info-box:not(:last-child)::after {
+    left: 8%;
+
+    width: 75%;
+
+    bottom: -38px;
+  }
+
+  /*
+     Keep timeline on the left on mobile.
+     This is the same behavior as your original CSS.
+  */
+
+  .career-timeline {
+    left: 0%;
+  }
+}
