@@ -1,9 +1,7 @@
 import {
   PropsWithChildren,
   useEffect,
-  useState,
 } from "react";
-
 
 import Certifications from "./Certifications";
 import About from "./About";
@@ -24,23 +22,9 @@ import setSplitText from "./utils/splitText";
 const MainContainer = ({
   children,
 }: PropsWithChildren) => {
-  const [isDesktopView, setIsDesktopView] =
-    useState<boolean>(
-      window.innerWidth > 1024
-    );
-
-  const [isMobile, setIsMobile] =
-    useState<boolean>(
-      window.innerWidth <= 768
-    );
 
   useEffect(() => {
     const resizeHandler = () => {
-      const width = window.innerWidth;
-
-      setIsDesktopView(width > 1024);
-      setIsMobile(width <= 768);
-
       setSplitText();
     };
 
@@ -102,9 +86,8 @@ const MainContainer = ({
 
       <CallToAction />
 
-
       <ChatWithSai />
-           
+
       <Contact />
 
     </div>

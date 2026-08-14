@@ -14,7 +14,6 @@ import {
 
 import RedoxChessEngine from "../utils/redoxchessEngine";
 import "./Play.css";
-import { config } from "../config";
 
 // ============================================================
 // CHESS PIECES
