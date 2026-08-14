@@ -1,114 +1,210 @@
-/* =========================================
+/* =========================================================
    CTA SECTION
-========================================= */
+========================================================= */
 
 .cta-section {
+  position: relative;
+
   width: 100%;
-  padding: 100px 30px;
+  min-height: 560px;
+
+  padding: 90px 30px;
 
   background-color: var(--backgroundColor);
 
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+
+  scroll-margin-top: 80px;
+
+  overflow: visible;
+
+  box-sizing: border-box;
 }
 
 
-/* =========================================
-   MAIN CTA ROW
-========================================= */
+/* =========================================================
+   MAIN CTA GRID
+========================================================= */
 
 .cta-buttons {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1500px;
 
-  display: flex;
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr)
+    minmax(0, 1fr);
+
   align-items: center;
   justify-content: center;
 
-  gap: 70px;
+  gap: clamp(20px, 3vw, 60px);
+
+  margin: 0 auto;
 }
 
 
-/* =========================================
-   EACH CTA GROUP
-========================================= */
+/* =========================================================
+   CTA ITEM
+========================================================= */
 
 .cta-item {
+  min-width: 0;
+
   display: flex;
+
   align-items: center;
   justify-content: center;
 
-  gap: 18px;
+  gap: clamp(14px, 1.5vw, 24px);
 
-  flex: 1;
+  box-sizing: border-box;
 }
 
 
-/* =========================================
+/* =========================================================
    PLAY GROUP
 
-   BIG ANIMATION → BUTTON
-========================================= */
+   DESKTOP:
+   ANIMATION → BUTTON
+========================================================= */
 
 .cta-item-play {
   flex-direction: row;
 }
 
 
-/* =========================================
+/* =========================================================
+   CHAT GROUP
+
+   DESKTOP:
+   ANIMATION
+       ↓
+   BUTTON
+========================================================= */
+
+.cta-item-chat {
+  flex-direction: column;
+
+  gap: 8px;
+
+  text-align: center;
+}
+
+
+/* =========================================================
    HIRE GROUP
 
-   BUTTON → BIG ANIMATION
-========================================= */
+   DESKTOP:
+   BUTTON → ANIMATION
+========================================================= */
 
 .cta-item-hire {
   flex-direction: row;
 }
 
 
-/* =========================================
-   ANIMATION CONTAINER
-========================================= */
+/* =========================================================
+   ANIMATION BASE
+========================================================= */
 
 .cta-animation {
+  position: relative;
+
   display: flex;
+
   align-items: center;
   justify-content: center;
 
   flex-shrink: 0;
 
+  overflow: visible;
+
   pointer-events: none;
+
+  line-height: 0;
+
+  box-sizing: border-box;
 }
 
 
-/* =========================================
-   BIG GAMING ANIMATION
-========================================= */
+/*
+   Lottie React can render different internal
+   wrapper structures depending on version.
+   Keep every possible renderer inside the
+   animation box.
+*/
+
+.cta-animation > div,
+.cta-animation > svg,
+.cta-animation > canvas,
+.cta-animation svg,
+.cta-animation canvas {
+  display: block !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  max-width: 100%;
+  max-height: 100%;
+}
+
+
+/* =========================================================
+   PLAY ANIMATION
+========================================================= */
 
 .cta-animation-play {
-  width: 210px;
-  height: 210px;
+  width: clamp(170px, 14vw, 235px);
+  height: clamp(170px, 14vw, 235px);
 
-  animation: ctaFloatPlay 3.5s ease-in-out infinite;
+  animation:
+    ctaFloatPlay
+    3.5s
+    ease-in-out
+    infinite;
 }
 
 
-/* =========================================
-   BIG HIRE ANIMATION
-========================================= */
+/* =========================================================
+   CHAT AI ANIMATION
+========================================================= */
+
+.cta-animation-chat {
+  width: clamp(145px, 12vw, 210px);
+  height: clamp(145px, 12vw, 210px);
+
+  animation:
+    ctaFloatChat
+    3.7s
+    ease-in-out
+    infinite;
+}
+
+
+/* =========================================================
+   HIRE ANIMATION
+========================================================= */
 
 .cta-animation-hire {
-  width: 220px;
-  height: 220px;
+  width: clamp(170px, 14vw, 235px);
+  height: clamp(170px, 14vw, 235px);
 
-  animation: ctaFloatHire 3.8s ease-in-out infinite;
+  animation:
+    ctaFloatHire
+    3.8s
+    ease-in-out
+    infinite;
 }
 
 
-/* =========================================
+/* =========================================================
    BUTTON BASE
-========================================= */
+========================================================= */
 
 .cta-btn {
   position: relative;
@@ -120,25 +216,29 @@
 
   gap: 12px;
 
+  width: max-content;
   min-width: 205px;
 
   padding: 17px 25px;
 
-  font-size: 14px;
+  border-radius: 14px;
 
+  font-size: 14px;
   font-weight: 600;
 
   letter-spacing: 0.8px;
 
   text-decoration: none;
 
-  border-radius: 14px;
-
   cursor: pointer;
 
   overflow: hidden;
 
   flex-shrink: 0;
+
+  white-space: nowrap;
+
+  box-sizing: border-box;
 
   transition:
     transform 0.3s ease,
@@ -148,9 +248,9 @@
 }
 
 
-/* =========================================
+/* =========================================================
    ICON
-========================================= */
+========================================================= */
 
 .cta-icon {
   display: flex;
@@ -158,17 +258,20 @@
   align-items: center;
   justify-content: center;
 
+  flex-shrink: 0;
+
   font-size: 18px;
 
   line-height: 1;
 
-  transition: transform 0.3s ease;
+  transition:
+    transform 0.3s ease;
 }
 
 
-/* =========================================
+/* =========================================================
    TEXT
-========================================= */
+========================================================= */
 
 .cta-text {
   position: relative;
@@ -179,114 +282,207 @@
 }
 
 
-/* =========================================
+/* =========================================================
    ARROW
-========================================= */
+========================================================= */
 
 .cta-arrow {
   display: inline-flex;
 
   align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
 
   font-size: 20px;
 
   line-height: 1;
 
-  transition: transform 0.3s ease;
+  transition:
+    transform 0.3s ease;
 }
 
 
-/* =========================================
-   PLAY WITH ME
-========================================= */
+/* =========================================================
+   CHAT DOWN ARROW
+========================================================= */
+
+.cta-arrow-down {
+  font-size: 21px;
+
+  transform:
+    translateY(-1px);
+}
+
+
+/* =========================================================
+   PLAY BUTTON
+========================================================= */
 
 .cta-btn-play {
   color: #ffffff;
 
-  background: rgba(255, 255, 255, 0.06);
+  background:
+    rgba(255, 255, 255, 0.06);
 
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.16);
 
   box-shadow:
-    0 0 0 rgba(160, 100, 255, 0),
-    inset 0 0 20px rgba(255, 255, 255, 0.02);
+    inset 0 0 20px
+    rgba(255, 255, 255, 0.02);
 }
 
 
 .cta-btn-play:hover {
-  transform: translateY(-5px);
+  transform:
+    translateY(-5px);
 
-  background: rgba(145, 90, 255, 0.12);
+  background:
+    rgba(145, 90, 255, 0.12);
 
-  border-color: rgba(180, 130, 255, 0.55);
+  border-color:
+    rgba(180, 130, 255, 0.55);
 
   box-shadow:
-    0 12px 40px rgba(130, 70, 255, 0.3),
-    0 0 30px rgba(160, 100, 255, 0.15);
+    0 12px 40px
+    rgba(130, 70, 255, 0.3),
+
+    0 0 30px
+    rgba(160, 100, 255, 0.15);
 }
 
 
 .cta-btn-play:hover .cta-icon {
-  transform: rotate(-8deg) scale(1.1);
+  transform:
+    rotate(-8deg)
+    scale(1.1);
 }
 
 
 .cta-btn-play:hover .cta-arrow {
-  transform: translateX(6px);
+  transform:
+    translateX(6px);
 }
 
 
-/* =========================================
-   HIRE ME
-========================================= */
+/* =========================================================
+   CHAT BUTTON
+========================================================= */
+
+.cta-btn-chat {
+  color: #ffffff;
+
+  background:
+    rgba(255, 255, 255, 0.045);
+
+  border:
+    1px solid
+    rgba(180, 130, 255, 0.6);
+
+  box-shadow:
+    0 0 25px
+    rgba(150, 90, 255, 0.08);
+}
+
+
+.cta-btn-chat:hover {
+  transform:
+    translateY(-5px);
+
+  background:
+    rgba(145, 90, 255, 0.12);
+
+  border-color:
+    rgba(195, 155, 255, 0.9);
+
+  box-shadow:
+    0 14px 40px
+    rgba(130, 70, 255, 0.28),
+
+    0 0 30px
+    rgba(160, 100, 255, 0.16);
+}
+
+
+.cta-btn-chat:hover .cta-icon {
+  transform:
+    scale(1.1)
+    rotate(-5deg);
+}
+
+
+.cta-btn-chat:hover .cta-arrow-down {
+  transform:
+    translateY(5px);
+}
+
+
+/* =========================================================
+   HIRE BUTTON
+========================================================= */
 
 .cta-btn-hire {
   color: #08040f;
 
-  background: linear-gradient(
-    135deg,
-    #c8a7ff 0%,
-    #a875ff 50%,
-    #8b5cf6 100%
-  );
+  background:
+    linear-gradient(
+      135deg,
+      #c8a7ff 0%,
+      #a875ff 50%,
+      #8b5cf6 100%
+    );
 
-  border: 1px solid rgba(205, 170, 255, 0.8);
+  border:
+    1px solid
+    rgba(205, 170, 255, 0.8);
 
   box-shadow:
-    0 8px 25px rgba(139, 92, 246, 0.25),
-    0 0 20px rgba(139, 92, 246, 0.08);
+    0 8px 25px
+    rgba(139, 92, 246, 0.25),
+
+    0 0 20px
+    rgba(139, 92, 246, 0.08);
 }
 
 
 .cta-btn-hire:hover {
-  transform: translateY(-5px);
+  transform:
+    translateY(-5px);
 
   box-shadow:
-    0 16px 45px rgba(139, 92, 246, 0.45),
-    0 0 35px rgba(180, 130, 255, 0.25);
+    0 16px 45px
+    rgba(139, 92, 246, 0.45),
 
-  background: linear-gradient(
-    135deg,
-    #d8c0ff 0%,
-    #b88cff 50%,
-    #9868ff 100%
-  );
+    0 0 35px
+    rgba(180, 130, 255, 0.25);
+
+  background:
+    linear-gradient(
+      135deg,
+      #d8c0ff 0%,
+      #b88cff 50%,
+      #9868ff 100%
+    );
 }
 
 
 .cta-btn-hire:hover .cta-icon {
-  transform: scale(1.1);
+  transform:
+    scale(1.1);
 }
 
 
 .cta-btn-hire:hover .cta-arrow {
-  transform: translateX(6px);
+  transform:
+    translateX(6px);
 }
 
 
-/* =========================================
-   SHINE
-========================================= */
+/* =========================================================
+   BUTTON SHINE
+========================================================= */
 
 .cta-btn::before {
   content: "";
@@ -299,16 +495,21 @@
   width: 80%;
   height: 100%;
 
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.15),
-    transparent
-  );
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.15),
+      transparent
+    );
 
-  transform: skewX(-20deg);
+  transform:
+    skewX(-20deg);
 
-  transition: left 0.6s ease;
+  transition:
+    left 0.6s ease;
+
+  pointer-events: none;
 }
 
 
@@ -317,183 +518,546 @@
 }
 
 
-/* =========================================
+/* =========================================================
    FLOATING ANIMATIONS
-========================================= */
+========================================================= */
 
 @keyframes ctaFloatPlay {
+
   0% {
-    transform: translateY(0) rotate(0deg);
+    transform:
+      translateY(0)
+      rotate(0deg);
   }
 
   50% {
-    transform: translateY(-12px) rotate(-1deg);
+    transform:
+      translateY(-12px)
+      rotate(-1deg);
   }
 
   100% {
-    transform: translateY(0) rotate(0deg);
+    transform:
+      translateY(0)
+      rotate(0deg);
   }
+
+}
+
+
+@keyframes ctaFloatChat {
+
+  0% {
+    transform:
+      translateY(0);
+  }
+
+  50% {
+    transform:
+      translateY(-10px);
+  }
+
+  100% {
+    transform:
+      translateY(0);
+  }
+
 }
 
 
 @keyframes ctaFloatHire {
+
   0% {
-    transform: translateY(0);
+    transform:
+      translateY(0);
   }
 
   50% {
-    transform: translateY(-14px);
+    transform:
+      translateY(-14px);
   }
 
   100% {
-    transform: translateY(0);
+    transform:
+      translateY(0);
   }
+
 }
 
 
-/* =========================================
+/* =========================================================
    FOCUS
-========================================= */
+========================================================= */
 
 .cta-btn:focus-visible {
-  outline: 2px solid rgba(190, 150, 255, 0.9);
+  outline:
+    2px solid
+    rgba(190, 150, 255, 0.9);
 
   outline-offset: 4px;
 }
 
 
-/* =========================================
-   LARGE SCREENS
-========================================= */
+/* =========================================================
+   16" / LARGE LAPTOPS / DESKTOP
+========================================================= */
 
-@media only screen and (min-width: 1400px) {
+@media only screen and
+(min-width: 1200px) {
+
+  .cta-section {
+    min-height: 580px;
+
+    padding:
+      80px 35px;
+  }
 
   .cta-buttons {
-    max-width: 1300px;
+    max-width: 1500px;
 
-    gap: 90px;
+    gap:
+      clamp(25px, 3vw, 60px);
   }
 
-  .cta-animation-play {
-    width: 250px;
-    height: 250px;
-  }
-
+  .cta-animation-play,
   .cta-animation-hire {
-    width: 250px;
-    height: 250px;
+    width:
+      clamp(185px, 13vw, 230px);
+
+    height:
+      clamp(185px, 13vw, 230px);
+  }
+
+  .cta-animation-chat {
+    width:
+      clamp(155px, 11vw, 200px);
+
+    height:
+      clamp(155px, 11vw, 200px);
   }
 
   .cta-btn {
-    min-width: 215px;
+    min-width: 205px;
   }
 }
 
 
-/* =========================================
-   TABLET
-========================================= */
+/* =========================================================
+   STANDARD LAPTOP
+   14" / 15.6" / 16"
+========================================================= */
 
-@media only screen and (max-width: 1000px) {
+@media only screen and
+(min-width: 1001px) and
+(max-width: 1199px) {
 
   .cta-section {
-    padding: 80px 20px;
+    min-height: 540px;
+
+    padding:
+      70px 24px;
   }
 
   .cta-buttons {
-    gap: 30px;
+    gap: 18px;
   }
 
   .cta-item {
-    gap: 8px;
+    gap: 10px;
   }
 
-  .cta-animation-play {
-    width: 150px;
-    height: 150px;
-  }
-
+  .cta-animation-play,
   .cta-animation-hire {
-    width: 160px;
-    height: 160px;
+    width: 155px;
+    height: 155px;
+  }
+
+  .cta-animation-chat {
+    width: 140px;
+    height: 140px;
   }
 
   .cta-btn {
-    min-width: 175px;
+    min-width: 170px;
 
-    padding: 15px 18px;
+    padding:
+      15px 17px;
 
     font-size: 13px;
+
+    gap: 9px;
+  }
+
+  .cta-icon {
+    font-size: 16px;
+  }
+
+  .cta-arrow {
+    font-size: 18px;
   }
 }
 
 
-/* =========================================
-   MOBILE
-========================================= */
+/* =========================================================
+   TABLET LANDSCAPE / LARGE TABLET
+========================================================= */
 
-@media only screen and (max-width: 700px) {
+@media only screen and
+(min-width: 701px) and
+(max-width: 1000px) {
 
   .cta-section {
-    padding: 70px 20px;
+    min-height: 500px;
+
+    padding:
+      65px 18px;
   }
 
   .cta-buttons {
+    gap: 10px;
+  }
+
+  .cta-item {
+    gap: 7px;
+  }
+
+  .cta-animation-play,
+  .cta-animation-hire {
+    width: 115px;
+    height: 115px;
+  }
+
+  .cta-animation-chat {
+    width: 105px;
+    height: 105px;
+  }
+
+  .cta-btn {
+    min-width: 140px;
+
+    padding:
+      13px 12px;
+
+    font-size: 11px;
+
+    gap: 7px;
+  }
+
+  .cta-icon {
+    font-size: 15px;
+  }
+
+  .cta-arrow {
+    font-size: 17px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media only screen and
+(max-width: 700px) {
+
+  .cta-section {
+    min-height: auto;
+
+    padding:
+      70px 16px 90px;
+
+    overflow: visible;
+  }
+
+
+  /* -----------------------------------------
+     MAIN MOBILE STACK
+  ----------------------------------------- */
+
+  .cta-buttons {
+    width: 100%;
+
+    display: flex;
+
     flex-direction: column;
+
+    align-items: center;
 
     gap: 55px;
   }
 
+
+  /* -----------------------------------------
+     EACH ITEM
+  ----------------------------------------- */
+
   .cta-item {
     width: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+  }
+
+
+  /* -----------------------------------------
+     PLAY
+
+     JSON
+       ↓
+     PLAY WITH ME
+  ----------------------------------------- */
+
+  .cta-item-play {
+    order: 1;
 
     flex-direction: column;
 
     gap: 8px;
   }
 
-  .cta-item-play,
+
+  /* -----------------------------------------
+     HIRE
+
+     HIRE ME
+       ↓
+     JSON
+  ----------------------------------------- */
+
   .cta-item-hire {
-    flex-direction: column;
+    order: 2;
+
+    flex-direction: column-reverse;
+
+    gap: 8px;
   }
+
+
+  /*
+     column-reverse makes the visual order:
+
+     BUTTON
+       ↓
+     ANIMATION
+
+     while preserving the JSX structure.
+  */
+
+
+  /* -----------------------------------------
+     CHAT
+
+     JSON
+       ↓
+     TALK WITH SAI ↓
+  ----------------------------------------- */
+
+  .cta-item-chat {
+    order: 3;
+
+    flex-direction: column;
+
+    gap: 8px;
+  }
+
+
+  /* -----------------------------------------
+     PLAY ANIMATION
+  ----------------------------------------- */
 
   .cta-animation-play {
-    width: 190px;
-    height: 190px;
+    width:
+      clamp(145px, 45vw, 180px);
+
+    height:
+      clamp(145px, 45vw, 180px);
   }
+
+
+  /* -----------------------------------------
+     CHAT ANIMATION
+  ----------------------------------------- */
+
+  .cta-animation-chat {
+    width:
+      clamp(125px, 38vw, 165px);
+
+    height:
+      clamp(125px, 38vw, 165px);
+  }
+
+
+  /* -----------------------------------------
+     HIRE ANIMATION
+  ----------------------------------------- */
 
   .cta-animation-hire {
-    width: 200px;
-    height: 200px;
+    width:
+      clamp(145px, 45vw, 180px);
+
+    height:
+      clamp(145px, 45vw, 180px);
   }
 
+
+  /* -----------------------------------------
+     BUTTON
+  ----------------------------------------- */
+
   .cta-btn {
-    width: 210px;
+    width:
+      clamp(190px, 62vw, 215px);
 
     min-width: 0;
 
-    padding: 15px 20px;
+    padding:
+      15px 18px;
+
+    font-size: 13px;
+
+    gap: 9px;
   }
+
+
+  .cta-icon {
+    font-size: 17px;
+  }
+
+
+  .cta-arrow {
+    font-size: 19px;
+  }
+
+
+  .cta-arrow-down {
+    font-size: 21px;
+  }
+
 }
 
 
-/* =========================================
-   SMALL MOBILE
-========================================= */
+/* =========================================================
+   MEDIUM / LARGE MOBILE
+========================================================= */
 
-@media only screen and (max-width: 400px) {
+@media only screen and
+(min-width: 401px) and
+(max-width: 700px) {
 
-  .cta-animation-play {
+  .cta-buttons {
+    gap: 60px;
+  }
+
+  .cta-animation-play,
+  .cta-animation-hire {
+    width: 175px;
+    height: 175px;
+  }
+
+  .cta-animation-chat {
     width: 160px;
     height: 160px;
   }
 
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media only screen and
+(max-width: 400px) {
+
+  .cta-section {
+    padding:
+      60px 12px 75px;
+  }
+
+  .cta-buttons {
+    gap: 48px;
+  }
+
+  .cta-animation-play,
   .cta-animation-hire {
-    width: 170px;
-    height: 170px;
+    width: 145px;
+    height: 145px;
+  }
+
+  .cta-animation-chat {
+    width: 135px;
+    height: 135px;
   }
 
   .cta-btn {
     width: 190px;
+
+    padding:
+      14px 16px;
+
+    font-size: 12px;
   }
+
+  .cta-icon {
+    font-size: 16px;
+  }
+
+  .cta-arrow {
+    font-size: 18px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media only screen and
+(max-width: 350px) {
+
+  .cta-animation-play,
+  .cta-animation-hire {
+    width: 125px;
+    height: 125px;
+  }
+
+  .cta-animation-chat {
+    width: 115px;
+    height: 115px;
+  }
+
+  .cta-btn {
+    width: 180px;
+
+    padding:
+      13px 14px;
+
+    font-size: 11px;
+  }
+
+}
+
+
+/* =========================================================
+   REDUCE MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .cta-animation-play,
+  .cta-animation-chat,
+  .cta-animation-hire {
+    animation: none;
+  }
+
+  .cta-btn {
+    transition: none;
+  }
+
 }

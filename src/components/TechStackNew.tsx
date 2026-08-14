@@ -184,8 +184,10 @@ const techStack: TechItem[][] = [
 
 const TechStackNew = () => {
   return (
-    <div className="techstack-new">
-      {/* Video Background */}
+<div
+  className="techstack-new"
+  id="techstack"
+>      {/* Video Background */}
       <div className="techstack-video-container">
         <video
           autoPlay

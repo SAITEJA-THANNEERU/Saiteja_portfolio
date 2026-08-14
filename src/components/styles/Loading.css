@@ -1,78 +1,565 @@
-/* ==========================================================
-   CREATIVE LOADING SCREEN
-   ULTRA-REALISTIC FUTURISTIC ENERGY ORB
-   ========================================================== */
+/* ============================================================
+   PREMIUM PORTFOLIO LOADING SCREEN
+   SAI TEJA
+   FULL UPDATED CSS
+   ============================================================ */
+
+
+/* ============================================================
+   LOADING SCREEN
+   ============================================================ */
 
 .loading-screen {
   position: fixed;
+
   inset: 0;
 
   width: 100vw;
-  height: var(--vh);
+  height: var(--vh, 100vh);
 
   z-index: 999999999;
 
   overflow: hidden;
 
   display: flex;
+
   align-items: center;
   justify-content: center;
 
+  color: #ffffff;
+
   background:
     radial-gradient(
-      circle at 50% 40%,
-      rgba(125, 65, 255, 0.075),
-      transparent 30%
+      circle at 50% 35%,
+      rgba(17, 83, 190, 0.11) 0%,
+      rgba(8, 45, 110, 0.055) 20%,
+      transparent 46%
     ),
-    radial-gradient(
-      circle at 50% 55%,
-      rgba(70, 30, 150, 0.035),
-      transparent 48%
-    ),
-    #030207;
 
-  color: #ffffff;
+    radial-gradient(
+      circle at 50% 72%,
+      rgba(27, 42, 110, 0.035),
+      transparent 50%
+    ),
+
+    #010208;
 }
 
 
-/* ==========================================================
-   BACKGROUND
-   ========================================================== */
+/* ============================================================
+   DEEP SPACE ATMOSPHERE
+   ============================================================ */
 
-.loading-stars {
+.loading-screen::before {
+  content: "";
+
   position: absolute;
+
+  inset: -30%;
+
+  pointer-events: none;
+
+  background:
+
+    radial-gradient(
+      circle at 16% 25%,
+      rgba(28, 116, 255, 0.035),
+      transparent 23%
+    ),
+
+    radial-gradient(
+      circle at 84% 32%,
+      rgba(54, 116, 255, 0.028),
+      transparent 25%
+    ),
+
+    radial-gradient(
+      circle at 50% 40%,
+      rgba(39, 125, 255, 0.055),
+      transparent 28%
+    ),
+
+    radial-gradient(
+      circle at 70% 76%,
+      rgba(55, 55, 190, 0.025),
+      transparent 23%
+    );
+
+  filter:
+    blur(60px);
+
+  animation:
+    ambientDrift 20s ease-in-out infinite alternate;
+
+  z-index: 0;
+}
+
+
+/* ============================================================
+   DEEP SPACE VIGNETTE
+   ============================================================ */
+
+.loading-screen::after {
+  content: "";
+
+  position: absolute;
+
   inset: 0;
 
   pointer-events: none;
 
-  background-image:
+  background:
     radial-gradient(
-      circle,
-      rgba(205, 180, 255, 0.5) 0.8px,
-      transparent 1px
+      circle at center,
+      transparent 25%,
+      rgba(0, 0, 0, 0.04) 48%,
+      rgba(0, 0, 0, 0.2) 76%,
+      rgba(0, 0, 0, 0.62) 100%
     );
 
-  background-size: 120px 120px;
-
-  opacity: 0.1;
-
-  animation: starsMove 24s linear infinite;
-}
-
-@keyframes starsMove {
-  from {
-    transform: translateY(0);
-  }
-
-  to {
-    transform: translateY(120px);
-  }
+  z-index: 2;
 }
 
 
-/* ==========================================================
-   TOP HEADER
-   ========================================================== */
+/* ============================================================
+   AMBIENT MOTION
+   ============================================================ */
+
+@keyframes ambientDrift {
+
+  0% {
+    transform:
+      translate3d(-2%, -1%, 0)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translate3d(2%, 1%, 0)
+      scale(1.035);
+  }
+
+  100% {
+    transform:
+      translate3d(-1%, 2%, 0)
+      scale(1.015);
+  }
+}
+
+
+/* ============================================================
+   STAR FIELD
+   ============================================================
+
+   IMPORTANT:
+
+   This version intentionally uses fewer stars.
+
+   The background now has:
+   - small distant stars
+   - medium stars
+   - occasional bright stars
+   - large areas of black space
+
+   There are NO constellation connection lines.
+
+   There are NO giant diagonal lines.
+
+   There are NO repeating dense grids.
+   ============================================================ */
+
+.loading-stars {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  pointer-events: none;
+
+  overflow: hidden;
+
+  z-index: 3;
+
+  opacity: 0.82;
+
+  background:
+
+    /* ========================================================
+       SMALL RANDOM STAR 01
+       ======================================================== */
+
+    radial-gradient(
+      circle at 4% 17%,
+      rgba(125, 199, 255, 0.8) 0 0.8px,
+      transparent 1.8px
+    ),
+
+    /* STAR 02 */
+    radial-gradient(
+      circle at 8% 64%,
+      rgba(255, 255, 255, 0.72) 0 0.7px,
+      transparent 1.7px
+    ),
+
+    /* STAR 03 */
+    radial-gradient(
+      circle at 13% 31%,
+      rgba(99, 179, 255, 0.78) 0 0.8px,
+      transparent 1.8px
+    ),
+
+    /* STAR 04 */
+    radial-gradient(
+      circle at 17% 78%,
+      rgba(159, 218, 255, 0.76) 0 0.7px,
+      transparent 1.7px
+    ),
+
+    /* STAR 05 */
+    radial-gradient(
+      circle at 21% 13%,
+      rgba(255, 255, 255, 0.74) 0 0.8px,
+      transparent 1.8px
+    ),
+
+    /* STAR 06 */
+    radial-gradient(
+      circle at 26% 42%,
+      rgba(94, 173, 255, 0.72) 0 0.7px,
+      transparent 1.7px
+    ),
+
+    /* STAR 07 */
+    radial-gradient(
+      circle at 29% 87%,
+      rgba(127, 205, 255, 0.78) 0 0.8px,
+      transparent 1.8px
+    ),
+
+    /* STAR 08 */
+    radial-gradient(
+      circle at 34% 22%,
+      rgba(255, 255, 255, 0.72) 0 0.75px,
+      transparent 1.7px
+    ),
+
+    /* STAR 09 */
+    radial-gradient(
+      circle at 38% 67%,
+      rgba(98, 182, 255, 0.8) 0 0.75px,
+      transparent 1.8px
+    ),
+
+    /* STAR 10 */
+    radial-gradient(
+      circle at 43% 9%,
+      rgba(173, 222, 255, 0.76) 0 0.8px,
+      transparent 1.8px
+    ),
+
+    /* STAR 11 */
+    radial-gradient(
+      circle at 47% 81%,
+      rgba(255, 255, 255, 0.7) 0 0.7px,
+      transparent 1.7px
+    ),
+
+    /* STAR 12 */
+    radial-gradient(
+      circle at 52% 17%,
+      rgba(103, 190, 255, 0.76) 0 0.8px,
+      transparent 1.8px
+    ),
+
+    /* STAR 13 */
+    radial-gradient(
+      circle at 56% 72%,
+      rgba(127, 204, 255, 0.78) 0 0.7px,
+      transparent 1.7px
+    ),
+
+    /* STAR 14 */
+    radial-gradient(
+      circle at 61% 11%,
+      rgba(255, 255, 255, 0.72) 0 0.75px,
+      transparent 1.7px
+    ),
+
+    /* STAR 15 */
+    radial-gradient(
+      circle at 65% 49%,
+      rgba(100, 183, 255, 0.75) 0 0.8px,
+      transparent 1.8px
+    ),
+
+    /* STAR 16 */
+    radial-gradient(
+      circle at 69% 86%,
+      rgba(158, 219, 255, 0.72) 0 0.7px,
+      transparent 1.7px
+    ),
+
+    /* STAR 17 */
+    radial-gradient(
+      circle at 74% 22%,
+      rgba(255, 255, 255, 0.74) 0 0.8px,
+      transparent 1.8px
+    ),
+
+    /* STAR 18 */
+    radial-gradient(
+      circle at 79% 62%,
+      rgba(96, 180, 255, 0.76) 0 0.75px,
+      transparent 1.8px
+    ),
+
+    /* STAR 19 */
+    radial-gradient(
+      circle at 84% 14%,
+      rgba(133, 207, 255, 0.74) 0 0.8px,
+      transparent 1.8px
+    ),
+
+    /* STAR 20 */
+    radial-gradient(
+      circle at 88% 77%,
+      rgba(255, 255, 255, 0.7) 0 0.7px,
+      transparent 1.7px
+    ),
+
+    /* STAR 21 */
+    radial-gradient(
+      circle at 93% 37%,
+      rgba(102, 186, 255, 0.78) 0 0.8px,
+      transparent 1.8px
+    ),
+
+    /* STAR 22 */
+    radial-gradient(
+      circle at 97% 88%,
+      rgba(157, 219, 255, 0.74) 0 0.7px,
+      transparent 1.7px
+    ),
+
+    /* ========================================================
+       MEDIUM STARS
+       ======================================================== */
+
+    radial-gradient(
+      circle at 10% 47%,
+      rgba(111, 197, 255, 0.9) 0 1.2px,
+      transparent 2.8px
+    ),
+
+    radial-gradient(
+      circle at 23% 68%,
+      rgba(255, 255, 255, 0.88) 0 1.1px,
+      transparent 2.7px
+    ),
+
+    radial-gradient(
+      circle at 31% 14%,
+      rgba(104, 190, 255, 0.9) 0 1.2px,
+      transparent 2.8px
+    ),
+
+    radial-gradient(
+      circle at 40% 36%,
+      rgba(124, 204, 255, 0.88) 0 1.1px,
+      transparent 2.7px
+    ),
+
+    radial-gradient(
+      circle at 58% 29%,
+      rgba(255, 255, 255, 0.9) 0 1.15px,
+      transparent 2.8px
+    ),
+
+    radial-gradient(
+      circle at 68% 68%,
+      rgba(102, 190, 255, 0.9) 0 1.2px,
+      transparent 2.8px
+    ),
+
+    radial-gradient(
+      circle at 78% 44%,
+      rgba(130, 208, 255, 0.88) 0 1.1px,
+      transparent 2.7px
+    ),
+
+    radial-gradient(
+      circle at 91% 59%,
+      rgba(255, 255, 255, 0.88) 0 1.1px,
+      transparent 2.7px
+    ),
+
+    /* ========================================================
+       OCCASIONAL BRIGHT STARS
+       ======================================================== */
+
+    radial-gradient(
+      circle at 15% 19%,
+      rgba(132, 211, 255, 0.95) 0 1.6px,
+      rgba(70, 170, 255, 0.25) 2px,
+      transparent 5px
+    ),
+
+    radial-gradient(
+      circle at 86% 28%,
+      rgba(255, 255, 255, 0.95) 0 1.5px,
+      rgba(104, 193, 255, 0.22) 2px,
+      transparent 5px
+    ),
+
+    radial-gradient(
+      circle at 7% 86%,
+      rgba(112, 198, 255, 0.94) 0 1.5px,
+      rgba(55, 156, 255, 0.2) 2px,
+      transparent 5px
+    ),
+
+    radial-gradient(
+      circle at 94% 82%,
+      rgba(145, 218, 255, 0.94) 0 1.5px,
+      rgba(65, 166, 255, 0.22) 2px,
+      transparent 5px
+    );
+}
+
+
+/* ============================================================
+   REMOVE ALL OLD CONSTELLATION LINES
+   ============================================================ */
+
+.loading-stars::before {
+  content: none;
+
+  display: none;
+
+  background: none;
+}
+
+
+/* ============================================================
+   SECONDARY STAR GLINT LAYER
+   ============================================================
+
+   Only a few brighter points.
+   ============================================================ */
+
+.loading-stars::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+
+    radial-gradient(
+      circle at 18% 55%,
+      rgba(93, 187, 255, 0.85) 0 1.3px,
+      transparent 3.5px
+    ),
+
+    radial-gradient(
+      circle at 36% 76%,
+      rgba(255, 255, 255, 0.82) 0 1.2px,
+      transparent 3.2px
+    ),
+
+    radial-gradient(
+      circle at 63% 14%,
+      rgba(107, 196, 255, 0.85) 0 1.3px,
+      transparent 3.5px
+    ),
+
+    radial-gradient(
+      circle at 82% 70%,
+      rgba(255, 255, 255, 0.82) 0 1.2px,
+      transparent 3.2px
+    );
+
+  opacity: 0.7;
+
+  animation:
+    constellationStars 9s ease-in-out infinite alternate;
+}
+
+
+/* ============================================================
+   STAR FIELD ANIMATION
+   ============================================================ */
+
+@keyframes starFieldDrift {
+
+  0% {
+    transform:
+      translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform:
+      translate3d(5px, -3px, 0);
+  }
+
+  100% {
+    transform:
+      translate3d(-4px, 5px, 0);
+  }
+}
+
+
+@keyframes starFieldPulse {
+
+  0%,
+  100% {
+    opacity:
+      0.72;
+  }
+
+  50% {
+    opacity:
+      0.9;
+  }
+}
+
+
+@keyframes constellationStars {
+
+  0% {
+    transform:
+      translate3d(-4px, 2px, 0);
+
+    opacity:
+      0.5;
+  }
+
+  50% {
+    transform:
+      translate3d(4px, -3px, 0);
+
+    opacity:
+      0.9;
+  }
+
+  100% {
+    transform:
+      translate3d(-2px, 4px, 0);
+
+    opacity:
+      0.65;
+  }
+}
+
+
+/* ============================================================
+   HEADER
+   ============================================================ */
 
 .loading-header {
   position: fixed;
@@ -80,7 +567,8 @@
   top: 0;
   left: 50%;
 
-  transform: translateX(-50%);
+  transform:
+    translateX(-50%);
 
   width: var(--cWidth);
   max-width: var(--cMaxWidth);
@@ -88,78 +576,192 @@
   padding: 30px 0;
 
   display: flex;
+
   align-items: center;
   justify-content: space-between;
 
-  z-index: 20;
-
   box-sizing: border-box;
+
+  z-index: 30;
 }
 
+
+/* ============================================================
+   LOADER TITLE
+   ============================================================ */
+
 .loader-title {
-  color: #ffffff;
+  position: relative;
+
+  color:
+    rgba(255, 255, 255, 0.94);
 
   text-decoration: none;
 
-  font-size: 14px;
+  font-size: 13px;
 
   font-weight: 600;
 
-  letter-spacing: 0.15em;
+  letter-spacing: 0.16em;
+
+  opacity: 0.9;
+
+  transition:
+    opacity 0.3s ease,
+    color 0.3s ease;
+}
+
+
+.loader-title::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  bottom: -7px;
+
+  width: 42px;
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #69caff,
+      #3d8cff,
+      transparent
+    );
+
+  box-shadow:
+    0 0 8px rgba(71, 177, 255, 0.55);
 
   opacity: 0.9;
 }
 
+
+.loader-title:hover {
+  color:
+    #b8eaff;
+
+  opacity:
+    1;
+}
+
+
+/* ============================================================
+   SYSTEM STATUS
+   ============================================================ */
+
 .loader-status {
   display: flex;
+
   align-items: center;
-  gap: 10px;
 
-  color: rgba(255, 255, 255, 0.65);
+  gap: 9px;
 
-  font-size: 10px;
+  color:
+    rgba(255, 255, 255, 0.58);
+
+  font-size: 9px;
 
   letter-spacing: 0.2em;
 
-  transition: opacity 0.5s ease;
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
 }
 
+
 .loader-status-dot {
+  position: relative;
+
   width: 6px;
   height: 6px;
 
   border-radius: 50%;
 
-  background: #a87cff;
+  background:
+    #63caff;
 
   box-shadow:
-    0 0 7px #a87cff,
-    0 0 14px rgba(168, 124, 255, 0.45);
+    0 0 7px rgba(99, 202, 255, 1),
+    0 0 16px rgba(52, 156, 255, 0.8),
+    0 0 28px rgba(39, 113, 255, 0.4);
 
-  animation: statusPulse 1.5s ease-in-out infinite;
+  animation:
+    statusPulse 1.5s ease-in-out infinite;
 }
 
+
+.loader-status-dot::after {
+  content: "";
+
+  position: absolute;
+
+  inset: -5px;
+
+  border:
+    1px solid rgba(99, 202, 255, 0.32);
+
+  border-radius: 50%;
+
+  animation:
+    statusRing 1.8s ease-out infinite;
+}
+
+
 @keyframes statusPulse {
+
   0%,
   100% {
-    opacity: 0.35;
-    transform: scale(0.8);
+    opacity:
+      0.45;
+
+    transform:
+      scale(0.75);
   }
 
   50% {
-    opacity: 1;
-    transform: scale(1);
+    opacity:
+      1;
+
+    transform:
+      scale(1);
   }
 }
 
-.loader-out {
-  opacity: 0;
+
+@keyframes statusRing {
+
+  0% {
+    transform:
+      scale(0.5);
+
+    opacity:
+      0.7;
+  }
+
+  100% {
+    transform:
+      scale(1.9);
+
+    opacity:
+      0;
+  }
 }
 
 
-/* ==========================================================
-   MAIN WRAPPER
-   ========================================================== */
+.loader-out {
+  opacity:
+    0;
+
+  transform:
+    translateY(-8px);
+}
+
+
+/* ============================================================
+   MAIN LOADING WRAPPER
+   ============================================================ */
 
 .loading-wrap {
   position: relative;
@@ -174,1312 +776,2867 @@
 
   overflow: hidden;
 
-  background: transparent;
+  background:
+    transparent;
 
   transition:
     transform 0.9s cubic-bezier(0.33, 0.11, 1, 0.72),
     opacity 0.6s ease;
+
+  z-index: 5;
 }
 
 
-/* ==========================================================
-   MOUSE GLOW
-   ========================================================== */
+/* ============================================================
+   MOUSE FOLLOW GLOW
+   ============================================================ */
 
 .loading-hover {
   position: absolute;
 
-  width: 220px;
-  height: 220px;
+  width: 360px;
+  height: 360px;
 
-  left: var(--mouse-x);
-  top: var(--mouse-y);
+  left:
+    var(--mouse-x, 50%);
 
-  transform: translate(-50%, -50%);
+  top:
+    var(--mouse-y, 50%);
+
+  transform:
+    translate(-50%, -50%);
 
   border-radius: 50%;
 
   background:
     radial-gradient(
       circle,
-      rgba(180, 135, 255, 0.08),
-      rgba(140, 80, 255, 0.025) 45%,
+      rgba(76, 190, 255, 0.08),
+      rgba(40, 125, 255, 0.025) 40%,
       transparent 72%
     );
 
-  filter: blur(50px);
+  filter:
+    blur(52px);
 
   pointer-events: none;
 
   opacity: 0;
 
-  transition: opacity 0.5s ease;
+  transition:
+    opacity 0.5s ease;
+
+  z-index: 1;
 }
+
 
 .loading-wrap:hover .loading-hover {
-  opacity: 1;
+  opacity:
+    1;
 }
 
 
-/* ==========================================================
+/* ============================================================
    ORB AREA
-   ========================================================== */
+   ============================================================
+
+   Moved upward so there is clear separation between:
+
+   ORB
+      ↓
+   TITLE
+      ↓
+   PROGRESS
+   ============================================================ */
 
 .loading-orb-area {
   position: absolute;
 
-  top: 15%;
+  top:
+    -4%;
 
-  left: 50%;
+  left:
+    50%;
 
-  width: min(900px, 80vw);
-  height: min(500px, 48vw);
+  width:
+    min(980px, 88vw);
 
-  transform: translateX(-50%);
+  height:
+    min(620px, 60vw);
 
-  display: flex;
+  transform:
+    translateX(-50%);
 
-  align-items: center;
-  justify-content: center;
+  display:
+    flex;
 
-  pointer-events: none;
+  align-items:
+    center;
 
-  perspective: 1000px;
+  justify-content:
+    center;
+
+  pointer-events:
+    none;
+
+  perspective:
+    1600px;
+
+  perspective-origin:
+    center center;
+
+  z-index:
+    10;
 }
 
 
-/* ==========================================================
-   FUTURISTIC ENERGY ORB
-   ========================================================== */
+/* ============================================================
+   REMOVE SIDE ENERGY STREAKS
+   ============================================================ */
+
+.energy-left,
+.energy-right {
+  display:
+    none;
+}
+
+
+/* ============================================================
+   ENERGY ORB
+   ============================================================ */
 
 .energy-orb {
   position: relative;
 
-  width: clamp(210px, 23vw, 350px);
-  height: clamp(210px, 23vw, 350px);
+  width:
+    clamp(250px, 27vw, 410px);
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height:
+    clamp(250px, 27vw, 410px);
 
-  border-radius: 50%;
+  display:
+    flex;
 
-  z-index: 5;
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  border-radius:
+    50%;
+
+  transform-style:
+    preserve-3d;
+
+  isolation:
+    isolate;
+
+  z-index:
+    5;
 
   animation:
-    orbFloat 5s ease-in-out infinite,
-    orbMicroRotate 18s linear infinite;
+    orbFloat 6s ease-in-out infinite,
+    orbBrightness 5s ease-in-out infinite;
 
-  transform-style: preserve-3d;
-
-  isolation: isolate;
+  will-change:
+    transform,
+    filter;
 }
 
 
-/* ==========================================================
+/* ============================================================
    ORB FLOAT
-   ========================================================== */
+   ============================================================ */
 
 @keyframes orbFloat {
+
   0%,
   100% {
-    transform: translateY(0) scale(1);
+    transform:
+      translate3d(0, 0, 0)
+      scale(1);
+  }
+
+  25% {
+    transform:
+      translate3d(-2px, -5px, 0)
+      scale(1.006);
   }
 
   50% {
-    transform: translateY(-7px) scale(1.012);
+    transform:
+      translate3d(0, -10px, 0)
+      scale(1.014);
+  }
+
+  75% {
+    transform:
+      translate3d(2px, -5px, 0)
+      scale(1.006);
   }
 }
 
-@keyframes orbMicroRotate {
-  0% {
-    filter: brightness(1);
-  }
 
-  50% {
-    filter: brightness(1.04);
-  }
+/* ============================================================
+   ORB BRIGHTNESS
+   ============================================================ */
 
+@keyframes orbBrightness {
+
+  0%,
   100% {
-    filter: brightness(1);
+    filter:
+      brightness(0.96);
+  }
+
+  50% {
+    filter:
+      brightness(1.08);
   }
 }
 
 
-/* ==========================================================
-   OUTER ATMOSPHERE
-   ========================================================== */
+/* ============================================================
+   MASSIVE ATMOSPHERIC GLOW
+   ============================================================ */
 
 .orb-glow {
   position: absolute;
 
-  width: 155%;
-  height: 155%;
+  width:
+    190%;
 
-  left: 50%;
-  top: 50%;
+  height:
+    190%;
 
-  transform: translate(-50%, -50%);
+  left:
+    50%;
 
-  border-radius: 50%;
+  top:
+    50%;
+
+  transform:
+    translate(-50%, -50%);
+
+  border-radius:
+    50%;
+
+  pointer-events:
+    none;
 
   background:
+
     radial-gradient(
-      circle,
-      rgba(177, 117, 255, 0.18) 0%,
-      rgba(126, 61, 238, 0.11) 27%,
-      rgba(91, 40, 190, 0.055) 46%,
+      circle at center,
+      rgba(108, 215, 255, 0.2) 0%,
+      rgba(54, 169, 255, 0.12) 18%,
+      rgba(28, 112, 240, 0.06) 35%,
+      rgba(16, 70, 190, 0.025) 50%,
       transparent 70%
     );
 
-  filter: blur(25px);
+  filter:
+    blur(34px);
 
-  opacity: 0.82;
+  opacity:
+    0.72;
+
+  z-index:
+    -20;
 
   animation:
-    orbAtmosphere 4.5s ease-in-out infinite;
-
-  z-index: -5;
-
-  pointer-events: none;
-}
-
-@keyframes orbAtmosphere {
-  0%,
-  100% {
-    transform:
-      translate(-50%, -50%)
-      scale(0.94);
-
-    opacity: 0.55;
-  }
-
-  50% {
-    transform:
-      translate(-50%, -50%)
-      scale(1.06);
-
-    opacity: 0.95;
-  }
+    orbAuraPulse 4.5s ease-in-out infinite;
 }
 
 
-/* ==========================================================
-   OUTER AURA
-   ========================================================== */
+/* ============================================================
+   SECONDARY OUTER AURA
+   ============================================================ */
 
 .energy-orb::before {
   content: "";
 
   position: absolute;
 
-  width: 82%;
-  height: 82%;
+  width:
+    150%;
 
-  left: 50%;
-  top: 50%;
+  height:
+    150%;
 
-  transform: translate(-50%, -50%);
+  left:
+    50%;
 
-  border-radius: 50%;
+  top:
+    50%;
+
+  transform:
+    translate(-50%, -50%);
+
+  border-radius:
+    50%;
+
+  pointer-events:
+    none;
 
   background:
     radial-gradient(
-      circle at 35% 30%,
-      rgba(255, 255, 255, 0.09),
-      transparent 10%
-    ),
-    radial-gradient(
-      circle at 48% 48%,
-      rgba(154, 83, 255, 0.1),
-      transparent 55%
-    ),
-    transparent;
+      circle,
+      transparent 34%,
+      rgba(53, 184, 255, 0.06) 45%,
+      rgba(48, 151, 255, 0.05) 53%,
+      transparent 70%
+    );
 
-  filter: blur(14px);
+  filter:
+    blur(13px);
 
-  opacity: 0.9;
+  opacity:
+    0.78;
 
-  z-index: 1;
+  z-index:
+    -15;
 
-  pointer-events: none;
+  animation:
+    outerAuraRotate 14s linear infinite;
 }
 
 
-/* ==========================================================
-   MAIN SPHERE
-   REALISTIC MULTI-LIGHTING MATERIAL
-   ========================================================== */
+/* ============================================================
+   AURA PULSE
+   ============================================================ */
+
+@keyframes orbAuraPulse {
+
+  0%,
+  100% {
+    transform:
+      translate(-50%, -50%)
+      scale(0.9);
+
+    opacity:
+      0.42;
+  }
+
+  50% {
+    transform:
+      translate(-50%, -50%)
+      scale(1.1);
+
+    opacity:
+      0.82;
+  }
+}
+
+
+@keyframes outerAuraRotate {
+
+  0% {
+    transform:
+      translate(-50%, -50%)
+      rotate(0deg)
+      scale(0.96);
+  }
+
+  50% {
+    transform:
+      translate(-50%, -50%)
+      rotate(180deg)
+      scale(1.04);
+  }
+
+  100% {
+    transform:
+      translate(-50%, -50%)
+      rotate(360deg)
+      scale(0.96);
+  }
+}
+
+
+/* ============================================================
+   MAIN 3D SPHERE
+   ============================================================ */
 
 .orb-core {
   position: absolute;
 
-  width: 60%;
-  height: 60%;
+  width:
+    63%;
 
-  left: 50%;
-  top: 50%;
+  height:
+    63%;
 
-  transform: translate(-50%, -50%);
+  left:
+    50%;
 
-  border-radius: 50%;
+  top:
+    50%;
 
-  overflow: hidden;
+  transform:
+    translate(-50%, -50%);
+
+  border-radius:
+    50%;
+
+  overflow:
+    hidden;
+
+  transform-style:
+    preserve-3d;
+
+  isolation:
+    isolate;
+
+  z-index:
+    5;
 
   background:
 
-    /* Sharp specular reflection */
     radial-gradient(
-      ellipse 28% 18% at 31% 23%,
-      rgba(255, 255, 255, 0.92),
-      rgba(239, 222, 255, 0.35) 24%,
-      transparent 58%
+      ellipse 30% 24% at 28% 19%,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(237, 252, 255, 0.96) 10%,
+      rgba(177, 236, 255, 0.7) 23%,
+      rgba(74, 193, 255, 0.2) 44%,
+      transparent 68%
     ),
 
-    /* Secondary purple reflection */
     radial-gradient(
-      ellipse 48% 42% at 70% 36%,
-      rgba(160, 91, 255, 0.42),
-      transparent 67%
+      ellipse 68% 62% at 43% 42%,
+      rgba(40, 176, 255, 0.98) 0%,
+      rgba(18, 128, 240, 0.97) 24%,
+      rgba(8, 81, 194, 0.96) 48%,
+      rgba(3, 39, 112, 0.98) 68%,
+      rgba(1, 12, 43, 1) 91%
     ),
 
-    /* Internal plasma */
     radial-gradient(
-      ellipse 65% 70% at 50% 54%,
-      rgba(123, 55, 226, 0.52),
-      rgba(52, 16, 112, 0.62) 48%,
-      transparent 78%
-    ),
-
-    /* Deep shadow */
-    radial-gradient(
-      circle at 74% 76%,
-      #030107 0%,
-      #08020f 26%,
-      #120625 58%,
-      #24104b 100%
+      circle at 60% 55%,
+      #0869d9 0%,
+      #0649ad 38%,
+      #022568 68%,
+      #010b2a 88%,
+      #00030f 100%
     );
 
-  border: 1px solid rgba(230, 214, 255, 0.86);
+  border:
+    2px solid
+    rgba(192, 239, 255, 0.96);
 
   box-shadow:
 
-    /* Internal lighting */
-    inset 15px 10px 30px rgba(255, 255, 255, 0.08),
+    inset
+      12px
+      10px
+      24px
+      rgba(255, 255, 255, 0.24),
 
-    inset -22px -25px 45px rgba(0, 0, 0, 0.65),
+    inset
+      0
+      0
+      35px
+      rgba(74, 196, 255, 0.6),
 
-    inset 0 0 38px rgba(170, 100, 255, 0.3),
+    inset
+      0
+      0
+      70px
+      rgba(21, 121, 241, 0.48),
 
-    inset 0 0 80px rgba(86, 34, 180, 0.2),
+    inset
+      0
+      0
+      110px
+      rgba(6, 66, 177, 0.3),
 
-    /* Sharp rim */
-    0 0 7px rgba(235, 218, 255, 0.95),
+    inset
+      -28px
+      -32px
+      55px
+      rgba(0, 3, 18, 0.92),
 
-    /* Bloom */
-    0 0 25px rgba(164, 96, 255, 0.55),
+    0
+      0
+      4px
+      rgba(229, 249, 255, 1),
 
-    0 0 65px rgba(112, 52, 235, 0.24);
+    0
+      0
+      14px
+      rgba(102, 216, 255, 0.98),
 
-  z-index: 3;
+    0
+      0
+      30px
+      rgba(52, 171, 255, 0.88),
+
+    0
+      0
+      55px
+      rgba(28, 119, 245, 0.68),
+
+    0
+      0
+      95px
+      rgba(18, 76, 210, 0.42);
 
   animation:
-    coreBreath 3.8s ease-in-out infinite;
+    sphereBreathing 4.5s ease-in-out infinite;
 
-  transform-style: preserve-3d;
+  will-change:
+    transform,
+    box-shadow;
 }
 
 
-/* ==========================================================
-   SPHERICAL LIGHT FALL-OFF
-   ========================================================== */
+/* ============================================================
+   SPHERICAL HIGHLIGHT
+   ============================================================ */
 
 .orb-core::before {
   content: "";
 
   position: absolute;
 
-  inset: 0;
+  inset:
+    0;
 
-  border-radius: 50%;
+  border-radius:
+    50%;
+
+  pointer-events:
+    none;
 
   background:
 
-    /* White key-light */
     radial-gradient(
-      ellipse 35% 25% at 30% 22%,
-      rgba(255, 255, 255, 0.72),
-      transparent 60%
+      ellipse 25% 17% at 28% 19%,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(241, 252, 255, 0.94) 14%,
+      rgba(196, 239, 255, 0.7) 30%,
+      rgba(107, 210, 255, 0.18) 52%,
+      transparent 74%
     ),
 
-    /* Purple light */
     radial-gradient(
-      ellipse 60% 60% at 50% 50%,
-      transparent 35%,
-      rgba(80, 24, 150, 0.12) 63%,
-      rgba(0, 0, 0, 0.68) 100%
+      ellipse 55% 25% at 42% 12%,
+      rgba(151, 229, 255, 0.34),
+      transparent 72%
+    ),
+
+    radial-gradient(
+      ellipse 24% 58% at 82% 39%,
+      rgba(77, 199, 255, 0.28),
+      transparent 72%
     );
 
-  z-index: 5;
+  mix-blend-mode:
+    screen;
 
-  pointer-events: none;
+  opacity:
+    0.92;
 
-  mix-blend-mode: screen;
-
-  opacity: 0.8;
+  z-index:
+    8;
 }
 
 
-/* ==========================================================
-   SPHERICAL SHADOW
-   ========================================================== */
+/* ============================================================
+   SPHERICAL SHADOW / DEPTH
+   ============================================================ */
 
 .orb-core::after {
   content: "";
 
   position: absolute;
 
-  inset: 0;
+  inset:
+    0;
 
-  border-radius: 50%;
+  border-radius:
+    50%;
+
+  pointer-events:
+    none;
 
   background:
+
     radial-gradient(
-      circle at 78% 78%,
-      rgba(0, 0, 0, 0.78),
-      transparent 55%
+      ellipse 76% 88% at 80% 80%,
+      rgba(0, 3, 16, 0.95) 0%,
+      rgba(0, 5, 23, 0.78) 34%,
+      rgba(0, 9, 35, 0.38) 58%,
+      transparent 78%
+    ),
+
+    radial-gradient(
+      circle,
+      transparent 58%,
+      transparent 72%,
+      rgba(63, 181, 255, 0.2) 83%,
+      rgba(124, 220, 255, 0.62) 94%,
+      rgba(224, 249, 255, 0.92) 100%
     );
 
-  z-index: 6;
+  z-index:
+    9;
 
-  pointer-events: none;
-
-  opacity: 0.7;
+  opacity:
+    0.95;
 }
 
 
-@keyframes coreBreath {
+/* ============================================================
+   SPHERE BREATHING
+   ============================================================ */
+
+@keyframes sphereBreathing {
+
   0%,
   100% {
+    transform:
+      translate(-50%, -50%)
+      scale(1);
+
     box-shadow:
 
-      inset 15px 10px 30px rgba(255, 255, 255, 0.07),
+      inset
+        12px
+        10px
+        24px
+        rgba(255, 255, 255, 0.2),
 
-      inset -22px -25px 45px rgba(0, 0, 0, 0.62),
+      inset
+        0
+        0
+        35px
+        rgba(74, 196, 255, 0.52),
 
-      inset 0 0 38px rgba(170, 100, 255, 0.28),
+      inset
+        0
+        0
+        70px
+        rgba(21, 121, 241, 0.4),
 
-      inset 0 0 80px rgba(86, 34, 180, 0.18),
+      inset
+        -28px
+        -32px
+        55px
+        rgba(0, 3, 18, 0.92),
 
-      0 0 7px rgba(235, 218, 255, 0.9),
+      0
+        0
+        4px
+        rgba(229, 249, 255, 0.98),
 
-      0 0 25px rgba(164, 96, 255, 0.5),
+      0
+        0
+        14px
+        rgba(102, 216, 255, 0.88),
 
-      0 0 60px rgba(112, 52, 235, 0.22);
+      0
+        0
+        30px
+        rgba(52, 171, 255, 0.76),
+
+      0
+        0
+        55px
+        rgba(28, 119, 245, 0.56),
+
+      0
+        0
+        95px
+        rgba(18, 76, 210, 0.34);
   }
 
   50% {
+    transform:
+      translate(-50%, -50%)
+      scale(1.022);
+
     box-shadow:
 
-      inset 15px 10px 34px rgba(255, 255, 255, 0.1),
+      inset
+        12px
+        10px
+        30px
+        rgba(255, 255, 255, 0.3),
 
-      inset -22px -25px 48px rgba(0, 0, 0, 0.68),
+      inset
+        0
+        0
+        45px
+        rgba(91, 208, 255, 0.7),
 
-      inset 0 0 44px rgba(182, 112, 255, 0.36),
+      inset
+        0
+        0
+        88px
+        rgba(25, 132, 250, 0.52),
 
-      inset 0 0 90px rgba(96, 42, 198, 0.24),
+      inset
+        -30px
+        -35px
+        62px
+        rgba(0, 3, 18, 0.96),
 
-      0 0 9px rgba(245, 232, 255, 1),
+      0
+        0
+        6px
+        rgba(240, 252, 255, 1),
 
-      0 0 32px rgba(174, 107, 255, 0.65),
+      0
+        0
+        20px
+        rgba(121, 226, 255, 1),
 
-      0 0 75px rgba(125, 58, 245, 0.3);
+      0
+        0
+        42px
+        rgba(52, 180, 255, 0.92),
+
+      0
+        0
+        75px
+        rgba(27, 128, 250, 0.7),
+
+      0
+        0
+        120px
+        rgba(20, 81, 220, 0.42);
   }
 }
 
 
-/* ==========================================================
-   INTERNAL PLASMA FIELD
-   ========================================================== */
+/* ============================================================
+   INTERNAL ENERGY / PLASMA
+   ============================================================ */
 
 .orb-core-inner {
   position: absolute;
 
-  inset: -18%;
+  inset:
+    -18%;
 
-  border-radius: 50%;
+  border-radius:
+    50%;
+
+  pointer-events:
+    none;
 
   background:
 
-    conic-gradient(
-      from 0deg,
+    radial-gradient(
+      ellipse 28% 24% at 51% 48%,
+      rgba(224, 250, 255, 0.85) 0%,
+      rgba(112, 219, 255, 0.72) 17%,
+      rgba(49, 177, 255, 0.42) 36%,
+      transparent 65%
+    ),
 
-      transparent 0deg,
+    radial-gradient(
+      ellipse 70% 24% at 42% 28%,
+      rgba(76, 200, 255, 0.5),
+      rgba(31, 150, 255, 0.2) 45%,
+      transparent 75%
+    ),
 
-      rgba(135, 59, 255, 0.18) 28deg,
+    radial-gradient(
+      ellipse 30% 72% at 25% 55%,
+      rgba(43, 187, 255, 0.44),
+      rgba(21, 130, 242, 0.18) 45%,
+      transparent 74%
+    ),
 
-      rgba(228, 191, 255, 0.3) 50deg,
+    radial-gradient(
+      ellipse 30% 65% at 73% 45%,
+      rgba(60, 185, 255, 0.32),
+      rgba(24, 112, 231, 0.14) 48%,
+      transparent 74%
+    ),
 
-      transparent 82deg,
-
-      rgba(105, 42, 220, 0.2) 122deg,
-
-      transparent 165deg,
-
-      rgba(203, 139, 255, 0.22) 205deg,
-
-      transparent 244deg,
-
-      rgba(118, 50, 244, 0.28) 286deg,
-
-      rgba(231, 199, 255, 0.18) 312deg,
-
-      transparent 345deg
+    radial-gradient(
+      ellipse 65% 28% at 48% 78%,
+      rgba(24, 127, 242, 0.34),
+      transparent 70%
     );
 
-  opacity: 0.72;
+  filter:
+    blur(7px);
 
-  mix-blend-mode: screen;
+  mix-blend-mode:
+    screen;
+
+  opacity:
+    0.78;
+
+  z-index:
+    6;
 
   animation:
-    orbInnerRotate 11s linear infinite,
-    orbInnerPulse 4s ease-in-out infinite;
-
-  pointer-events: none;
-
-  z-index: 4;
+    plasmaFlow 7s ease-in-out infinite alternate;
 }
 
 
-@keyframes orbInnerRotate {
-  from {
-    transform: rotate(0deg) scale(1);
+/* ============================================================
+   PLASMA FLOW
+   ============================================================ */
+
+@keyframes plasmaFlow {
+
+  0% {
+    transform:
+      translate3d(-4%, -2%, 0)
+      scale(0.96)
+      rotate(-2deg);
+
+    opacity:
+      0.48;
   }
 
-  to {
-    transform: rotate(360deg) scale(1);
-  }
-}
+  25% {
+    transform:
+      translate3d(2%, 1%, 0)
+      scale(1.01)
+      rotate(1deg);
 
-
-@keyframes orbInnerPulse {
-  0%,
-  100% {
-    opacity: 0.3;
+    opacity:
+      0.7;
   }
 
   50% {
-    opacity: 0.82;
+    transform:
+      translate3d(4%, 3%, 0)
+      scale(1.05)
+      rotate(3deg);
+
+    opacity:
+      0.9;
+  }
+
+  75% {
+    transform:
+      translate3d(-1%, 4%, 0)
+      scale(1.02)
+      rotate(1deg);
+
+    opacity:
+      0.68;
+  }
+
+  100% {
+    transform:
+      translate3d(-4%, -1%, 0)
+      scale(0.98)
+      rotate(-2deg);
+
+    opacity:
+      0.55;
   }
 }
 
 
-/* ==========================================================
-   SECOND INTERNAL ENERGY LAYER
-   ========================================================== */
-
-.orb-core-inner::after {
-  content: "";
-
-  position: absolute;
-
-  inset: 15%;
-
-  border-radius: 50%;
-
-  background:
-    repeating-conic-gradient(
-      from 45deg,
-      transparent 0deg,
-      rgba(195, 133, 255, 0.13) 12deg,
-      transparent 25deg,
-      rgba(122, 54, 245, 0.12) 42deg,
-      transparent 62deg
-    );
-
-  filter: blur(5px);
-
-  opacity: 0.75;
-
-  animation: plasmaRotation 7s linear infinite reverse;
-
-  pointer-events: none;
-}
-
-@keyframes plasmaRotation {
-  from {
-    transform: rotate(0deg) scale(1);
-  }
-
-  to {
-    transform: rotate(360deg) scale(1.08);
-  }
-}
-
-
-/* ==========================================================
-   INNER ENERGY RING
-   ========================================================== */
+/* ============================================================
+   INTERNAL ENERGY RIM
+   ============================================================ */
 
 .energy-orb::after {
   content: "";
 
   position: absolute;
 
-  inset: 17.5%;
+  inset:
+    17%;
 
-  border-radius: 50%;
+  border-radius:
+    50%;
 
-  border: 1px solid rgba(244, 229, 255, 0.7);
+  border:
+    2px solid
+    rgba(118, 216, 255, 0.68);
 
   box-shadow:
-    0 0 5px rgba(218, 181, 255, 0.5),
-    0 0 14px rgba(153, 87, 255, 0.25);
 
-  opacity: 0.75;
+    0
+      0
+      5px
+      rgba(206, 245, 255, 0.82),
 
-  z-index: 12;
+    0
+      0
+      14px
+      rgba(76, 196, 255, 0.7),
 
-  pointer-events: none;
+    0
+      0
+      28px
+      rgba(43, 148, 255, 0.42);
 
-  animation: innerRingPulse 3.4s ease-in-out infinite;
+  opacity:
+    0.68;
+
+  pointer-events:
+    none;
+
+  z-index:
+    15;
+
+  animation:
+    innerEnergyRim 3.5s ease-in-out infinite;
 }
 
 
-@keyframes innerRingPulse {
+@keyframes innerEnergyRim {
+
   0%,
   100% {
-    opacity: 0.35;
-    transform: scale(0.99);
+    transform:
+      scale(0.985);
+
+    opacity:
+      0.42;
+
+    border-color:
+      rgba(76, 191, 255, 0.52);
   }
 
   50% {
-    opacity: 0.9;
-    transform: scale(1.015);
+    transform:
+      scale(1.018);
+
+    opacity:
+      0.9;
+
+    border-color:
+      rgba(192, 239, 255, 0.96);
   }
 }
 
 
-/* ==========================================================
-   ORB EDGE LIGHT
-   ========================================================== */
-
-.orb-core {
-  isolation: isolate;
-}
-
-
-/* ==========================================================
-   ORBIT RINGS
-   ========================================================== */
+/* ============================================================
+   ORBITAL RINGS
+   ============================================================ */
 
 .orb-ring {
   position: absolute;
 
-  left: 50%;
-  top: 50%;
+  left:
+    50%;
 
-  border-radius: 50%;
+  top:
+    50%;
 
-  background: transparent;
+  border-radius:
+    50%;
 
-  transform-style: preserve-3d;
+  background:
+    transparent;
 
-  pointer-events: none;
+  transform-style:
+    preserve-3d;
 
-  will-change: transform;
+  pointer-events:
+    none;
+
+  will-change:
+    transform;
+
+  overflow:
+    visible;
 }
 
 
-/* ==========================================================
-   RING 1
-   CLOSE / BRIGHT
-   ========================================================== */
+/* ============================================================
+   ORBIT 1
+   ============================================================ */
 
 .orb-ring-1 {
-  width: 78%;
-  height: 29%;
+  width:
+    91%;
+
+  height:
+    32%;
 
   border:
-    1px solid rgba(223, 193, 255, 0.82);
+    3px solid
+    rgba(133, 222, 255, 0.98);
 
   transform:
     translate(-50%, -50%)
-    rotateX(65deg);
+    rotateX(66deg)
+    rotateZ(-12deg);
 
   animation:
-    orbitOne 5.2s linear infinite;
+    orbitOne 6s linear infinite;
 
-  z-index: 20;
+  z-index:
+    22;
 
   box-shadow:
-    0 0 5px rgba(183, 112, 255, 0.5),
-    0 0 12px rgba(133, 67, 242, 0.2);
+
+    0
+      0
+      5px
+      rgba(226, 250, 255, 1),
+
+    0
+      0
+      12px
+      rgba(104, 213, 255, 1),
+
+    0
+      0
+      26px
+      rgba(48, 167, 255, 0.82),
+
+    0
+      0
+      48px
+      rgba(30, 120, 245, 0.35);
 }
 
 
-/* ==========================================================
-   RING 2
-   VERTICAL ORBIT
-   ========================================================== */
+/* ============================================================
+   ORBIT 1 PARTICLE
+   ============================================================ */
+
+.orb-ring-1::after {
+  content: "";
+
+  position: absolute;
+
+  width:
+    11px;
+
+  height:
+    11px;
+
+  left:
+    15%;
+
+  top:
+    50%;
+
+  transform:
+    translate(-50%, -50%);
+
+  border-radius:
+    50%;
+
+  background:
+    #ffffff;
+
+  box-shadow:
+
+    0
+      0
+      7px
+      #ffffff,
+
+    0
+      0
+      16px
+      #b6edff,
+
+    0
+      0
+      30px
+      rgba(74, 184, 255, 1),
+
+    0
+      0
+      52px
+      rgba(48, 139, 255, 0.55);
+
+  animation:
+    orbitParticlePulse 1.8s ease-in-out infinite;
+}
+
+
+/* ============================================================
+   ORBIT 2
+   ============================================================ */
 
 .orb-ring-2 {
-  width: 88%;
-  height: 36%;
+  width:
+    96%;
+
+  height:
+    38%;
 
   border:
-    1px solid rgba(166, 111, 255, 0.56);
+    3px solid
+    rgba(83, 198, 255, 0.86);
 
   transform:
     translate(-50%, -50%)
-    rotateY(65deg);
+    rotateY(65deg)
+    rotateZ(18deg);
 
   animation:
-    orbitTwo 7.2s linear infinite;
+    orbitTwo 8s linear infinite reverse;
 
-  z-index: 18;
+  z-index:
+    20;
 
   box-shadow:
-    0 0 8px rgba(138, 67, 255, 0.2);
+
+    0
+      0
+      6px
+      rgba(173, 234, 255, 0.9),
+
+    0
+      0
+      16px
+      rgba(67, 192, 255, 0.75),
+
+    0
+      0
+      34px
+      rgba(38, 142, 255, 0.5);
 }
 
 
-/* ==========================================================
-   RING 3
-   WIDE ATMOSPHERIC ORBIT
-   ========================================================== */
+/* ============================================================
+   ORBIT 2 PARTICLE
+   ============================================================ */
+
+.orb-ring-2::after {
+  content: "";
+
+  position: absolute;
+
+  width:
+    9px;
+
+  height:
+    9px;
+
+  right:
+    13%;
+
+  top:
+    50%;
+
+  transform:
+    translate(50%, -50%);
+
+  border-radius:
+    50%;
+
+  background:
+    #d8f7ff;
+
+  box-shadow:
+
+    0
+      0
+      7px
+      #d8f7ff,
+
+    0
+      0
+      16px
+      #79d4ff,
+
+    0
+      0
+      30px
+      rgba(52, 165, 255, 0.95);
+}
+
+
+/* ============================================================
+   ORBIT 3
+   ============================================================ */
 
 .orb-ring-3 {
-  width: 102%;
-  height: 45%;
+  width:
+    111%;
+
+  height:
+    47%;
 
   border:
-    1px solid rgba(210, 181, 255, 0.3);
+    2px solid
+    rgba(95, 205, 255, 0.62);
 
   transform:
     translate(-50%, -50%)
-    rotateX(72deg)
-    rotateY(20deg);
+    rotateX(73deg)
+    rotateY(22deg)
+    rotateZ(-10deg);
 
   animation:
-    orbitThree 9.5s linear infinite;
+    orbitThree 10.5s linear infinite;
 
-  z-index: 16;
+  z-index:
+    17;
+
+  box-shadow:
+
+    0
+      0
+      7px
+      rgba(109, 215, 255, 0.68),
+
+    0
+      0
+      20px
+      rgba(55, 165, 255, 0.45),
+
+    0
+      0
+      40px
+      rgba(38, 126, 255, 0.22);
 }
 
 
-/* ==========================================================
+/* ============================================================
    ORBIT ANIMATIONS
-   ========================================================== */
+   ============================================================ */
 
 @keyframes orbitOne {
-  from {
+
+  0% {
     transform:
       translate(-50%, -50%)
-      rotateX(65deg)
-      rotateZ(0deg);
+      rotateX(66deg)
+      rotateZ(-12deg);
   }
 
-  to {
+  50% {
     transform:
       translate(-50%, -50%)
-      rotateX(65deg)
-      rotateZ(360deg);
+      rotateX(66deg)
+      rotateZ(168deg);
+  }
+
+  100% {
+    transform:
+      translate(-50%, -50%)
+      rotateX(66deg)
+      rotateZ(348deg);
   }
 }
 
 
 @keyframes orbitTwo {
-  from {
+
+  0% {
     transform:
       translate(-50%, -50%)
       rotateY(65deg)
-      rotateZ(0deg);
+      rotateZ(18deg);
   }
 
-  to {
+  50% {
     transform:
       translate(-50%, -50%)
       rotateY(65deg)
-      rotateZ(-360deg);
+      rotateZ(-162deg);
+  }
+
+  100% {
+    transform:
+      translate(-50%, -50%)
+      rotateY(65deg)
+      rotateZ(-342deg);
   }
 }
 
 
 @keyframes orbitThree {
-  from {
-    transform:
-      translate(-50%, -50%)
-      rotateX(72deg)
-      rotateY(20deg)
-      rotateZ(0deg);
-  }
 
-  to {
-    transform:
-      translate(-50%, -50%)
-      rotateX(72deg)
-      rotateY(20deg)
-      rotateZ(360deg);
-  }
-}
-
-
-/* ==========================================================
-   ENERGY PARTICLE SYSTEM
-   ========================================================== */
-
-.orb-energy {
-  position: absolute;
-
-  width: 100%;
-  height: 100%;
-
-  left: 0;
-  top: 0;
-
-  border-radius: 50%;
-
-  z-index: 25;
-
-  pointer-events: none;
-
-  background:
-
-    radial-gradient(
-      circle at 18% 45%,
-      rgba(255, 255, 255, 0.9) 0 1px,
-      transparent 2px
-    ),
-
-    radial-gradient(
-      circle at 76% 25%,
-      rgba(205, 160, 255, 0.85) 0 1px,
-      transparent 2px
-    ),
-
-    radial-gradient(
-      circle at 83% 66%,
-      rgba(183, 125, 255, 0.7) 0 1px,
-      transparent 2px
-    ),
-
-    radial-gradient(
-      circle at 25% 78%,
-      rgba(234, 215, 255, 0.7) 0 1px,
-      transparent 2px
-    );
-
-  filter:
-    drop-shadow(0 0 4px rgba(180, 115, 255, 0.7));
-
-  animation:
-    energyParticles 5s ease-in-out infinite;
-}
-
-@keyframes energyParticles {
-  0%,
-  100% {
-    opacity: 0.35;
-    transform: scale(0.98);
-  }
-
-  50% {
-    opacity: 0.9;
-    transform: scale(1.02);
-  }
-}
-
-
-/* ==========================================================
-   ORBITAL PARTICLE HIGHLIGHT
-   ========================================================== */
-
-.orb-energy::before {
-  content: "";
-
-  position: absolute;
-
-  width: 6px;
-  height: 6px;
-
-  left: 18%;
-  top: 42%;
-
-  border-radius: 50%;
-
-  background: #ffffff;
-
-  box-shadow:
-    0 0 5px #ffffff,
-    0 0 12px rgba(190, 130, 255, 0.9),
-    0 0 24px rgba(140, 70, 255, 0.55);
-
-  animation: particleOrbit 4.5s linear infinite;
-
-  opacity: 0.85;
-}
-
-@keyframes particleOrbit {
   0% {
     transform:
-      rotate(0deg)
-      translateX(70px)
-      rotate(0deg);
-  }
-
-  100% {
-    transform:
-      rotate(360deg)
-      translateX(70px)
-      rotate(-360deg);
-  }
-}
-
-
-/* ==========================================================
-   REDUCED MOTION
-   ========================================================== */
-
-@media (prefers-reduced-motion: reduce) {
-  .energy-orb,
-  .orb-glow,
-  .orb-core,
-  .orb-core-inner,
-  .orb-ring,
-  .orb-energy,
-  .energy-orb::before,
-  .energy-orb::after,
-  .orb-core-inner::after {
-    animation: none !important;
-  }
-}
-
-
-/* ==========================================================
-   MAIN CONTENT
-   ========================================================== */
-
-.loading-button {
-  position: fixed;
-
-  left: 50vw;
-  top: 68%;
-
-  transform: translateX(-50%);
-
-  width: min(850px, 70vw);
-
-  margin: 0;
-  padding: 0;
-
-  background: transparent;
-
-  z-index: 10;
-
-  transition:
-    opacity 0.5s ease,
-    transform 0.8s ease;
-}
-
-
-/* ==========================================================
-   TITLE
-   ========================================================== */
-
-.loading-title {
-  text-align: center;
-
-  color: rgba(255, 255, 255, 0.94);
-
-  font-size: clamp(20px, 2vw, 30px);
-
-  font-weight: 400;
-
-  letter-spacing: 0.18em;
-
-  white-space: nowrap;
-
-  margin-bottom: 35px;
-}
-
-.loading-title span {
-  color: #a87cff;
-
-  text-shadow:
-    0 0 12px rgba(168, 124, 255, 0.45);
-}
-
-
-/* ==========================================================
-   PROGRESS AREA
-   ========================================================== */
-
-.progress-area {
-  width: 100%;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  gap: 22px;
-
-  box-sizing: border-box;
-}
-
-
-/* ==========================================================
-   PROGRESS TRACK
-   ========================================================== */
-
-.progress-track {
-  position: relative;
-
-  width: min(900px, 70vw);
-
-  height: 4px;
-
-  flex: 0 0 auto;
-
-  background: rgba(130, 70, 220, 0.14);
-
-  border-radius: 999px;
-
-  box-shadow:
-    0 0 7px rgba(140, 70, 255, 0.12);
-
-  overflow: visible;
-}
-
-
-/* ==========================================================
-   PROGRESS FILL
-   ========================================================== */
-
-.progress-fill {
-  position: relative;
-
-  height: 100%;
-
-  border-radius: 100px;
-
-  background:
-    linear-gradient(
-      90deg,
-      #713cff,
-      #a87cff,
-      #d5b8ff
-    );
-
-  box-shadow:
-    0 0 7px rgba(145, 80, 255, 0.85),
-    0 0 16px rgba(145, 80, 255, 0.4);
-
-  transition:
-    width 0.4s ease;
-}
-
-
-/* ==========================================================
-   PROGRESS END DOT
-   ========================================================== */
-
-.progress-fill::after {
-  content: "";
-
-  position: absolute;
-
-  right: 0;
-  top: 50%;
-
-  width: 8px;
-  height: 8px;
-
-  transform:
-    translate(50%, -50%);
-
-  border-radius: 50%;
-
-  background: #ffffff;
-
-  box-shadow:
-    0 0 6px #ffffff,
-    0 0 13px #a87cff,
-    0 0 22px rgba(168, 124, 255, 0.75);
-
-  z-index: 5;
-
-  animation: progressDotPulse 1.4s ease-in-out infinite;
-}
-
-@keyframes progressDotPulse {
-  0%,
-  100% {
-    transform:
-      translate(50%, -50%)
-      scale(0.85);
-
-    opacity: 0.75;
+      translate(-50%, -50%)
+      rotateX(73deg)
+      rotateY(22deg)
+      rotateZ(-10deg);
   }
 
   50% {
     transform:
-      translate(50%, -50%)
-      scale(1.15);
+      translate(-50%, -50%)
+      rotateX(73deg)
+      rotateY(22deg)
+      rotateZ(170deg);
+  }
 
-    opacity: 1;
+  100% {
+    transform:
+      translate(-50%, -50%)
+      rotateX(73deg)
+      rotateY(22deg)
+      rotateZ(350deg);
   }
 }
 
 
-/* ==========================================================
-   MOVING SHINE
-   ========================================================== */
+@keyframes orbitParticlePulse {
 
-.progress-shine {
+  0%,
+  100% {
+    transform:
+      translate(-50%, -50%)
+      scale(0.72);
+
+    opacity:
+      0.7;
+  }
+
+  50% {
+    transform:
+      translate(-50%, -50%)
+      scale(1.3);
+
+    opacity:
+      1;
+  }
+}
+
+
+/* ============================================================
+   ORBIT DEPTH GLOW
+   ============================================================ */
+
+.orb-ring-1,
+.orb-ring-2,
+.orb-ring-3 {
+  filter:
+    drop-shadow(
+      0
+      0
+      4px
+      rgba(112, 215, 255, 0.75)
+    );
+}
+
+
+/* ============================================================
+   LOADING CONTENT
+   ============================================================ */
+
+.loading-button {
   position: absolute;
 
-  top: 0;
-  left: -60px;
+  left:
+    50%;
 
-  width: 45px;
-  height: 100%;
+  bottom:
+    13%;
+
+  transform:
+    translateX(-50%);
+
+  width:
+    min(620px, 72vw);
+
+  min-height:
+    150px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  background:
+    transparent;
+
+  border:
+    none;
+
+  box-shadow:
+    none;
+
+  z-index:
+    25;
+
+  transition:
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.6s ease,
+    filter 0.6s ease;
+}
+
+
+/* ============================================================
+   MAIN CONTENT
+   ============================================================ */
+
+.loading-main-content {
+  position:
+    relative;
+
+  width:
+    100%;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  text-align:
+    center;
+
+  z-index:
+    2;
+}
+
+
+/* ============================================================
+   LOADING TITLE
+   ============================================================ */
+
+.loading-title {
+  position:
+    relative;
+
+  width:
+    100%;
+
+  margin-bottom:
+    30px;
+
+  color:
+    rgba(255, 255, 255, 0.9);
+
+  font-size:
+    clamp(11px, 1vw, 14px);
+
+  font-weight:
+    500;
+
+  line-height:
+    1.6;
+
+  letter-spacing:
+    0.24em;
+
+  text-align:
+    center;
+
+  white-space:
+    nowrap;
+
+  text-shadow:
+    0 0 12px rgba(255, 255, 255, 0.08);
+
+  opacity:
+    0.88;
+
+  animation:
+    titleReveal 1.4s ease-out both;
+}
+
+
+/* ============================================================
+   TITLE HIGHLIGHT
+   ============================================================ */
+
+.loading-title span {
+  position:
+    relative;
+
+  color:
+    #74d3ff;
+
+  font-weight:
+    650;
+
+  text-shadow:
+
+    0 0 5px
+    rgba(192, 240, 255, 0.85),
+
+    0 0 14px
+    rgba(77, 192, 255, 0.72),
+
+    0 0 30px
+    rgba(44, 145, 255, 0.42);
+}
+
+
+/* ============================================================
+   TITLE UNDERLINE
+   ============================================================ */
+
+.loading-title span::after {
+  content:
+    "";
+
+  position:
+    absolute;
+
+  left:
+    5%;
+
+  right:
+    5%;
+
+  bottom:
+    -6px;
+
+  height:
+    1px;
 
   background:
     linear-gradient(
       90deg,
       transparent,
-      rgba(255, 255, 255, 0.85),
+      rgba(109, 215, 255, 0.7),
       transparent
     );
 
-  opacity: 0;
+  box-shadow:
+    0 0 8px rgba(82, 193, 255, 0.55);
+
+  opacity:
+    0.7;
 
   animation:
-    progressShine 2.8s linear infinite;
+    titleLinePulse 3s ease-in-out infinite;
 }
 
-@keyframes progressShine {
+
+@keyframes titleReveal {
+
   0% {
-    transform: translateX(0);
-    opacity: 0;
-  }
+    opacity:
+      0;
 
-  35% {
-    opacity: 1;
-  }
+    transform:
+      translateY(12px);
 
-  65% {
-    opacity: 0;
+    filter:
+      blur(5px);
   }
 
   100% {
-    transform: translateX(900px);
-    opacity: 0;
+    opacity:
+      0.88;
+
+    transform:
+      translateY(0);
+
+    filter:
+      blur(0);
   }
 }
 
 
-/* ==========================================================
-   OLD DOT
-   ========================================================== */
+@keyframes titleLinePulse {
 
-.progress-dot {
-  display: none;
-}
-
-
-/* ==========================================================
-   PERCENTAGE
-   ========================================================== */
-
-.progress-percent {
-  min-width: 50px;
-
-  color: #a87cff;
-
-  font-size: 18px;
-
-  font-weight: 500;
-
-  letter-spacing: 0.08em;
-}
-
-
-/* ==========================================================
-   MESSAGE
-   ========================================================== */
-
-.loading-message {
-  margin-top: 25px;
-
-  text-align: center;
-
-  color: #a87cff;
-
-  font-size: 13px;
-
-  letter-spacing: 0.25em;
-
-  text-transform: none;
-
-  opacity: 0.9;
-
-  animation:
-    messagePulse 2.5s ease-in-out infinite;
-}
-
-@keyframes messagePulse {
   0%,
   100% {
-    opacity: 0.45;
+    opacity:
+      0.35;
+
+    transform:
+      scaleX(0.72);
   }
 
   50% {
-    opacity: 1;
+    opacity:
+      0.9;
+
+    transform:
+      scaleX(1);
   }
 }
 
 
-/* ==========================================================
-   FOOTER
-   ========================================================== */
+/* ============================================================
+   PROGRESS AREA
+   ============================================================ */
 
-.loading-footer {
-  position: fixed;
+.progress-area {
+  position:
+    relative;
 
-  bottom: 30px;
+  width:
+    min(520px, 100%);
 
-  left: 50%;
+  display:
+    flex;
 
-  transform: translateX(-50%);
+  align-items:
+    center;
 
-  width: var(--cWidth);
-  max-width: var(--cMaxWidth);
-
-  display: flex;
-
-  justify-content: space-between;
-
-  color: rgba(255, 255, 255, 0.45);
-
-  font-size: 10px;
-
-  letter-spacing: 0.2em;
-
-  text-transform: uppercase;
-
-  z-index: 10;
+  gap:
+    16px;
 }
 
 
-/* ==========================================================
-   LOADING COMPLETE
-   ========================================================== */
+/* ============================================================
+   PROGRESS TRACK
+   ============================================================ */
 
-.loading-complete {
+.progress-track {
+  position:
+    relative;
+
+  flex:
+    1;
+
+  height:
+    3px;
+
+  overflow:
+    visible;
+
+  border-radius:
+    999px;
+
+  background:
+    rgba(255, 255, 255, 0.1);
+
+  box-shadow:
+
+    0 0 2px
+    rgba(255, 255, 255, 0.08),
+
+    0 0 10px
+    rgba(42, 128, 255, 0.06);
+
+  isolation:
+    isolate;
+}
+
+
+.progress-track::before {
+  content:
+    "";
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  border-radius:
+    inherit;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.04),
+      rgba(91, 188, 255, 0.06),
+      rgba(255, 255, 255, 0.03)
+    );
+
+  pointer-events:
+    none;
+}
+
+
+/* ============================================================
+   PROGRESS FILL
+   ============================================================ */
+
+.progress-fill {
+  position:
+    relative;
+
+  height:
+    100%;
+
+  max-width:
+    100%;
+
+  border-radius:
+    inherit;
+
+  background:
+    linear-gradient(
+      90deg,
+      #287eff 0%,
+      #42aaff 48%,
+      #8be2ff 100%
+    );
+
+  box-shadow:
+
+    0 0 4px
+    rgba(120, 221, 255, 0.95),
+
+    0 0 12px
+    rgba(66, 177, 255, 0.8),
+
+    0 0 25px
+    rgba(41, 131, 255, 0.48);
+
   transition:
-    opacity 0.5s ease,
-    transform 0.8s ease;
+    width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+
+  overflow:
+    hidden;
 }
 
 
-/* ==========================================================
-   EXIT
-   ========================================================== */
+/* ============================================================
+   PROGRESS SHINE
+   ============================================================ */
 
-.loading-clicked {
-  pointer-events: none;
+.progress-shine {
+  position:
+    absolute;
+
+  top:
+    0;
+
+  right:
+    -80px;
+
+  width:
+    120px;
+
+  height:
+    100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.75),
+      transparent
+    );
+
+  filter:
+    blur(1px);
+
+  opacity:
+    0.85;
 
   animation:
-    loadingExit 0.9s
-    cubic-bezier(0.33, 0.11, 1, 0.72)
-    forwards;
+    progressShineMove 1.8s linear infinite;
 }
 
-@keyframes loadingExit {
+
+@keyframes progressShineMove {
+
   0% {
-    transform: scale(1);
-    opacity: 1;
+    transform:
+      translateX(-100px);
   }
 
   100% {
-    transform: scale(1.25);
-    opacity: 0;
+    transform:
+      translateX(100px);
   }
 }
 
 
-/* ==========================================================
-   TABLET
-   ========================================================== */
+/* ============================================================
+   PROGRESS ENDPOINT
+   ============================================================ */
 
-@media only screen and (max-width: 900px) {
-  .loading-orb-area {
-    top: 25%;
+.progress-dot {
+  position:
+    absolute;
 
-    width: 90vw;
+  top:
+    50%;
+
+  width:
+    8px;
+
+  height:
+    8px;
+
+  transform:
+    translate(-50%, -50%);
+
+  border-radius:
+    50%;
+
+  background:
+    #d9f7ff;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.95);
+
+  box-shadow:
+
+    0 0 5px
+    rgba(255, 255, 255, 1),
+
+    0 0 11px
+    rgba(128, 221, 255, 1),
+
+    0 0 22px
+    rgba(67, 175, 255, 0.9),
+
+    0 0 38px
+    rgba(36, 125, 255, 0.55);
+
+  transition:
+    left 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+
+  z-index:
+    4;
+
+  animation:
+    progressDotPulse 1.7s ease-in-out infinite;
+}
+
+
+@keyframes progressDotPulse {
+
+  0%,
+  100% {
+    transform:
+      translate(-50%, -50%)
+      scale(0.82);
+
+    opacity:
+      0.75;
   }
 
-  .loading-button {
-    width: 78vw;
+  50% {
+    transform:
+      translate(-50%, -50%)
+      scale(1.12);
 
-    top: 63%;
+    opacity:
+      1;
+  }
+}
+
+
+/* ============================================================
+   PERCENTAGE
+   ============================================================ */
+
+.progress-percent {
+  min-width:
+    38px;
+
+  color:
+    rgba(179, 231, 255, 0.9);
+
+  font-family:
+    "SFMono-Regular",
+    Consolas,
+    "Liberation Mono",
+    monospace;
+
+  font-size:
+    10px;
+
+  font-weight:
+    500;
+
+  letter-spacing:
+    0.08em;
+
+  text-align:
+    right;
+
+  text-shadow:
+    0 0 10px rgba(76, 183, 255, 0.45);
+}
+
+
+/* ============================================================
+   LOADING MESSAGE
+   ============================================================ */
+
+.loading-message {
+  margin-top:
+    17px;
+
+  color:
+    rgba(255, 255, 255, 0.38);
+
+  font-size:
+    9px;
+
+  font-weight:
+    400;
+
+  letter-spacing:
+    0.18em;
+
+  text-align:
+    center;
+
+  text-transform:
+    none;
+
+  opacity:
+    0.85;
+
+  animation:
+    messagePulse 3s ease-in-out infinite;
+}
+
+
+@keyframes messagePulse {
+
+  0%,
+  100% {
+    opacity:
+      0.45;
+  }
+
+  50% {
+    opacity:
+      0.82;
+  }
+}
+
+
+/* ============================================================
+   LOADING COMPLETE
+   ============================================================ */
+
+.loading-complete {
+  transform:
+    translateX(-50%)
+    translateY(0);
+}
+
+
+.loading-complete .progress-fill {
+  box-shadow:
+
+    0 0 6px
+    rgba(177, 239, 255, 1),
+
+    0 0 18px
+    rgba(92, 204, 255, 0.95),
+
+    0 0 38px
+    rgba(44, 145, 255, 0.72),
+
+    0 0 70px
+    rgba(35, 112, 255, 0.4);
+}
+
+
+.loading-complete .progress-dot {
+  background:
+    #ffffff;
+
+  box-shadow:
+
+    0 0 8px
+    #ffffff,
+
+    0 0 18px
+    #a9eaff,
+
+    0 0 38px
+    #48baff,
+
+    0 0 70px
+    rgba(48, 140, 255, 0.75);
+}
+
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+
+.loading-footer {
+  position:
+    fixed;
+
+  left:
+    50%;
+
+  bottom:
+    25px;
+
+  transform:
+    translateX(-50%);
+
+  width:
+    var(--cWidth);
+
+  max-width:
+    var(--cMaxWidth);
+
+  display:
+    flex;
+
+  justify-content:
+    center;
+
+  align-items:
+    center;
+
+  z-index:
+    30;
+
+  pointer-events:
+    none;
+}
+
+
+.loading-footer span {
+  position:
+    relative;
+
+  color:
+    rgba(255, 255, 255, 0.28);
+
+  font-size:
+    8px;
+
+  font-weight:
+    500;
+
+  letter-spacing:
+    0.24em;
+
+  text-transform:
+    uppercase;
+
+  text-align:
+    center;
+
+  opacity:
+    0.72;
+
+  text-shadow:
+    0 0 10px rgba(78, 171, 255, 0.12);
+}
+
+
+.loading-footer span::before,
+.loading-footer span::after {
+  content:
+    "";
+
+  position:
+    absolute;
+
+  top:
+    50%;
+
+  width:
+    36px;
+
+  height:
+    1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(100, 192, 255, 0.25)
+    );
+}
+
+
+.loading-footer span::before {
+  right:
+    calc(100% + 16px);
+
+  transform:
+    translateY(-50%);
+}
+
+
+.loading-footer span::after {
+  left:
+    calc(100% + 16px);
+
+  transform:
+    translateY(-50%)
+    rotate(180deg);
+}
+
+
+/* ============================================================
+   EXIT ANIMATION
+   ============================================================ */
+
+.loading-clicked {
+  transform:
+    translateY(-12px)
+    scale(1.04);
+
+  opacity:
+    0;
+
+  filter:
+    blur(10px);
+
+  pointer-events:
+    none;
+}
+
+
+.loading-clicked .energy-orb {
+  animation:
+    orbExit 0.9s cubic-bezier(0.22, 1, 0.36, 1)
+    forwards;
+}
+
+
+.loading-clicked .orb-ring {
+  animation:
+    ringExit 0.9s cubic-bezier(0.22, 1, 0.36, 1)
+    forwards;
+}
+
+
+.loading-clicked .orb-glow {
+  animation:
+    glowExit 0.9s ease-out
+    forwards;
+}
+
+
+.loading-clicked .loading-title {
+  animation:
+    contentExit 0.65s ease-out
+    forwards;
+}
+
+
+.loading-clicked .progress-area {
+  animation:
+    contentExit 0.7s ease-out
+    forwards;
+}
+
+
+.loading-clicked .loading-message {
+  animation:
+    contentExit 0.55s ease-out
+    forwards;
+}
+
+
+@keyframes orbExit {
+
+  0% {
+    transform:
+      translate3d(0, 0, 0)
+      scale(1);
+
+    opacity:
+      1;
+
+    filter:
+      brightness(1);
+  }
+
+  45% {
+    transform:
+      translate3d(0, -5px, 0)
+      scale(1.08);
+
+    opacity:
+      1;
+
+    filter:
+      brightness(1.35);
+  }
+
+  100% {
+    transform:
+      translate3d(0, -30px, 0)
+      scale(1.28);
+
+    opacity:
+      0;
+
+    filter:
+      brightness(2.4)
+      blur(12px);
+  }
+}
+
+
+@keyframes ringExit {
+
+  0% {
+    opacity:
+      1;
+
+    transform:
+      translate(-50%, -50%)
+      scale(1);
+  }
+
+  45% {
+    opacity:
+      0.9;
+
+    transform:
+      translate(-50%, -50%)
+      scale(1.12);
+  }
+
+  100% {
+    opacity:
+      0;
+
+    transform:
+      translate(-50%, -50%)
+      scale(1.55);
+  }
+}
+
+
+@keyframes glowExit {
+
+  0% {
+    opacity:
+      0.8;
+
+    transform:
+      translate(-50%, -50%)
+      scale(1);
+  }
+
+  100% {
+    opacity:
+      0;
+
+    transform:
+      translate(-50%, -50%)
+      scale(1.7);
+
+    filter:
+      blur(80px);
+  }
+}
+
+
+@keyframes contentExit {
+
+  0% {
+    opacity:
+      1;
+
+    transform:
+      translateY(0);
+
+    filter:
+      blur(0);
+  }
+
+  100% {
+    opacity:
+      0;
+
+    transform:
+      translateY(20px);
+
+    filter:
+      blur(8px);
+  }
+}
+
+
+/* ============================================================
+   DESKTOP
+   ============================================================ */
+
+@media only screen and (min-width: 1200px) {
+
+  .loading-button {
+    bottom:
+      11.5%;
+
+    width:
+      600px;
   }
 
   .loading-title {
-    font-size: 18px;
+    margin-bottom:
+      31px;
+
+    font-size:
+      13px;
+
+    letter-spacing:
+      0.26em;
+  }
+
+  .progress-area {
+    width:
+      530px;
+  }
+
+  .loading-message {
+    margin-top:
+      18px;
   }
 }
 
 
-/* ==========================================================
-   MOBILE
-   ========================================================== */
-
-@media only screen and (max-width: 768px) {
-  .loading-screen {
-    display: none;
-  }
-}
-
-
-/* ==========================================================
+/* ============================================================
    LARGE DESKTOP
-   ========================================================== */
+   ============================================================ */
 
-@media only screen and (min-width: 1400px) {
-  .loading-header {
-    padding: 35px 0;
+@media only screen and (min-width: 1600px) {
+
+  .loading-button {
+    bottom:
+      10.5%;
+
+    width:
+      640px;
   }
 
-  .loader-title {
-    font-size: 16px;
+  .loading-title {
+    font-size:
+      14px;
+  }
+
+  .progress-area {
+    width:
+      560px;
+  }
+
+  .loading-message {
+    font-size:
+      9px;
+  }
+}
+
+
+/* ============================================================
+   TABLET
+   ============================================================ */
+
+@media only screen and (max-width: 1100px) {
+
+  .loading-header {
+    width:
+      86vw;
+
+    padding:
+      24px 0;
   }
 
   .loading-button {
-    width: 780px;
+    bottom:
+      10%;
+
+    width:
+      min(560px, 78vw);
+  }
+
+  .loading-title {
+    margin-bottom:
+      26px;
+
+    font-size:
+      11px;
+
+    letter-spacing:
+      0.2em;
+  }
+
+  .progress-area {
+    width:
+      min(480px, 100%);
+  }
+
+  .loading-footer {
+    bottom:
+      20px;
+
+    width:
+      86vw;
+  }
+
+  .loading-orb-area {
+    top:
+      -5%;
+  }
+
+  .loading-stars {
+    opacity:
+      0.76;
   }
 }
 
 
-/* ==========================================================
-   FINAL REDUCED MOTION SAFETY
-   ========================================================== */
+/* ============================================================
+   SMALL TABLET
+   ============================================================ */
+
+@media only screen and (max-width: 900px) {
+
+  .loading-header {
+    width:
+      88vw;
+
+    padding:
+      22px 0;
+  }
+
+  .loader-title {
+    font-size:
+      11px;
+  }
+
+  .loader-status {
+    font-size:
+      8px;
+
+    letter-spacing:
+      0.16em;
+  }
+
+  .loading-button {
+    bottom:
+      9%;
+
+    width:
+      min(500px, 82vw);
+  }
+
+  .loading-title {
+    margin-bottom:
+      23px;
+
+    font-size:
+      10px;
+
+    letter-spacing:
+      0.17em;
+  }
+
+  .progress-area {
+    gap:
+      13px;
+  }
+
+  .loading-message {
+    margin-top:
+      14px;
+
+    font-size:
+      8px;
+  }
+
+  .loading-footer {
+    bottom:
+      17px;
+  }
+
+  .loading-footer span {
+    font-size:
+      7px;
+  }
+
+  .loading-orb-area {
+    top:
+      -2%;
+  }
+
+  .loading-stars {
+    opacity:
+      0.72;
+  }
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media only screen and (max-width: 600px) {
+
+  .loading-header {
+    width:
+      88vw;
+
+    padding:
+      20px 0;
+  }
+
+  .loader-title {
+    font-size:
+      10px;
+
+    letter-spacing:
+      0.12em;
+  }
+
+  .loader-title::after {
+    width:
+      32px;
+
+    bottom:
+      -6px;
+  }
+
+  .loader-status {
+    gap:
+      6px;
+
+    font-size:
+      7px;
+
+    letter-spacing:
+      0.12em;
+  }
+
+  .loader-status-dot {
+    width:
+      5px;
+
+    height:
+      5px;
+  }
+
+  .loading-orb-area {
+    top:
+      0%;
+
+    width:
+      100vw;
+
+    height:
+      58vh;
+  }
+
+  .loading-button {
+    bottom:
+      9%;
+
+    width:
+      84vw;
+
+    min-height:
+      130px;
+  }
+
+  .loading-title {
+    margin-bottom:
+      21px;
+
+    font-size:
+      8px;
+
+    letter-spacing:
+      0.12em;
+  }
+
+  .loading-title span::after {
+    bottom:
+      -4px;
+  }
+
+  .progress-area {
+    width:
+      100%;
+
+    gap:
+      10px;
+  }
+
+  .progress-track {
+    height:
+      2px;
+  }
+
+  .progress-dot {
+    width:
+      7px;
+
+    height:
+      7px;
+  }
+
+  .progress-percent {
+    min-width:
+      31px;
+
+    font-size:
+      8px;
+  }
+
+  .loading-message {
+    margin-top:
+      12px;
+
+    font-size:
+      7px;
+
+    letter-spacing:
+      0.12em;
+  }
+
+  .loading-footer {
+    bottom:
+      13px;
+
+    width:
+      88vw;
+  }
+
+  .loading-footer span {
+    font-size:
+      6px;
+
+    letter-spacing:
+      0.18em;
+  }
+
+  .loading-footer span::before,
+  .loading-footer span::after {
+    width:
+      22px;
+  }
+
+  .loading-footer span::before {
+    right:
+      calc(100% + 10px);
+  }
+
+  .loading-footer span::after {
+    left:
+      calc(100% + 10px);
+  }
+
+  .loading-stars {
+    opacity:
+      0.68;
+  }
+}
+
+
+/* ============================================================
+   VERY SMALL MOBILE
+   ============================================================ */
+
+@media only screen and (max-width: 380px) {
+
+  .loading-header {
+    padding:
+      17px 0;
+  }
+
+  .loader-title {
+    font-size:
+      9px;
+  }
+
+  .loader-status {
+    font-size:
+      6px;
+
+    letter-spacing:
+      0.08em;
+  }
+
+  .loading-button {
+    bottom:
+      8%;
+
+    width:
+      87vw;
+  }
+
+  .loading-title {
+    font-size:
+      7px;
+
+    letter-spacing:
+      0.09em;
+
+    margin-bottom:
+      18px;
+  }
+
+  .loading-message {
+    font-size:
+      6px;
+
+    letter-spacing:
+      0.08em;
+  }
+
+  .loading-footer {
+    bottom:
+      10px;
+  }
+}
+
+
+/* ============================================================
+   LANDSCAPE MOBILE
+   ============================================================ */
+
+@media only screen
+  and (max-width: 900px)
+  and (orientation: landscape) {
+
+  .loading-header {
+    padding:
+      13px 0;
+  }
+
+  .loading-orb-area {
+    top:
+      -7%;
+
+    height:
+      72vh;
+  }
+
+  .loading-button {
+    bottom:
+      5%;
+
+    width:
+      min(520px, 72vw);
+
+    min-height:
+      110px;
+  }
+
+  .loading-title {
+    margin-bottom:
+      14px;
+
+    font-size:
+      8px;
+  }
+
+  .loading-message {
+    margin-top:
+      9px;
+  }
+
+  .loading-footer {
+    bottom:
+      8px;
+  }
+}
+
+
+/* ============================================================
+   TALL MOBILE
+   ============================================================ */
+
+@media only screen
+  and (max-width: 600px)
+  and (min-height: 760px) {
+
+  .loading-orb-area {
+    top:
+      2%;
+  }
+
+  .loading-button {
+    bottom:
+      10%;
+  }
+}
+
+
+/* ============================================================
+   ACCESSIBILITY — REDUCED MOTION
+   ============================================================ */
 
 @media (prefers-reduced-motion: reduce) {
+
   .loading-stars,
+  .loading-stars::before,
+  .loading-stars::after,
+  .loading-screen::before,
+
   .energy-orb,
   .orb-glow,
+  .orb-core,
   .orb-core-inner,
-  .orb-ring,
   .orb-energy,
-  .loader-status-dot,
+
+  .orb-ring,
+  .orb-ring-1::after,
+  .orb-ring-2::after,
+
+  .loading-title,
+  .loading-title span::after,
+
   .progress-shine,
-  .progress-fill::after,
-  .loading-message {
-    animation: none !important;
+  .progress-dot,
+  .loading-message,
+  .loader-status-dot,
+  .loader-status-dot::after {
+    animation:
+      none !important;
   }
+
+  .loading-hover {
+    display:
+      none;
+  }
+}
+
+
+/* ============================================================
+   PERFORMANCE
+   ============================================================ */
+
+.loading-stars,
+.loading-stars::before,
+.loading-stars::after,
+
+.energy-orb,
+.orb-core,
+.orb-core-inner,
+.orb-glow,
+
+.orb-ring,
+.orb-energy,
+
+.progress-fill,
+.progress-dot {
+  backface-visibility:
+    hidden;
+
+  -webkit-backface-visibility:
+    hidden;
+}
+
+
+/* ============================================================
+   FINAL POINTER SAFETY
+   ============================================================ */
+
+.loading-screen,
+.loading-wrap,
+.loading-orb-area,
+.loading-stars {
+  pointer-events:
+    none;
+}
+
+
+.loading-header,
+.loading-footer,
+.loading-title,
+.progress-area {
+  pointer-events:
+    none;
 }

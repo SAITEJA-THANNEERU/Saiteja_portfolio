@@ -3,7 +3,6 @@ import {
   useCallback,
   useEffect,
   useRef,
-  type KeyboardEvent,
 } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -59,37 +58,7 @@ interface MoveHistory {
   san: string;
 }
 
-interface ChatMessage {
-  role: "user" | "assistant" | "system";
-  content: string;
-}
 
-// ============================================================
-// CHAT SYSTEM PROMPT
-// ============================================================
-
-const SYSTEM_PROMPT = `You are ${config.developer.fullName}, a ${config.developer.title} from ${config.social.location}. You are NOT an AI assistant - you ARE ${config.developer.name} himself chatting with visitors on your portfolio website.
-
-About you (${config.developer.fullName}):
-- Full name: ${config.developer.fullName}
-- Location: ${config.social.location}
-- Profession: ${config.developer.title}
-- Experience: See the portfolio for details
-- Specialties: Software Development, AI, Backend, Full-Stack Development
-- Notable projects: Scorera, Game Portal Platform, Ultimate Choice Game
-- Languages: English (fluent)
-- Hobbies: Programming, AI, Building projects
-- Contact: Available through the portfolio website
-
-Rules:
-1. Always respond in first person ("I", "my", "me")
-2. Be friendly, helpful, and concise
-3. If asked about work/projects, provide accurate summaries from the portfolio
-4. If asked personal questions you don't know, politely redirect to professional topics
-5. Keep responses concise but helpful
-6. Discuss programming, AI, and related topics when relevant
-7. Never say you are an AI or language model - respond as ${config.developer.name}
-8. Use occasional emoji to be friendly 😊`;
 
 // ============================================================
 // PLAY COMPONENT
@@ -157,20 +126,6 @@ const [, setCapturedBlack] =
   const [gameSeconds, setGameSeconds] =
     useState(0);
 
-  const [chatMessages, setChatMessages] =
-    useState<ChatMessage[]>([
-      {
-        role: "assistant",
-        content:
-          `Hello! I'm ${config.developer.name} 🤖 Ask me anything about chess, strategies, or just say hi!`,
-      },
-    ]);
-
-  const [chatInput, setChatInput] =
-    useState("");
-
-  const [isTyping, setIsTyping] =
-    useState(false);
 
   const aiColor: PlayerColor =
     playerColor === "w" ? "b" : "w";
@@ -823,144 +778,7 @@ useEffect(() => {
     }
   };
 
-  // ==========================================================
-  // SEND CHAT MESSAGE
-  // ==========================================================
 
-  const sendMessage = async () => {
-    const trimmedInput =
-      chatInput.trim();
-
-    if (
-      !trimmedInput ||
-      isTyping
-    ) {
-      return;
-    }
-
-    const userMessage:
-      ChatMessage = {
-      role: "user",
-      content: trimmedInput,
-    };
-
-    const conversationMessages =
-      [
-        ...chatMessages,
-        userMessage,
-      ];
-
-    setChatMessages(
-      conversationMessages
-    );
-
-    setChatInput("");
-    setIsTyping(true);
-
-    try {
-      const messages = [
-        {
-          role: "system",
-          content: SYSTEM_PROMPT,
-        },
-
-        ...conversationMessages
-          .filter(
-            (message) =>
-              message.role !==
-              "system"
-          )
-          .map(
-            (message) => ({
-              role: message.role,
-              content:
-                message.content,
-            })
-          ),
-      ];
-
-      const response =
-        await fetch(
-          "/api/chat",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type":
-                "application/json",
-            },
-            body: JSON.stringify({
-              messages,
-            }),
-          }
-        );
-
-      if (!response.ok) {
-        throw new Error(
-          `Chat request failed: ${response.status}`
-        );
-      }
-
-      const data =
-        await response.json();
-
-      const content =
-        data?.choices?.[0]
-          ?.message?.content;
-
-      if (
-        typeof content !==
-        "string"
-      ) {
-        throw new Error(
-          "Invalid chat response"
-        );
-      }
-
-      setChatMessages(
-        (previous) => [
-          ...previous,
-          {
-            role: "assistant",
-            content,
-          },
-        ]
-      );
-    } catch (error) {
-      console.error(
-        "Chat error:",
-        error
-      );
-
-      setChatMessages(
-        (previous) => [
-          ...previous,
-          {
-            role: "assistant",
-            content:
-              "Sorry, I'm having some connection issues. Try again? 😅",
-          },
-        ]
-      );
-    } finally {
-      setIsTyping(false);
-    }
-  };
-
-  // ==========================================================
-  // ENTER KEY
-  // ==========================================================
-
-  const handleKeyPress = (
-    event: KeyboardEvent<HTMLInputElement>
-  ) => {
-    if (
-      event.key === "Enter" &&
-      !event.shiftKey
-    ) {
-      event.preventDefault();
-      sendMessage();
-    }
-  };
 
   // ==========================================================
   // RENDER PIECE
@@ -1249,7 +1067,10 @@ useEffect(() => {
 
           RIGHT:
             Move history
-            Chat
+
+          Chat has been intentionally removed from this
+          chess page. It will live separately in the
+          portfolio chat section.
 
           This structure intentionally matches the reference
           screenshot. CSS will control the exact dimensions.
@@ -1682,110 +1503,7 @@ useEffect(() => {
 
           </section>
 
-          {/* =================================================
-              CHAT
-              ================================================= */}
-
-          <section className="chat-card">
-
-            <div className="chat-header">
-
-              <div className="chat-title">
-
-                <span className="chat-title-icon">
-                  💬
-                </span>
-
-                TALK WITH SAI
-
-              </div>
-
-              <button
-                type="button"
-                className="chat-minimize"
-                data-cursor="disable"
-                aria-label="Minimize chat"
-              >
-                −
-              </button>
-
-            </div>
-
-            <div className="chat-messages">
-
-              {chatMessages.map(
-                (message, index) => (
-
-                  <div
-                    key={`${message.role}-${index}`}
-                    className={`
-                      chat-message
-                      ${message.role}
-                    `}
-                  >
-
-                    <div className="message-content">
-                      {message.content}
-                    </div>
-
-                    <span className="message-time">
-                      Now
-                    </span>
-
-                  </div>
-
-                )
-              )}
-
-              {isTyping && (
-                <div className="chat-message assistant">
-
-                  <div className="message-content typing">
-
-                    <span />
-                    <span />
-                    <span />
-
-                  </div>
-
-                </div>
-              )}
-
-            </div>
-
-            <div className="chat-input-area">
-
-              <input
-                type="text"
-                className="chat-input"
-                placeholder="Type your message..."
-                value={chatInput}
-                onChange={(event) =>
-                  setChatInput(event.target.value)
-                }
-                onKeyDown={handleKeyPress}
-                disabled={isTyping}
-                data-cursor="disable"
-              />
-
-              <button
-                type="button"
-                className="chat-send-btn"
-                onClick={sendMessage}
-                disabled={
-                  isTyping ||
-                  !chatInput.trim()
-                }
-                data-cursor="disable"
-                aria-label="Send message"
-              >
-                ➤
-              </button>
-
-            </div>
-
-          </section>
-
+         
         </aside>
 
       </div>

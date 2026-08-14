@@ -2756,31 +2756,47 @@
 /* ============================================================
    33. MOBILE PORTRAIT
    ------------------------------------------------------------
-   Still no PAGE scrolling.
-   The three sections become vertical viewport regions.
+   IMPORTANT:
+   - The complete 8x8 chess board must always be visible.
+   - All 64 squares and pieces must fit inside the viewport.
+   - No horizontal page scrolling.
+   - No vertical page scrolling.
+   - Board size is calculated from BOTH viewport width and height.
+   - Supporting panels are compressed around the board instead
+     of shrinking the board into an unusable size.
    ============================================================ */
 
-@media (max-width: 800px) {
+@media (max-width: 800px) and (orientation: portrait) {
 
   .play-page {
+    width: 100%;
     height: 100dvh;
+    min-height: 0;
 
     padding:
-      7px
-      8px;
+      6px
+      6px;
 
     overflow: hidden;
   }
 
-  .play-header {
-    height: 30px;
 
-    margin-bottom: 2px;
+  /* ----------------------------------------------------------
+     HEADER
+     ---------------------------------------------------------- */
+
+  .play-header {
+    width: 100%;
+    height: 28px;
+
+    flex: 0 0 28px;
+
+    margin: 0 0 2px;
   }
 
   .back-button,
   .online-status {
-    height: 28px;
+    height: 27px;
   }
 
   .back-button {
@@ -2788,6 +2804,8 @@
       0 9px;
 
     font-size: 8px;
+
+    border-radius: 9px;
   }
 
   .online-status {
@@ -2795,190 +2813,420 @@
       0 9px;
 
     font-size: 7px;
+
+    border-radius: 999px;
   }
 
+  .online-dot {
+    width: 6px;
+    height: 6px;
+
+    flex-basis: 6px;
+  }
+
+
+  /* ----------------------------------------------------------
+     TITLE
+     ---------------------------------------------------------- */
+
   .play-title-area {
-    height: 55px;
+    width: 100%;
+    height: 48px;
+
+    flex: 0 0 48px;
+
+    justify-content: center;
+
+    overflow: hidden;
   }
 
   .play-title {
-    font-size: clamp(24px, 7vw, 31px);
+    font-size:
+      clamp(23px, 7vw, 30px);
+
+    line-height: 0.95;
+
+    white-space: nowrap;
   }
 
   .play-subtitle {
-    margin-top: 4px;
+    margin-top: 3px;
 
     font-size: 8px;
+
+    line-height: 1.1;
+
+    white-space: nowrap;
   }
 
+
+  /* ----------------------------------------------------------
+     MAIN MOBILE LAYOUT
+     
+     The board gets a dedicated square region.
+
+     Order:
+       1. Players / status / controls
+       2. Chess board
+       3. Move history
+       4. Chat
+     ---------------------------------------------------------- */
+
   .game-layout {
-    height: calc(100dvh - 94px);
+    width: 100%;
+    height: calc(
+      100dvh - 78px
+    );
+
+    min-height: 0;
 
     display: grid;
 
     grid-template-columns:
       minmax(0, 1fr);
 
+    /*
+      The middle row is calculated from viewport width.
+      This guarantees that the board has enough space to
+      remain a true square.
+    */
     grid-template-rows:
-      minmax(0, 0.78fr)
-      86px
+      minmax(120px, 0.72fr)
+      min(
+        calc(100vw - 12px),
+        58dvh
+      )
       minmax(0, 1fr);
 
-    gap: 6px;
+    gap: 5px;
+
+    overflow: hidden;
   }
+
+
+  /* ==========================================================
+     PLAYERS PANEL
+     ========================================================== */
 
   .players-panel {
     grid-column: 1;
     grid-row: 1;
 
-    padding: 9px;
+    width: 100%;
+    height: 100%;
 
-    border-radius: 13px;
+    min-width: 0;
+    min-height: 0;
+
+    padding: 7px;
+
+    border-radius: 12px;
+
+    overflow: hidden;
   }
 
   .players-panel-title {
-    height: 18px;
-    flex-basis: 18px;
+    height: 17px;
+    flex-basis: 17px;
 
-    font-size: 10px;
-}
+    font-size: 9px;
 
-  .saiteja-player {
-    height: 56px;
-
-    margin-top: 5px;
+    gap: 6px;
   }
 
+  .players-panel-icon {
+    font-size: 12px;
+  }
+
+
+  /* ----------------------------------------------------------
+     PLAYER CARDS
+     ---------------------------------------------------------- */
+
+  .saiteja-player,
   .you-player {
-    height: 56px;
+    width: 100%;
+
+    height: 48px;
+
+    min-height: 48px;
+
+    padding:
+      5px
+      7px;
 
     margin-top: 4px;
-  }
 
-  .player-card {
     gap: 7px;
-
-    padding: 5px 8px;
 
     border-radius: 9px;
   }
 
-  .player-avatar {
-    width: 39px;
-    height: 39px;
+  .you-player {
+    margin-top: 3px;
+  }
 
-    min-width: 39px;
+  .player-avatar {
+    width: 35px;
+    height: 35px;
+
+    min-width: 35px;
 
     border-radius: 8px;
 
-    font-size: 18px;
+    font-size: 17px;
+  }
+
+  .you-avatar {
+    font-size: 19px;
+  }
+
+  .player-info {
+    min-width: 0;
   }
 
   .player-name {
-    font-size: 13px;
+    font-size: 10px;
+
+    line-height: 1.05;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .player-rating,
   .player-color {
     margin-top: 3px;
 
-    font-size: 8px;
+    font-size: 6px;
+
+    line-height: 1;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
+
+  /* ----------------------------------------------------------
+     VS DIVIDER
+     ---------------------------------------------------------- */
+
   .players-divider {
-    height: 9px;
+    width: 100%;
+    height: 8px;
 
     gap: 5px;
 
-    margin-top: 2px;
+    margin-top: 1px;
   }
 
   .players-divider strong {
     font-size: 5px;
   }
 
+
+  /* ----------------------------------------------------------
+     GAME STATUS
+     ---------------------------------------------------------- */
+
   .game-status-card {
-    height: 53px;
-    flex-basis: 53px;
+    width: 100%;
 
-    margin-top: 4px;
+    height: 43px;
+    flex: 0 0 43px;
 
-    padding: 6px 8px;
+    margin-top: 3px;
 
-    border-radius: 9px;
+    padding:
+      5px
+      7px;
+
+    border-radius: 8px;
   }
 
   .game-status-title {
-    font-size: 8px;
+    font-size: 6px;
+
+    line-height: 1;
   }
 
   .game-status-main {
-    margin-top: 4px;
+    margin-top: 3px;
 
     gap: 5px;
 
-    font-size: 10px;
+    font-size: 8px;
+
+    line-height: 1;
   }
 
   .game-status-dot {
     width: 5px;
     height: 5px;
+
     flex-basis: 5px;
   }
 
   .game-status-description {
     margin-top: 3px;
 
-    font-size: 8px;
+    font-size: 6px;
+
+    line-height: 1;
   }
 
+
+  /* ----------------------------------------------------------
+     CONTROLS
+     ---------------------------------------------------------- */
+
   .game-controls {
+    width: 100%;
+
     display: grid;
 
     grid-template-columns:
-      1fr
-      1fr
-      1fr;
+      repeat(3, minmax(0, 1fr));
 
     gap: 4px;
 
-    margin-top: 5px;
+    margin-top: 4px;
   }
 
   .game-control-btn {
-    height: 34px;
-    flex-basis: 34px;
+    width: 100%;
 
-    padding: 0 4px;
+    height: 29px;
+    min-height: 29px;
+    flex-basis: 29px;
+
+    padding:
+      0 3px;
 
     border-radius: 7px;
 
-    font-size: 10px;
-}
+    gap: 4px;
+
+    font-size: 7px;
+
+    overflow: hidden;
+  }
 
   .game-control-btn span {
     font-size: 9px;
   }
 
+
+  /* ==========================================================
+     BOARD COLUMN
+     ========================================================== */
+
   .board-column {
     grid-column: 1;
     grid-row: 2;
 
-    min-height: 0;
-  }
-
-  .board-card {
+    width: 100%;
     height: 100%;
 
+    min-width: 0;
+    min-height: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+  }
+
+
+  /* ==========================================================
+     BOARD CARD
+     ========================================================== */
+
+  .board-card {
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
     padding:
+      4px;
+
+    border-radius: 11px;
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+  }
+
+
+  /* ----------------------------------------------------------
+     VIEW MODE
+     ---------------------------------------------------------- */
+
+  .view-mode-banner {
+    width: 100%;
+
+    flex: 0 0 auto;
+
+    padding:
+      3px
       5px;
 
-    border-radius: 12px;
+    margin:
+      0 0 3px;
+
+    border-radius: 6px;
+
+    font-size: 5px;
+
+    line-height: 1;
+
+    white-space: nowrap;
   }
 
+
+  /* ==========================================================
+     BOARD WRAPPER
+     ========================================================== */
+
   .chess-board-wrapper {
+    width: 100%;
+
+    /*
+      Critical:
+      Do not allow the wrapper to stretch the board beyond
+      the available viewport.
+    */
+    flex: 1 1 auto;
+
+    min-width: 0;
     min-height: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
   }
+
+
+  /* ==========================================================
+     CHESS BOARD
+     ----------------------------------------------------------
+     CRITICAL MOBILE RULE
+
+     The board is ALWAYS:
+       width = height
+       aspect ratio = 1 / 1
+
+     It uses the available WIDTH as the primary limit, while
+     the wrapper's height provides the second constraint.
+     ========================================================== */
 
   .chess-board {
     width: min(
@@ -2986,37 +3234,164 @@
       100%
     );
 
-    max-width: 100%;
+    height: auto;
 
-    border-radius: 6px;
+    max-width: 100%;
+    max-height: 100%;
+
+    aspect-ratio: 1 / 1;
+
+    flex:
+      0 0 auto;
+
+    margin:
+      0 auto;
+
+    border-radius: 5px;
+
+    overflow: hidden;
+
+    /*
+      Never allow the board to become larger than the
+      available wrapper.
+    */
+    box-sizing: border-box;
   }
+
+
+  /* ----------------------------------------------------------
+     SQUARES
+     ---------------------------------------------------------- */
+
+  .chess-square {
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+  }
+
+
+  /* ----------------------------------------------------------
+     PIECES
+     ----------------------------------------------------------
+     Keep pieces large enough to be immediately recognizable.
+     ---------------------------------------------------------- */
+
+  .chess-piece {
+    width: 91%;
+    height: 91%;
+
+    filter:
+      drop-shadow(
+        0 1px 1px rgba(0, 0, 0, 0.40)
+      );
+  }
+
+  .chess-piece svg {
+    width: 100%;
+    height: 100%;
+  }
+
+
+  /* ----------------------------------------------------------
+     COORDINATES
+     ---------------------------------------------------------- */
+
+  .coord-rank,
+  .coord-file {
+    font-size:
+      clamp(6px, 1.7vw, 9px);
+  }
+
+  .coord-rank {
+    top: 3px;
+    left: 4px;
+  }
+
+  .coord-file {
+    right: 4px;
+    bottom: 3px;
+  }
+
+
+  /* ----------------------------------------------------------
+     MOVE INDICATORS
+     ---------------------------------------------------------- */
+
+  .move-indicator {
+    width: 25%;
+    height: 25%;
+  }
+
+  .move-indicator.capture {
+    width: 78%;
+    height: 78%;
+
+    border-width: 3px;
+  }
+
+
+  /* ==========================================================
+     BOARD FOOTER
+     ----------------------------------------------------------
+     Hidden on portrait mobile so the board gets priority.
+     ========================================================== */
 
   .board-footer {
     display: none;
   }
 
+
+  /* ==========================================================
+     RIGHT PANEL
+     ========================================================== */
+
   .right-panel {
     grid-column: 1;
     grid-row: 3;
 
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    display: grid;
+
     grid-template-rows:
-      86px
+      72px
       minmax(0, 1fr);
 
-    gap: 6px;
+    gap: 5px;
+
+    overflow: hidden;
   }
 
-  .move-history-card {
-    padding: 7px;
 
-    border-radius: 12px;
+  /* ==========================================================
+     MOVE HISTORY
+     ========================================================== */
+
+  .move-history-card {
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    padding: 6px;
+
+    border-radius: 10px;
+
+    overflow: hidden;
   }
 
   .move-history-header {
-    height: 16px;
-    flex-basis: 16px;
+    height: 15px;
+    flex-basis: 15px;
 
-    margin-bottom: 2px;
+    margin-bottom: 1px;
   }
 
   .move-history-title {
@@ -3024,32 +3399,47 @@
   }
 
   .move-history-count {
-    font-size: 6px;
+    font-size: 5px;
   }
 
   .move-history-columns {
-    height: 13px;
-    flex-basis: 13px;
+    height: 11px;
+    flex-basis: 11px;
 
     grid-template-columns:
-      20px
-      1fr
-      1fr;
+      19px
+      minmax(0, 1fr)
+      minmax(0, 1fr);
 
-    padding: 0 5px;
+    gap: 4px;
+
+    padding:
+      0
+      4px;
 
     font-size: 5px;
   }
 
+  .move-history-list {
+    min-height: 0;
+
+    overflow-y: auto;
+  }
+
   .move-history-row {
-    min-height: 21px;
+    min-height: 19px;
+    height: 19px;
 
     grid-template-columns:
-      20px
-      1fr
-      1fr;
+      19px
+      minmax(0, 1fr)
+      minmax(0, 1fr);
 
-    padding: 0 5px;
+    gap: 4px;
+
+    padding:
+      0
+      4px;
   }
 
   .move-number,
@@ -3057,16 +3447,32 @@
     font-size: 6px;
   }
 
+
+  /* ==========================================================
+     CHAT
+     ========================================================== */
+
   .chat-card {
-    border-radius: 12px;
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    border-radius: 10px;
+
+    overflow: hidden;
   }
 
   .chat-header {
-    height: 34px;
-    flex-basis: 34px;
+    width: 100%;
+
+    height: 31px;
+    flex-basis: 31px;
 
     padding:
-      0 9px;
+      0
+      8px;
   }
 
   .chat-title {
@@ -3080,61 +3486,381 @@
   }
 
   .chat-minimize {
-    width: 23px;
-    height: 23px;
+    width: 22px;
+    height: 22px;
 
-    font-size: 11px;
+    font-size: 10px;
   }
 
   .chat-messages {
+    min-width: 0;
+    min-height: 0;
+
     padding:
-      6px
-      8px;
+      5px
+      7px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .chat-message {
+    max-width: 88%;
+
+    margin-bottom: 7px;
   }
 
   .message-content {
     padding:
-      7px
-      8px;
+      6px
+      7px;
 
     font-size: 7px;
+
+    line-height: 1.4;
   }
 
   .message-time {
-    margin-top: 3px;
+    margin-top: 2px;
 
     font-size: 5px;
   }
 
   .chat-input-area {
-    height: 42px;
-    flex-basis: 42px;
+    width: 100%;
+
+    height: 39px;
+    flex-basis: 39px;
 
     gap: 5px;
 
     padding:
-      5px
-      8px;
+      4px
+      7px;
   }
 
   .chat-input {
-    height: 30px;
+    width: 100%;
+
+    height: 29px;
 
     padding:
-      0 8px;
+      0
+      7px;
 
     font-size: 7px;
+
+    border-radius: 8px;
   }
 
   .chat-send-btn {
-    width: 30px;
-    min-width: 30px;
-    height: 30px;
+    width: 29px;
+    min-width: 29px;
+    height: 29px;
+
+    border-radius: 8px;
 
     font-size: 10px;
   }
 }
 
+
+/* ============================================================
+   33A. SMALL PORTRAIT PHONES
+   ------------------------------------------------------------
+   Extra compression for narrow phones.
+   The board remains the priority.
+   ============================================================ */
+
+@media (
+  max-width: 500px
+) and (
+  orientation: portrait
+) {
+
+  .play-page {
+    padding:
+      5px
+      5px;
+  }
+
+  .play-header {
+    height: 26px;
+    flex-basis: 26px;
+  }
+
+  .back-button,
+  .online-status {
+    height: 25px;
+  }
+
+  .play-title-area {
+    height: 43px;
+    flex-basis: 43px;
+  }
+
+  .play-title {
+    font-size:
+      clamp(21px, 7vw, 27px);
+  }
+
+  .play-subtitle {
+    font-size: 7px;
+  }
+
+  .game-layout {
+    height: calc(
+      100dvh - 69px
+    );
+
+    /*
+      Board gets priority over all secondary content.
+    */
+    grid-template-rows:
+      minmax(105px, 0.62fr)
+      min(
+        calc(100vw - 10px),
+        56dvh
+      )
+      minmax(0, 1fr);
+
+    gap: 4px;
+  }
+
+  .players-panel {
+    padding: 6px;
+
+    border-radius: 10px;
+  }
+
+  .players-panel-title {
+    height: 15px;
+    flex-basis: 15px;
+
+    font-size: 8px;
+  }
+
+  .saiteja-player,
+  .you-player {
+    height: 42px;
+    min-height: 42px;
+
+    padding:
+      4px
+      6px;
+
+    gap: 6px;
+  }
+
+  .player-avatar {
+    width: 31px;
+    height: 31px;
+
+    min-width: 31px;
+
+    border-radius: 7px;
+  }
+
+  .player-name {
+    font-size: 9px;
+  }
+
+  .player-rating,
+  .player-color {
+    margin-top: 2px;
+
+    font-size: 5px;
+  }
+
+  .players-divider {
+    height: 7px;
+  }
+
+  .players-divider strong {
+    font-size: 4px;
+  }
+
+  .game-status-card {
+    height: 38px;
+    flex-basis: 38px;
+
+    margin-top: 2px;
+
+    padding:
+      4px
+      6px;
+  }
+
+  .game-status-title {
+    font-size: 5px;
+  }
+
+  .game-status-main {
+    margin-top: 2px;
+
+    font-size: 7px;
+  }
+
+  .game-status-description {
+    margin-top: 2px;
+
+    font-size: 5px;
+  }
+
+  .game-controls {
+    gap: 3px;
+
+    margin-top: 3px;
+  }
+
+  .game-control-btn {
+    height: 26px;
+    min-height: 26px;
+    flex-basis: 26px;
+
+    font-size: 6px;
+
+    border-radius: 6px;
+  }
+
+  .game-control-btn span {
+    font-size: 8px;
+  }
+
+  .board-card {
+    padding: 3px;
+
+    border-radius: 9px;
+  }
+
+  .view-mode-banner {
+    padding:
+      2px
+      4px;
+
+    margin-bottom: 2px;
+
+    font-size: 4px;
+  }
+
+  .chess-board {
+    width: 100%;
+    max-width: 100%;
+
+    max-height: 100%;
+
+    border-radius: 4px;
+  }
+
+  .chess-piece {
+    width: 92%;
+    height: 92%;
+  }
+
+  .coord-rank,
+  .coord-file {
+    font-size: 5px;
+  }
+
+  .right-panel {
+    grid-template-rows:
+      65px
+      minmax(0, 1fr);
+
+    gap: 4px;
+  }
+
+  .move-history-card {
+    padding: 5px;
+
+    border-radius: 9px;
+  }
+
+  .move-history-header {
+    height: 13px;
+    flex-basis: 13px;
+  }
+
+  .move-history-title {
+    font-size: 6px;
+  }
+
+  .move-history-columns {
+    height: 10px;
+    flex-basis: 10px;
+
+    font-size: 4px;
+  }
+
+  .move-history-row {
+    min-height: 18px;
+    height: 18px;
+  }
+
+  .move-number,
+  .move-san {
+    font-size: 5px;
+  }
+
+  .chat-card {
+    border-radius: 9px;
+  }
+
+  .chat-header {
+    height: 29px;
+    flex-basis: 29px;
+
+    padding:
+      0
+      7px;
+  }
+
+  .chat-title {
+    font-size: 6px;
+  }
+
+  .chat-minimize {
+    width: 20px;
+    height: 20px;
+  }
+
+  .chat-messages {
+    padding:
+      4px
+      6px;
+  }
+
+  .message-content {
+    padding:
+      5px
+      6px;
+
+    font-size: 6px;
+  }
+
+  .chat-input-area {
+    height: 36px;
+    flex-basis: 36px;
+
+    padding:
+      3px
+      6px;
+  }
+
+  .chat-input {
+    height: 27px;
+
+    font-size: 6px;
+  }
+
+  .chat-send-btn {
+    width: 27px;
+    min-width: 27px;
+    height: 27px;
+
+    font-size: 9px;
+  }
+}
 
 /* ============================================================
    34. MOBILE LANDSCAPE

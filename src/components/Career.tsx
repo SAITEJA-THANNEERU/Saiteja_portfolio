@@ -3,7 +3,10 @@ import { config } from "../config";
 
 const Career = () => {
   return (
-    <div className="career-section section-container">
+    <div
+  className="career-section section-container"
+  id="career"
+>
       <div className="career-container">
 
         {/* Section Heading */}

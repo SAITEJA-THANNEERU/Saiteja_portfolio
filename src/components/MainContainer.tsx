@@ -4,6 +4,7 @@ import {
   useState,
 } from "react";
 
+
 import Certifications from "./Certifications";
 import About from "./About";
 import Career from "./Career";
@@ -13,9 +14,11 @@ import Landing from "./Landing";
 import Navbar from "./Navbar";
 import SocialIcons from "./SocialIcons";
 import WhatIDo from "./WhatIDo";
+import Education from "./Education";
 import Work from "./Work";
 import TechStackNew from "./TechStackNew";
 import CallToAction from "./CallToAction";
+import ChatWithSai from "./ChatWithSai";
 import setSplitText from "./utils/splitText";
 
 const MainContainer = ({
@@ -58,17 +61,24 @@ const MainContainer = ({
 
   return (
     <div className="container-main">
+
       <Cursor />
 
       <Navbar />
 
       <SocialIcons />
 
-      {isDesktopView && !isMobile && (
-        <div className="character-layer">
-          {children}
-        </div>
-      )}
+      {/* ==================================================
+          3D CHARACTER
+      ================================================== */}
+
+      <div className="character-layer">
+        {children}
+      </div>
+
+      {/* ==================================================
+          MAIN PORTFOLIO SECTIONS
+      ================================================== */}
 
       <Landing />
 
@@ -78,6 +88,12 @@ const MainContainer = ({
 
       <Career />
 
+      {/* ==================================================
+          EDUCATION
+      ================================================== */}
+
+      <Education />
+
       <TechStackNew />
 
       <Certifications />
@@ -86,7 +102,11 @@ const MainContainer = ({
 
       <CallToAction />
 
+
+      <ChatWithSai />
+           
       <Contact />
+
     </div>
   );
 };

@@ -1,0 +1,650 @@
+/* ============================================================
+   CHAT WITH SAI TEJA
+   ============================================================ */
+
+.chat-with-sai-section {
+  position: relative;
+
+  width: 100%;
+  min-height: 85vh;
+
+  padding:
+    120px
+    6vw;
+
+  display: flex;
+  align-items: center;
+
+  overflow: hidden;
+}
+
+.chat-with-sai-container {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+}
+
+
+/* ============================================================
+   HEADING
+   ============================================================ */
+
+.chat-with-sai-heading {
+  text-align: center;
+
+  margin-bottom: 45px;
+}
+
+.chat-with-sai-eyebrow {
+  display: inline-flex;
+
+  align-items: center;
+  gap: 9px;
+
+  margin-bottom: 14px;
+
+  color: #c2a4ff;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.chat-with-sai-eyebrow span {
+  font-size: 15px;
+}
+
+.chat-with-sai-heading h2 {
+  margin: 0;
+
+  color: #fff;
+
+  font-size:
+    clamp(42px, 5vw, 72px);
+
+  line-height: 0.95;
+
+  letter-spacing: -0.04em;
+}
+
+.chat-with-sai-heading h2 span {
+  display: inline;
+
+  color: #c2a4ff;
+}
+
+.chat-with-sai-heading p {
+  width: min(620px, 100%);
+
+  margin:
+    20px auto 0;
+
+  color: rgba(255,255,255,0.62);
+
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+
+/* ============================================================
+   CHAT CARD
+   ============================================================ */
+
+.chat-with-sai-card {
+  position: relative;
+
+  width: min(850px, 100%);
+  height: min(620px, 70vh);
+
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+
+  min-height: 0;
+
+  overflow: hidden;
+
+  border:
+    1px solid rgba(194,164,255,0.25);
+
+  border-radius: 24px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,0.055),
+      rgba(255,255,255,0.018)
+    );
+
+  box-shadow:
+    0 0 80px rgba(143,82,255,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+
+  backdrop-filter: blur(20px);
+}
+
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+.chat-with-sai-header {
+  min-height: 74px;
+
+  padding:
+    14px
+    20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-bottom:
+    1px solid rgba(255,255,255,0.07);
+}
+
+.chat-with-sai-title {
+  display: flex;
+
+  align-items: center;
+  gap: 12px;
+}
+
+.chat-with-sai-avatar {
+  width: 42px;
+  height: 42px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  color: #fff;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  background:
+    linear-gradient(
+      135deg,
+      #c2a4ff,
+      #8c52ff
+    );
+
+  box-shadow:
+    0 0 25px rgba(194,164,255,0.25);
+}
+
+.chat-with-sai-title strong {
+  display: block;
+
+  color: #fff;
+
+  font-size: 14px;
+}
+
+.chat-with-sai-title span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #b9ffdc;
+
+  font-size: 10px;
+}
+
+.chat-with-sai-status {
+  padding:
+    7px
+    11px;
+
+  border:
+    1px solid rgba(194,164,255,0.2);
+
+  border-radius: 999px;
+
+  color: #c2a4ff;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+}
+
+/* ============================================================
+   MESSAGES
+   ============================================================ */
+
+.chat-with-sai-messages {
+  flex: 1 1 auto;
+
+  min-height: 0;
+
+  padding: 24px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  display: flex;
+  flex-direction: column;
+
+  /*
+   * Keep the newest messages visible naturally
+   * while allowing the user to scroll upward.
+   */
+  overscroll-behavior: contain;
+
+  /*
+   * Firefox scrollbar
+   */
+  scrollbar-width: thin;
+
+  scrollbar-color:
+    rgba(194,164,255,0.55)
+    rgba(255,255,255,0.035);
+}
+
+
+/* ============================================================
+   CHROME / EDGE / SAFARI SCROLLBAR
+   ============================================================ */
+
+.chat-with-sai-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-with-sai-messages::-webkit-scrollbar-track {
+  background:
+    rgba(255,255,255,0.025);
+
+  border-radius: 10px;
+}
+
+.chat-with-sai-messages::-webkit-scrollbar-thumb {
+  background:
+    linear-gradient(
+      180deg,
+      #c2a4ff,
+      #9257ff
+    );
+
+  border-radius: 10px;
+}
+
+.chat-with-sai-messages::-webkit-scrollbar-thumb:hover {
+  background:
+    linear-gradient(
+      180deg,
+      #d8c0ff,
+      #a875ff
+    );
+}
+
+.chat-with-sai-message {
+  max-width: 75%;
+
+  margin-bottom: 18px;
+}
+
+.chat-with-sai-message.user {
+  margin-left: auto;
+
+  text-align: right;
+}
+
+.chat-with-sai-message-content {
+  display: inline-block;
+
+  padding:
+    13px
+    16px;
+
+  border:
+    1px solid rgba(255,255,255,0.07);
+
+  border-radius: 14px;
+
+  color: #eee;
+
+  background:
+    rgba(255,255,255,0.035);
+
+  font-size: 13px;
+  line-height: 1.6;
+
+  text-align: left;
+}
+
+.chat-with-sai-message.user
+.chat-with-sai-message-content {
+  border-color:
+    rgba(194,164,255,0.25);
+
+  background:
+    rgba(194,164,255,0.12);
+}
+
+.chat-with-sai-message-time {
+  display: block;
+
+  margin-top: 5px;
+
+  color: rgba(255,255,255,0.28);
+
+  font-size: 8px;
+}
+
+
+/* ============================================================
+   TYPING
+   ============================================================ */
+
+.chat-with-sai-typing {
+  display: flex;
+
+  align-items: center;
+  gap: 4px;
+
+  padding:
+    12px
+    15px;
+}
+
+.chat-with-sai-typing span {
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+
+  background: #c2a4ff;
+
+  animation:
+    chatTyping 1.2s infinite ease-in-out;
+}
+
+.chat-with-sai-typing span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.chat-with-sai-typing span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes chatTyping {
+  0%,
+  60%,
+  100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+
+  30% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+
+/* ============================================================
+   INPUT
+   ============================================================ */
+
+.chat-with-sai-input-area {
+  display: flex;
+
+  gap: 10px;
+
+  padding:
+    14px;
+
+  flex: 0 0 auto;
+
+  border-top:
+    1px solid rgba(255,255,255,0.07);
+}
+
+.chat-with-sai-input {
+  flex: 1;
+
+  min-width: 0;
+
+  height: 48px;
+
+  padding:
+    0 16px;
+
+  border:
+    1px solid rgba(255,255,255,0.10);
+
+  border-radius: 13px;
+
+  outline: none;
+
+  color: #fff;
+
+  background:
+    rgba(255,255,255,0.035);
+
+  font-family: inherit;
+  font-size: 13px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.chat-with-sai-input::placeholder {
+  color:
+    rgba(255,255,255,0.32);
+}
+
+.chat-with-sai-input:focus {
+  border-color:
+    rgba(194,164,255,0.45);
+
+  box-shadow:
+    0 0 20px rgba(194,164,255,0.08);
+}
+
+.chat-with-sai-send {
+  width: 48px;
+  height: 48px;
+
+  flex: 0 0 48px;
+
+  border: none;
+
+  border-radius: 13px;
+
+  color: #fff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #c2a4ff,
+      #9257ff
+    );
+
+  font-size: 20px;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.chat-with-sai-send:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 25px rgba(150,90,255,0.28);
+}
+
+.chat-with-sai-send:disabled {
+  opacity: 0.35;
+
+  cursor: not-allowed;
+}
+
+
+/* ============================================================
+   TABLET
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+  .chat-with-sai-section {
+    min-height: 80vh;
+
+    padding:
+      90px
+      5vw;
+  }
+
+  .chat-with-sai-card {
+    height: 65vh;
+  }
+
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 600px) {
+
+  .chat-with-sai-section {
+    min-height: 78vh;
+
+    padding:
+      70px
+      14px;
+  }
+
+  .chat-with-sai-heading {
+    margin-bottom: 25px;
+  }
+
+  .chat-with-sai-eyebrow {
+    font-size: 10px;
+  }
+
+  .chat-with-sai-heading h2 {
+    font-size:
+      clamp(34px, 10vw, 48px);
+  }
+
+  .chat-with-sai-heading p {
+    margin-top: 14px;
+
+    font-size: 12px;
+
+    line-height: 1.55;
+  }
+
+  .chat-with-sai-card {
+    height: 65vh;
+
+    border-radius: 17px;
+  }
+
+  .chat-with-sai-header {
+    min-height: 58px;
+
+    padding:
+      10px
+      12px;
+  }
+
+  .chat-with-sai-avatar {
+    width: 34px;
+    height: 34px;
+  }
+
+  .chat-with-sai-title strong {
+    font-size: 11px;
+  }
+
+  .chat-with-sai-title span {
+    font-size: 8px;
+  }
+
+  .chat-with-sai-status {
+    font-size: 7px;
+  }
+
+  .chat-with-sai-messages {
+    padding:
+      14px;
+  }
+
+  .chat-with-sai-message {
+    max-width: 88%;
+
+    margin-bottom: 12px;
+  }
+
+  .chat-with-sai-message-content {
+    padding:
+      9px
+      11px;
+
+    font-size: 10px;
+
+    line-height: 1.5;
+  }
+
+  .chat-with-sai-message-time {
+    font-size: 7px;
+  }
+
+  .chat-with-sai-input-area {
+    gap: 6px;
+
+    padding: 8px;
+  }
+
+  .chat-with-sai-input {
+    height: 40px;
+
+    padding:
+      0
+      11px;
+
+    font-size: 10px;
+  }
+
+  .chat-with-sai-send {
+    width: 40px;
+    height: 40px;
+
+    flex-basis: 40px;
+
+    font-size: 16px;
+  }
+}
+
+
+/* ============================================================
+   VERY SMALL PHONES
+   ============================================================ */
+
+@media (max-width: 380px) {
+
+  .chat-with-sai-section {
+    padding-left: 9px;
+    padding-right: 9px;
+  }
+
+  .chat-with-sai-card {
+    height: 62vh;
+  }
+
+  .chat-with-sai-message-content {
+    font-size: 9px;
+  }
+}

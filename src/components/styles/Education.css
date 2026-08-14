@@ -1,0 +1,1359 @@
+/* ==========================================================
+   EDUCATION
+   PREMIUM DYNAMIC TIMELINE
+========================================================== */
+
+.education-section {
+  position: relative;
+
+  width: 100%;
+  min-height: 100vh;
+
+  /*
+   * Large separation from Career.
+   * This applies to desktop first and is adjusted
+   * further for tablet/mobile below.
+   */
+  padding: 210px 7vw 130px;
+
+  color: #ffffff;
+
+  overflow: hidden;
+}
+
+/* ==========================================================
+   BACKGROUND GRID
+========================================================== */
+
+.education-grid {
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  opacity: 0.18;
+
+  background-image:
+    linear-gradient(
+      rgba(194, 164, 255, 0.035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(194, 164, 255, 0.035) 1px,
+      transparent 1px
+    );
+
+  background-size: 80px 80px;
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+      transparent,
+      black 18%,
+      black 82%,
+      transparent
+    );
+}
+
+/* ==========================================================
+   BACKGROUND GLOWS
+========================================================== */
+
+.education-glow {
+  position: absolute;
+
+  pointer-events: none;
+
+  border-radius: 50%;
+
+  filter: blur(80px);
+
+  opacity: 0.14;
+}
+
+.education-glow-one {
+  width: 420px;
+  height: 420px;
+
+  top: 15%;
+  left: -220px;
+
+  background: #8c5cff;
+}
+
+.education-glow-two {
+  width: 380px;
+  height: 380px;
+
+  right: -220px;
+  bottom: 10%;
+
+  background: #c2a4ff;
+}
+
+/* ==========================================================
+   CONTAINER
+========================================================== */
+
+.education-container {
+  position: relative;
+
+  width: 100%;
+  max-width: 1180px;
+
+  margin: 0 auto;
+
+  z-index: 2;
+}
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+.education-heading {
+  width: 100%;
+  max-width: 900px;
+
+  margin: 0 auto 105px;
+
+  text-align: center;
+}
+
+.education-eyebrow {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  margin-bottom: 24px;
+
+  color: #c2a4ff;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 0.22em;
+}
+
+.education-eyebrow-line {
+  width: 35px;
+  height: 1px;
+
+  background: #c2a4ff;
+
+  box-shadow:
+    0 0 12px rgba(194, 164, 255, 0.8);
+}
+
+.education-heading h2 {
+  margin: 0;
+
+  font-size: clamp(52px, 6vw, 82px);
+
+  line-height: 0.95;
+
+  font-weight: 500;
+
+  letter-spacing: -0.055em;
+
+  color: #f4f0f8;
+
+  text-align: center;
+}
+
+.education-heading h2 span {
+  display: block;
+
+  color: #a87cff;
+
+  text-shadow:
+    0 0 35px rgba(168, 124, 255, 0.22);
+}
+
+.education-heading p {
+  max-width: 580px;
+
+  margin: 30px auto 0;
+
+  font-size: 15px;
+
+  line-height: 1.85;
+
+  color: rgba(255, 255, 255, 0.52);
+
+  text-align: center;
+}
+
+/* ==========================================================
+   TIMELINE
+========================================================== */
+
+.education-timeline {
+  position: relative;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 42px;
+
+  padding-bottom: 20px;
+}
+
+/* ==========================================================
+   DYNAMIC TIMELINE LINE
+========================================================== */
+
+/*
+ * Static base line.
+ *
+ * Kept very subtle so the animated line is the
+ * dominant visual element.
+ */
+
+.education-line {
+  position: absolute;
+
+  top: 28px;
+  bottom: 28px;
+
+  left: 30px;
+
+  width: 2px;
+
+  z-index: 0;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(194, 164, 255, 0.04),
+      rgba(194, 164, 255, 0.18),
+      rgba(194, 164, 255, 0.04)
+    );
+}
+
+/*
+ * Animated travelling glow.
+ *
+ * This creates the moving/dynamic feeling instead
+ * of a plain static vertical border.
+ */
+
+.education-line-glow {
+  position: absolute;
+
+  top: -35%;
+
+  left: -2px;
+
+  width: 6px;
+  height: 35%;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      to bottom,
+      transparent,
+      #a87cff 35%,
+      #d8c5ff 50%,
+      #a87cff 65%,
+      transparent
+    );
+
+  box-shadow:
+    0 0 10px rgba(168, 124, 255, 0.85),
+    0 0 24px rgba(168, 124, 255, 0.55),
+    0 0 45px rgba(168, 124, 255, 0.25);
+
+  animation:
+    educationLineTravel 4s
+    ease-in-out
+    infinite;
+}
+
+@keyframes educationLineTravel {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.8;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: translateY(390%);
+    opacity: 0;
+  }
+}
+
+/*
+ * Additional soft glow travelling behind the main line.
+ */
+
+.education-line::after {
+  content: "";
+
+  position: absolute;
+
+  top: -20%;
+
+  left: -7px;
+
+  width: 16px;
+  height: 28%;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      to bottom,
+      transparent,
+      rgba(168, 124, 255, 0.18),
+      transparent
+    );
+
+  filter: blur(5px);
+
+  animation:
+    educationLineAura 4s
+    ease-in-out
+    infinite;
+}
+
+@keyframes educationLineAura {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+
+  85% {
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: translateY(430%);
+    opacity: 0;
+  }
+}
+
+/* ==========================================================
+   EDUCATION ITEM
+========================================================== */
+
+.education-item {
+  position: relative;
+
+  display: grid;
+
+  grid-template-columns: 64px minmax(0, 1fr);
+
+  gap: 28px;
+
+  align-items: start;
+
+  opacity: 0;
+
+  transform:
+    translateY(45px)
+    translateX(-12px);
+
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s cubic-bezier(
+      0.22,
+      1,
+      0.36,
+      1
+    );
+}
+
+.education-item-visible {
+  opacity: 1;
+
+  transform:
+    translateY(0)
+    translateX(0);
+}
+
+.education-item:nth-child(2) {
+  transition-delay: 0.05s;
+}
+
+.education-item:nth-child(3) {
+  transition-delay: 0.12s;
+}
+
+.education-item:nth-child(4) {
+  transition-delay: 0.19s;
+}
+
+/* ==========================================================
+   TIMELINE NODE
+========================================================== */
+
+/*
+ * The numbered node is no longer used visually.
+ *
+ * We keep the node structure temporarily because the
+ * TSX will be cleaned up in the next step.
+ */
+
+.education-node {
+  position: relative;
+
+  z-index: 3;
+
+  width: 62px;
+  height: 62px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  /*
+   * No numbered circle.
+   * Only a subtle glowing point remains.
+   */
+
+  background: transparent;
+
+  border: none;
+
+  box-shadow: none;
+}
+
+/*
+ * Hide 01 / 02 / 03.
+ */
+
+.education-node-inner {
+  display: none;
+}
+
+/*
+ * Replace the old numbered node with a simple
+ * premium glowing point.
+ */
+
+.education-node::before {
+  content: "";
+
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+
+  background: #c2a4ff;
+
+  box-shadow:
+    0 0 8px rgba(194, 164, 255, 0.95),
+    0 0 18px rgba(168, 124, 255, 0.75),
+    0 0 35px rgba(168, 124, 255, 0.45);
+
+  animation:
+    educationNodePulse 2.5s
+    ease-in-out
+    infinite;
+}
+
+@keyframes educationNodePulse {
+  0%,
+  100% {
+    transform: scale(0.85);
+
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: scale(1.25);
+
+    opacity: 1;
+  }
+}
+
+/*
+ * Old pulse ring removed.
+ */
+
+.education-node-pulse {
+  display: none;
+}
+
+/* ==========================================================
+   EDUCATION CARD
+========================================================== */
+
+/*
+ * IMPORTANT:
+ *
+ * The old glass/matte finish has been removed.
+ *
+ * No backdrop-filter.
+ * No heavy translucent white layer.
+ *
+ * The card is now a dark premium surface with:
+ *
+ * - subtle purple border
+ * - controlled glow
+ * - clean depth
+ */
+
+.education-card {
+  position: relative;
+
+  min-height: 250px;
+
+  overflow: hidden;
+
+  border-radius: 24px;
+
+  border: 1px solid
+    rgba(194, 164, 255, 0.18);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(17, 12, 24, 0.96),
+      rgba(9, 7, 12, 0.98)
+    );
+
+  box-shadow:
+    0 20px 55px
+      rgba(0, 0, 0, 0.3),
+
+    0 0 0 1px
+      rgba(168, 124, 255, 0.025);
+
+  /*
+   * IMPORTANT:
+   * No backdrop-filter.
+   */
+
+  transition:
+    border-color 0.4s ease,
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+.education-card:hover {
+  transform: translateY(-5px);
+
+  border-color:
+    rgba(194, 164, 255, 0.48);
+
+  box-shadow:
+    0 25px 65px
+      rgba(0, 0, 0, 0.4),
+
+    0 0 28px
+      rgba(168, 124, 255, 0.13),
+
+    inset 0 0 25px
+      rgba(168, 124, 255, 0.025);
+}
+
+/* ==========================================================
+   CARD GLOW
+========================================================== */
+
+.education-card-shine {
+  position: absolute;
+
+  top: -130px;
+  right: -130px;
+
+  width: 330px;
+  height: 330px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(168, 124, 255, 0.13),
+      rgba(168, 124, 255, 0.035) 35%,
+      transparent 70%
+    );
+
+  pointer-events: none;
+
+  opacity: 0.85;
+}
+
+/*
+ * Subtle bottom purple glow.
+ */
+
+.education-card::after {
+  content: "";
+
+  position: absolute;
+
+  left: 12%;
+  right: 12%;
+  bottom: -90px;
+
+  height: 150px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      ellipse,
+      rgba(168, 124, 255, 0.11),
+      transparent 70%
+    );
+
+  filter: blur(22px);
+
+  pointer-events: none;
+}
+
+/* ==========================================================
+   CARD CONTENT
+========================================================== */
+
+.education-card-content {
+  position: relative;
+
+  padding: 32px 38px;
+
+  z-index: 2;
+}
+
+/* ==========================================================
+   CARD TOP
+========================================================== */
+
+.education-card-top {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  margin-bottom: 24px;
+}
+
+/*
+ * Hide card number.
+ */
+
+.education-card-index {
+  display: none;
+}
+
+/* ==========================================================
+   PERIOD
+========================================================== */
+
+.education-period {
+  padding: 7px 12px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(168, 124, 255, 0.055);
+
+  border: 1px solid
+    rgba(168, 124, 255, 0.17);
+
+  color:
+    rgba(255, 255, 255, 0.5);
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.11em;
+}
+
+/* ==========================================================
+   EDUCATION ICON
+========================================================== */
+
+.education-icon {
+  width: 42px;
+  height: 42px;
+
+  margin-left: auto;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  background:
+    rgba(168, 124, 255, 0.055);
+
+  border: 1px solid
+    rgba(194, 164, 255, 0.2);
+
+  box-shadow:
+    0 0 20px
+      rgba(168, 124, 255, 0.08);
+}
+
+.education-icon span {
+  font-size: 19px;
+
+  filter:
+    drop-shadow(
+      0 0 8px
+      rgba(194, 164, 255, 0.45)
+    );
+}
+
+/* ==========================================================
+   TITLES
+========================================================== */
+
+.education-card h3 {
+  max-width: 760px;
+
+  margin: 0;
+
+  font-size: clamp(22px, 2.4vw, 32px);
+
+  line-height: 1.2;
+
+  font-weight: 600;
+
+  letter-spacing: -0.025em;
+
+  color: #ffffff;
+}
+
+.education-degree {
+  margin-top: 12px;
+
+  font-size: 15px;
+
+  font-weight: 500;
+
+  color: #c2a4ff;
+}
+
+.education-field {
+  margin-top: 5px;
+
+  font-size: 13px;
+
+  color:
+    rgba(255, 255, 255, 0.52);
+}
+
+/* ==========================================================
+   DIVIDER
+========================================================== */
+
+.education-divider {
+  position: relative;
+
+  width: 100%;
+
+  height: 1px;
+
+  margin: 25px 0 20px;
+
+  background:
+    rgba(255, 255, 255, 0.07);
+}
+
+.education-divider span {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 70px;
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #a87cff,
+      transparent
+    );
+
+  box-shadow:
+    0 0 10px
+      rgba(168, 124, 255, 0.5);
+}
+
+/* ==========================================================
+   SKILLS
+========================================================== */
+
+.education-skills {
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+
+  flex-wrap: wrap;
+}
+
+.education-skills-label {
+  color:
+    rgba(255, 255, 255, 0.35);
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.16em;
+}
+
+.education-skill-list {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 7px;
+}
+
+.education-skill {
+  padding: 7px 11px;
+
+  border-radius: 999px;
+
+  border: 1px solid
+    rgba(194, 164, 255, 0.13);
+
+  background:
+    rgba(194, 164, 255, 0.035);
+
+  color:
+    rgba(255, 255, 255, 0.62);
+
+  font-size: 10px;
+
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    color 0.25s ease;
+}
+
+.education-skill:hover {
+  border-color:
+    rgba(194, 164, 255, 0.4);
+
+  background:
+    rgba(194, 164, 255, 0.09);
+
+  color: #ffffff;
+}
+
+/* ==========================================================
+   FEATURED EDUCATION
+========================================================== */
+
+.education-item-featured .education-card {
+  border-color:
+    rgba(194, 164, 255, 0.3);
+
+  box-shadow:
+    0 25px 65px
+      rgba(0, 0, 0, 0.34),
+
+    0 0 28px
+      rgba(168, 124, 255, 0.1);
+}
+
+.education-item-featured .education-node::before {
+  background: #d8c5ff;
+
+  box-shadow:
+    0 0 10px rgba(216, 197, 255, 1),
+    0 0 24px rgba(168, 124, 255, 0.85),
+    0 0 42px rgba(168, 124, 255, 0.5);
+}
+
+/* ==========================================================
+   PRIMARY EDUCATION BADGE
+========================================================== */
+
+.education-current-badge {
+  position: absolute;
+
+  right: 38px;
+  bottom: 31px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 7px 10px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(168, 124, 255, 0.055);
+
+  border: 1px solid
+    rgba(168, 124, 255, 0.16);
+
+  color:
+    rgba(194, 164, 255, 0.7);
+
+  font-size: 8px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+}
+
+.education-badge-dot {
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+
+  background: #c2a4ff;
+
+  box-shadow:
+    0 0 8px
+      rgba(194, 164, 255, 0.9);
+}
+
+/* ==========================================================
+   FOOTER
+========================================================== */
+
+.education-footer {
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+
+  justify-content: center;
+
+  margin-top: 90px;
+}
+
+.education-footer-line {
+  width: 60px;
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(194, 164, 255, 0.3)
+    );
+}
+
+.education-footer-line:last-child {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(194, 164, 255, 0.3),
+      transparent
+    );
+}
+
+.education-footer p {
+  margin: 0;
+
+  color:
+    rgba(255, 255, 255, 0.38);
+
+  font-size: 11px;
+
+  letter-spacing: 0.08em;
+
+  text-align: center;
+}
+
+.education-footer p span {
+  color:
+    rgba(194, 164, 255, 0.65);
+}
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@media only screen and (max-width: 1024px) {
+  .education-section {
+    /*
+     * More space after Career.
+     */
+    padding:
+      180px 5vw 110px;
+  }
+
+  .education-heading {
+    width: 100%;
+    max-width: 900px;
+
+    margin:
+      0 auto 80px;
+
+    text-align: center;
+  }
+
+  .education-eyebrow {
+    justify-content: center;
+  }
+
+  .education-heading h2 {
+    text-align: center;
+  }
+
+  .education-heading p {
+    margin:
+      25px auto 0;
+
+    text-align: center;
+  }
+
+  .education-card-content {
+    padding: 30px;
+  }
+}
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media only screen and (max-width: 768px) {
+  .education-section {
+    min-height: auto;
+
+    /*
+     * Deliberately larger Career → Education gap.
+     */
+    padding:
+      190px 20px 80px;
+  }
+
+  .education-heading {
+    width: 100%;
+    max-width: 100%;
+
+    margin:
+      0 auto 65px;
+
+    text-align: center;
+  }
+
+  .education-eyebrow {
+    justify-content: center;
+
+    margin-bottom: 20px;
+  }
+
+  .education-heading h2 {
+    font-size: 46px;
+
+    text-align: center;
+  }
+
+  .education-heading p {
+    margin:
+      22px auto 0;
+
+    font-size: 13px;
+
+    line-height: 1.75;
+
+    text-align: center;
+  }
+
+  /* ========================================================
+     MOBILE TIMELINE
+  ======================================================== */
+
+  .education-line {
+    left: 20px;
+
+    top: 22px;
+    bottom: 22px;
+
+    width: 2px;
+  }
+
+  .education-line-glow {
+    width: 5px;
+  }
+
+  .education-item {
+    grid-template-columns:
+      40px minmax(0, 1fr);
+
+    gap: 14px;
+  }
+
+  /* ========================================================
+     MOBILE NODE
+  ======================================================== */
+
+  .education-node {
+    width: 40px;
+    height: 40px;
+  }
+
+  .education-node::before {
+    width: 7px;
+    height: 7px;
+  }
+
+  /* ========================================================
+     MOBILE CARD
+  ======================================================== */
+
+  .education-card {
+    min-height: auto;
+
+    border-radius: 19px;
+  }
+
+  .education-card-content {
+    padding:
+      23px 20px;
+  }
+
+  .education-card-top {
+    margin-bottom: 20px;
+
+    gap: 8px;
+  }
+
+  .education-period {
+    padding:
+      6px 8px;
+
+    font-size: 7px;
+  }
+
+  .education-icon {
+    width: 35px;
+    height: 35px;
+
+    border-radius: 10px;
+  }
+
+  .education-icon span {
+    font-size: 15px;
+  }
+
+  .education-card h3 {
+    font-size: 19px;
+
+    line-height: 1.25;
+  }
+
+  .education-degree {
+    margin-top: 9px;
+
+    font-size: 13px;
+  }
+
+  .education-field {
+    font-size: 11px;
+  }
+
+  .education-divider {
+    margin:
+      20px 0 16px;
+  }
+
+  .education-skills {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 9px;
+  }
+
+  .education-current-badge {
+    position: static;
+
+    width: fit-content;
+
+    margin-top: 18px;
+  }
+
+  .education-footer {
+    margin-top: 65px;
+
+    gap: 10px;
+  }
+
+  .education-footer-line {
+    width: 30px;
+  }
+
+  .education-footer p {
+    font-size: 9px;
+  }
+}
+
+/* ==========================================================
+   SMALL MOBILE
+========================================================== */
+
+@media only screen and (max-width: 480px) {
+  .education-section {
+    /*
+     * Large separation from Career on small phones.
+     */
+    padding:
+      175px 14px 65px;
+  }
+
+  .education-heading {
+    width: 100%;
+
+    margin:
+      0 auto 55px;
+
+    text-align: center;
+  }
+
+  .education-eyebrow {
+    justify-content: center;
+  }
+
+  .education-heading h2 {
+    font-size: 39px;
+
+    text-align: center;
+  }
+
+  .education-heading p {
+    margin:
+      20px auto 0;
+
+    font-size: 12px;
+
+    text-align: center;
+  }
+
+  .education-item {
+    grid-template-columns:
+      32px minmax(0, 1fr);
+
+    gap: 9px;
+  }
+
+  .education-line {
+    left: 16px;
+  }
+
+  .education-node {
+    width: 32px;
+    height: 32px;
+  }
+
+  .education-node::before {
+    width: 6px;
+    height: 6px;
+  }
+
+  .education-card {
+    border-radius: 16px;
+  }
+
+  .education-card-content {
+    padding:
+      18px 15px;
+  }
+
+  .education-card-top {
+    align-items: flex-start;
+  }
+
+  .education-period {
+    max-width: 135px;
+
+    line-height: 1.4;
+  }
+
+  .education-icon {
+    width: 31px;
+    height: 31px;
+  }
+
+  .education-icon span {
+    font-size: 13px;
+  }
+
+  .education-card h3 {
+    font-size: 17px;
+  }
+
+  .education-degree {
+    font-size: 12px;
+  }
+
+  .education-field {
+    font-size: 10px;
+  }
+
+  .education-skill {
+    padding:
+      6px 8px;
+
+    font-size: 9px;
+  }
+}
+
+/* ==========================================================
+   REDUCED MOTION
+========================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .education-line-glow,
+  .education-line::after,
+  .education-node::before {
+    animation: none;
+  }
+
+  .education-item {
+    opacity: 1;
+
+    transform: none;
+
+    transition: none;
+  }
+
+  .education-card {
+    transition: none;
+  }
+}

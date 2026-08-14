@@ -6,8 +6,45 @@
 
 /* Remove mobile photo and ensure 3D character is always hidden on mobile */
 @media only screen and (max-width: 768px) {
+  /*
+   * Mobile 3D character
+   * Keep the existing 3D model visible instead of replacing it
+   * with the profile photo.
+   */
   .character-model {
-    display: none !important;
+    display: block !important;
+    position: absolute;
+    width: 100%;
+    height: 58vh;
+    max-width: none;
+    max-height: none;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    z-index: 0;
+    pointer-events: none;
+    overflow: visible;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .character-model canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /*
+   * The desktop fade/cover layers are not needed on mobile.
+   * They can otherwise cover part of the 3D model.
+   */
+  .character-model::before,
+  .character-model::after {
+    display: none;
   }
 
   .landing-section,
@@ -22,7 +59,6 @@
     padding-bottom: 40px;
   }
 
-  /* Fix spacing between name and subtitle */
   .landing-intro {
     position: relative !important;
     top: auto !important;
@@ -31,34 +67,27 @@
     bottom: auto !important;
     transform: none !important;
     padding-top: 40px;
-    /* Shift higher up */
     margin-bottom: 20px;
-    z-index: 10;
+    z-index: 22;
     text-align: center;
     width: 100% !important;
     order: 1;
-    /* First: Name */
     height: auto !important;
   }
 
   .landing-intro h1 {
     word-spacing: 0.1em;
     font-size: 32px !important;
-    /* Ensure nice size */
     line-height: 1.2 !important;
     margin: 0;
   }
 
-  /* Ensure name parts display correctly */
   .landing-intro h1 br {
     display: block;
-    /* Keep break on mobile for 2 lines, or use display:none for 1 line */
     content: " ";
-    /* Fallback */
     margin-bottom: 5px;
   }
 
-  /* Subtitles Container */
   .landing-info {
     position: relative !important;
     top: auto !important;
@@ -67,30 +96,24 @@
     bottom: auto !important;
     transform: none !important;
     text-align: center;
-    margin-top:6px;
-    /* Space between name and subtitles */
-    z-index: 10;
+    margin-top: 6px;
+    z-index: 22;
     background: transparent;
     padding-bottom: 50px;
-    /* Add bottom padding for scroll space */
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
     height: auto !important;
-    /* Force auto height */
     width: 100% !important;
     order: 3;
-    /* Third: Subtitles */
   }
 
   .landing-info h3 {
     text-align: center;
     display: none;
-    /* Hide 'An' if not needed, or keep it static */
   }
 
-  /* Force static positioning to prevent overlaps */
   .landing-info h2,
   h2.landing-info-h2,
   .landing-h2-1,
@@ -105,10 +128,8 @@
     text-align: center;
     height: auto !important;
     transform: none !important;
-    /* Remove any transforms */
   }
 
-  /* Specific styling for the distinct parts */
   .landing-h2-1 {
     font-size: 24px !important;
     color: var(--accentColor);
@@ -124,28 +145,12 @@
     display: none;
   }
 
-  /* Show mobile photo */
+  /*
+   * Mobile profile photo removed.
+   * The 3D character is now used directly.
+   */
   .mobile-photo {
-    display: block;
-    position: relative !important;
-    width: 100%;
-    max-width: 380px;
-    margin: 0 auto;
-    z-index: 1;
-    order: 2;
-    /* Second: Photo */
-    /* Add fade mask to bottom */
-    -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
-    mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
-    pointer-events: none;
-    transform: none !important;
-  }
-
-  .mobile-photo img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 0 40px rgba(194, 164, 255, 0.4));
+    display: none !important;
   }
 }
 
@@ -587,4 +592,61 @@ h2.landing-info-h2 {
 .character-layer .character-model {
   width: 100%;
   height: 100%;
+}
+
+/*
+ * ========================================================
+ * MOBILE 3D CHARACTER
+ * ========================================================
+ *
+ * The character-layer wrapper uses 100% height.
+ * On mobile we override the nested character model
+ * so the 3D model has a controlled viewport area.
+ */
+
+@media only screen and (max-width: 768px) {
+  .character-layer .character-model {
+    display: block !important;
+    position: absolute !important;
+
+    width: 100% !important;
+    height: 58vh !important;
+
+    max-width: none !important;
+    max-height: none !important;
+
+    left: 50% !important;
+    bottom: 0 !important;
+
+    transform: translateX(-50%) !important;
+
+    z-index: 0 !important;
+
+    opacity: 1;
+visibility: visible;
+
+    pointer-events: none !important;
+
+    overflow: visible !important;
+  }
+
+  .character-layer .character-model canvas {
+    display: block !important;
+
+    width: 100% !important;
+    height: 100% !important;
+
+    position: absolute !important;
+
+    inset: 0 !important;
+
+    pointer-events: none !important;
+
+    z-index: 2 !important;
+  }
+
+  .character-layer .character-model::before,
+  .character-layer .character-model::after {
+    display: none !important;
+  }
 }

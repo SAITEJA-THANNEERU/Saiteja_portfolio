@@ -6,14 +6,10 @@
   display: flex;
   align-items: center;
 
-  max-width: var(--cMaxWidth);
   width: var(--cWidth);
+  max-width: var(--cMaxWidth);
 
-  justify-content: space-between;
-
-  padding: 15px 0;
-
-  box-sizing: border-box;
+  height: 72px;
 
   position: fixed;
 
@@ -23,114 +19,48 @@
   transform: translateX(-50%);
 
   z-index: 9999;
-}
 
+  box-sizing: border-box;
 
-/* ==========================================================
-   NAVIGATION
-========================================================== */
+  padding: 14px 0;
 
-.header ul {
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: flex-end;
-
-  gap: 6px;
-
-  margin: 0;
-  padding: 0;
-
-  list-style: none;
-
-  font-size: 11px;
-}
-
-
-.header ul li {
-  margin: 0;
-
-  letter-spacing: 0.8px;
-
-  color: #ccc;
-
-  font-weight: 600;
-
-  cursor: pointer;
-}
-
-
-.header ul li a {
-  text-decoration: none;
-
-  color: inherit;
-}
-
-
-/* ==========================================================
-   EMAIL
-========================================================== */
-
-.navbar-connect {
-  position: absolute;
-
-  display: none;
-
-  left: 50%;
-  top: 50%;
-
-  transform: translate(-50%, -50%);
-
-  font-size: 13px;
-
-  letter-spacing: 0.8px;
-
-  font-weight: 500;
-
-  white-space: nowrap;
-
-  color: #eae5ec;
-
-  text-decoration: none;
-
-  transition: color 0.3s ease;
-}
-
-
-.navbar-connect:hover {
-  color: var(--accentColor);
+  gap: 10px;
 }
 
 
 /* ==========================================================
    PROFILE IMAGE
+   IMPORTANT:
+   DO NOT CHANGE THE PROFILE ANIMATION
 ========================================================== */
 
 .navbar-title {
   position: relative;
 
   display: flex;
+
   align-items: center;
   justify-content: center;
 
   width: 42px;
   height: 42px;
 
+  flex-shrink: 0;
+
+  overflow: visible;
+
   border-radius: 50%;
 
   text-decoration: none;
-
-  /* Allow the orbit to extend outside the image */
-  overflow: visible;
 
   isolation: isolate;
 }
 
 
-/* ==========================================
+/* ==========================================================
    PROFILE ORBIT
-========================================== */
+   PRESERVED FROM EXISTING DESIGN
+========================================================== */
 
 .navbar-title::before {
   content: "";
@@ -143,7 +73,8 @@
   left: 50%;
   top: 50%;
 
-  transform: translate(-50%, -50%);
+  transform:
+    translate(-50%, -50%);
 
   border-radius: 50%;
 
@@ -172,7 +103,8 @@
       #000 calc(100% - 1px)
     );
 
-  animation: navbarOrbit 5s linear infinite;
+  animation:
+    navbarOrbit 5s linear infinite;
 
   pointer-events: none;
 
@@ -180,7 +112,9 @@
 }
 
 
-/* Small glowing point travelling around the image */
+/* ==========================================================
+   ORBIT GLOWING DOT
+========================================================== */
 
 .navbar-title::after {
   content: "";
@@ -203,7 +137,8 @@
 
   transform-origin: 0 0;
 
-  animation: navbarOrbitDot 5s linear infinite;
+  animation:
+    navbarOrbitDot 5s linear infinite;
 
   pointer-events: none;
 
@@ -211,9 +146,9 @@
 }
 
 
-/* ==========================================
+/* ==========================================================
    ORBIT ANIMATION
-========================================== */
+========================================================== */
 
 @keyframes navbarOrbit {
   from {
@@ -244,6 +179,7 @@
   }
 }
 
+
 .navbar-profile-image {
   display: block;
 
@@ -258,10 +194,13 @@
 
   -webkit-user-drag: none;
 
-  border: 1px solid rgba(194, 164, 255, 0.35);
+  border:
+    1px solid
+    rgba(194, 164, 255, 0.35);
 
   box-shadow:
-    0 0 15px rgba(194, 164, 255, 0.12);
+    0 0 15px
+    rgba(194, 164, 255, 0.12);
 
   transition:
     transform 0.3s ease,
@@ -273,221 +212,127 @@
 .navbar-profile-image:hover {
   transform: scale(1.08);
 
-  border-color: var(--accentColor);
+  border-color:
+    var(--accentColor);
 
   box-shadow:
-    0 0 22px rgba(194, 164, 255, 0.3);
+    0 0 22px
+    rgba(194, 164, 255, 0.3);
 }
 
 
 /* ==========================================================
-   TABLET / SMALL DESKTOP
+   NAME
 ========================================================== */
 
-@media only screen and (min-width: 500px) {
-  .navbar-profile-image {
-    width: 44px;
-    height: 44px;
-  }
-
-  .navbar-title {
-    width: 44px;
-    height: 44px;
-  }
-
-  .navbar-title::before {
-    width: 58px;
-    height: 58px;
-  }
-
-  .navbar-title::after {
-    animation-name: navbarOrbitDotTablet;
-  }
-}
-
-@keyframes navbarOrbitDotTablet {
-  from {
-    transform:
-      rotate(0deg)
-      translateX(29px);
-  }
-
-  to {
-    transform:
-      rotate(360deg)
-      translateX(29px);
-  }
-}
-
-/* ==========================================================
-   DESKTOP
-========================================================== */
-
-@media only screen and (min-width: 900px) {
-
-  .navbar-connect {
-    display: block;
-  }
-
-}
-
-
-/* ==========================================================
-   LARGE DESKTOP
-========================================================== */
-
-@media only screen and (min-width: 1200px) {
-
-  .header {
-    padding: 30px 0;
-  }
-
-  .header ul {
-    gap: 48px;
-
-    font-size: 15px;
-  }
-
-  .navbar-connect {
-    font-size: 15px;
-  }
-
-  .navbar-profile-image {
-    width: 48px;
-    height: 48px;
-  }
-
-}
-
-@keyframes navbarOrbitDesktop {
-  from {
-    transform:
-      rotate(0deg)
-      translateX(32px);
-  }
-
-  to {
-    transform:
-      rotate(360deg)
-      translateX(32px);
-  }
-}
-
-/* ==========================================================
-   EXTRA LARGE DESKTOP
-========================================================== */
-
-@media only screen and (min-width: 1600px) {
-
-  .header ul {
-    gap: 58px;
-
-    font-size: 16px;
-  }
-
-  .navbar-connect {
-    font-size: 16px;
-  }
-
-}
-
-
-/* ==========================================================
-   MOBILE
-========================================================== */
-
-@media only screen and (max-width: 499px) {
-
-  .header {
-    padding: 14px 0;
-  }
-
-  .navbar-title {
-    width: 38px;
-    height: 38px;
-  }
-
-  .navbar-profile-image {
-    width: 38px;
-    height: 38px;
-  }
-
-}
-
-
-/* ==========================================================
-   NAVBAR BACKGROUND FADE
-========================================================== */
-
-.nav-fade {
-  pointer-events: none;
-}/* ==========================================================
-   NAVBAR
-========================================================== */
-
-.header {
+.navbar-name {
   display: flex;
+
   align-items: center;
 
-  max-width: var(--cMaxWidth);
-  width: var(--cWidth);
+  flex-shrink: 0;
 
-  justify-content: space-between;
+  margin-left: 4px;
 
-  padding: 22px 0;
+  color:
+    rgba(255, 255, 255, 0.92);
 
-  box-sizing: border-box;
+  text-decoration: none;
 
-  position: fixed;
+  font-size: 12px;
 
-  left: 50%;
-  top: 0;
+  font-weight: 600;
 
-  transform: translateX(-50%);
+  letter-spacing: 1.4px;
 
-  z-index: 9999;
+  white-space: nowrap;
+
+  transition:
+    color 0.3s ease,
+    text-shadow 0.3s ease;
+}
+
+
+.navbar-name:hover {
+  color:
+    var(--accentColor);
+
+  text-shadow:
+    0 0 14px
+    rgba(194, 164, 255, 0.4);
 }
 
 
 /* ==========================================================
-   NAVIGATION
+   DESKTOP / TABLET NAVIGATION
 ========================================================== */
 
-.header ul {
+.desktop-navigation {
   display: flex;
 
-  flex-direction: column;
+  align-items: center;
 
-  align-items: flex-end;
+  justify-content: flex-end;
 
-  gap: 6px;
+  flex: 1;
+
+  min-width: 0;
+
+  margin-left: auto;
+}
+
+
+.desktop-navigation ul {
+  display: flex;
+
+  flex-direction: row;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  flex-wrap: nowrap;
+
+  gap: clamp(9px, 1.15vw, 24px);
 
   margin: 0;
+
   padding: 0;
 
   list-style: none;
 
-  font-size: 11px;
+  white-space: nowrap;
 }
 
 
-.header ul li {
+.desktop-navigation li {
   margin: 0;
 
-  letter-spacing: 1px;
+  padding: 0;
 
-  color: rgba(255, 255, 255, 0.72);
+  flex-shrink: 0;
+
+  color:
+    rgba(255, 255, 255, 0.72);
+
+  font-size:
+    clamp(8px, 0.78vw, 13px);
 
   font-weight: 500;
+
+  letter-spacing:
+    clamp(0.3px, 0.06vw, 1px);
 
   cursor: pointer;
 }
 
 
-.header ul li a {
+.desktop-navigation li a {
   position: relative;
 
-  display: inline-block;
+  display: inline-flex;
+
+  align-items: center;
 
   color: inherit;
 
@@ -499,187 +344,540 @@
 }
 
 
-/* Subtle underline */
+.desktop-navigation li a:hover {
+  color:
+    var(--accentColor);
 
-.header ul li a::after {
+  transform:
+    translateY(-1px);
+}
+
+
+/* ==========================================================
+   ACTIVE / HOVER LINE
+========================================================== */
+
+.desktop-navigation li a::after {
   content: "";
 
   position: absolute;
 
   left: 0;
-  bottom: -5px;
+
+  bottom: -6px;
 
   width: 0;
+
   height: 1px;
 
-  background: var(--accentColor);
+  background:
+    var(--accentColor);
 
-  transition: width 0.3s ease;
+  box-shadow:
+    0 0 8px
+    rgba(194, 164, 255, 0.7);
+
+  transition:
+    width 0.3s ease;
 }
 
 
-.header ul li a:hover {
-  color: var(--accentColor);
-
-  transform: translateY(-1px);
-}
-
-
-.header ul li a:hover::after {
+.desktop-navigation li a:hover::after {
   width: 100%;
 }
 
 
 /* ==========================================================
-   EMAIL
+   MOBILE MENU BUTTON
 ========================================================== */
 
-.navbar-connect {
-  position: absolute;
-
+.navbar-menu-toggle {
   display: none;
 
-  left: 50%;
-  top: 50%;
+  width: 40px;
+  height: 40px;
 
-  transform: translate(-50%, -50%);
+  margin-left: auto;
 
-  font-size: 13px;
+  padding: 0;
 
-  letter-spacing: 0.8px;
+  border: 0;
 
-  font-weight: 400;
+  background: transparent;
 
-  white-space: nowrap;
+  cursor: pointer;
 
-  color: rgba(255, 255, 255, 0.65);
-
-  text-decoration: none;
-
-  transition:
-    color 0.3s ease;
-}
-
-
-.navbar-connect:hover {
-  color: var(--accentColor);
-}
-
-
-/* ==========================================================
-   PROFILE IMAGE
-========================================================== */
-
-.navbar-title {
-  display: flex;
+  flex-shrink: 0;
 
   align-items: center;
   justify-content: center;
 
-  width: 42px;
-  height: 42px;
+  flex-direction: column;
 
-  overflow: visible;
+  gap: 5px;
 
-  border-radius: 50%;
-
-  text-decoration: none;
-
-  flex-shrink: 0;
+  z-index: 10002;
 }
 
 
-.navbar-profile-image {
+.navbar-menu-toggle span {
   display: block;
 
-  width: 100%;
-  height: 100%;
+  width: 22px;
+  height: 1px;
 
-  object-fit: cover;
-
-  border-radius: 50%;
-
-  user-select: none;
-
-  -webkit-user-drag: none;
-
-  border: 1px solid rgba(194, 164, 255, 0.35);
-
-  box-shadow:
-    0 0 15px rgba(194, 164, 255, 0.12);
+  background:
+    rgba(255, 255, 255, 0.9);
 
   transition:
     transform 0.35s ease,
-    border-color 0.35s ease,
-    box-shadow 0.35s ease;
+    opacity 0.25s ease,
+    width 0.35s ease;
 }
 
 
-.navbar-profile-image:hover {
-  transform: scale(1.08);
-
-  border-color: var(--accentColor);
+.navbar-menu-toggle:hover span {
+  background:
+    var(--accentColor);
 
   box-shadow:
-    0 0 22px rgba(194, 164, 255, 0.3);
+    0 0 8px
+    rgba(194, 164, 255, 0.6);
 }
 
 
 /* ==========================================================
-   TABLET / SMALL DESKTOP
+   MOBILE MENU → CLOSE ICON
 ========================================================== */
 
-@media only screen and (min-width: 500px) {
-
-  .header {
-    padding: 24px 0;
-  }
-
-  .header ul {
-    flex-direction: row;
-
-    align-items: center;
-
-    gap: 28px;
-
-    font-size: 13px;
-  }
-
-  .header ul li {
-    color: rgba(255, 255, 255, 0.78);
-  }
-
-  .navbar-profile-image {
-    width: 44px;
-    height: 44px;
-  }
-
+.navbar-menu-toggle-open span:nth-child(1) {
+  transform:
+    translateY(6px)
+    rotate(45deg);
 }
 
-@keyframes navbarOrbitDotTablet {
+
+.navbar-menu-toggle-open span:nth-child(2) {
+  opacity: 0;
+  width: 0;
+}
+
+
+.navbar-menu-toggle-open span:nth-child(3) {
+  transform:
+    translateY(-6px)
+    rotate(-45deg);
+}
+
+
+/* ==========================================================
+   MOBILE NAVIGATION OVERLAY
+========================================================== */
+
+.mobile-navigation {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 9998;
+
+  display: none;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background:
+    radial-gradient(
+      circle at 50% 20%,
+      rgba(194, 164, 255, 0.10),
+      transparent 35%
+    ),
+    rgba(7, 5, 9, 0.97);
+
+  backdrop-filter:
+    blur(22px);
+
+  -webkit-backdrop-filter:
+    blur(22px);
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  pointer-events: none;
+
+  transition:
+    opacity 0.35s ease,
+    visibility 0.35s ease;
+}
+
+
+.mobile-navigation-open {
+  opacity: 1;
+
+  visibility: visible;
+
+  pointer-events: auto;
+}
+
+
+.mobile-navigation nav {
+  width: 100%;
+
+  max-width: 520px;
+
+  padding:
+    90px 30px 40px;
+
+  box-sizing: border-box;
+}
+
+
+.mobile-navigation ul {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: stretch;
+
+  gap: 0;
+
+  margin: 0;
+
+  padding: 0;
+
+  list-style: none;
+}
+
+
+.mobile-navigation li {
+  border-bottom:
+    1px solid
+    rgba(255, 255, 255, 0.08);
+
+  opacity: 0;
+
+  transform:
+    translateY(18px);
+
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
+}
+
+
+.mobile-navigation-open li {
+  opacity: 1;
+
+  transform:
+    translateY(0);
+}
+
+
+.mobile-navigation-open li:nth-child(1) {
+  transition-delay: 0.04s;
+}
+
+.mobile-navigation-open li:nth-child(2) {
+  transition-delay: 0.08s;
+}
+
+.mobile-navigation-open li:nth-child(3) {
+  transition-delay: 0.12s;
+}
+
+.mobile-navigation-open li:nth-child(4) {
+  transition-delay: 0.16s;
+}
+
+.mobile-navigation-open li:nth-child(5) {
+  transition-delay: 0.20s;
+}
+
+.mobile-navigation-open li:nth-child(6) {
+  transition-delay: 0.24s;
+}
+
+.mobile-navigation-open li:nth-child(7) {
+  transition-delay: 0.28s;
+}
+
+.mobile-navigation-open li:nth-child(8) {
+  transition-delay: 0.32s;
+}
+
+.mobile-navigation-open li:nth-child(9) {
+  transition-delay: 0.36s;
+}
+
+
+.mobile-navigation a {
+  display: flex;
+
+  align-items: center;
+
+  min-height: 58px;
+
+  padding: 4px 0;
+
+  color:
+    rgba(255, 255, 255, 0.88);
+
+  text-decoration: none;
+
+  font-size:
+    clamp(16px, 4.5vw, 21px);
+
+  font-weight: 500;
+
+  letter-spacing:
+    1.2px;
+
+  transition:
+    color 0.3s ease,
+    padding-left 0.3s ease,
+    text-shadow 0.3s ease;
+}
+
+
+.mobile-navigation a:hover,
+.mobile-navigation a:focus-visible {
+  color:
+    var(--accentColor);
+
+  padding-left: 10px;
+
+  text-shadow:
+    0 0 18px
+    rgba(194, 164, 255, 0.45);
+}
+
+
+/* ==========================================================
+   BODY LOCK WHEN MOBILE MENU IS OPEN
+========================================================== */
+
+body.navbar-menu-open {
+  overflow: hidden;
+}
+
+
+/* ==========================================================
+   DECORATIVE ELEMENTS
+========================================================== */
+
+.nav-fade,
+.landing-circle1,
+.landing-circle2 {
+  pointer-events: none;
+}
+
+
+/* ==========================================================
+   SMALL / MEDIUM MOBILE
+========================================================== */
+
+@media only screen and (max-width: 768px) {
+
+  .header {
+    width:
+      calc(100% - 32px);
+
+    height: 64px;
+
+    padding:
+      12px 0;
+  }
+
+  .navbar-title {
+    width: 38px;
+    height: 38px;
+  }
+
+  .navbar-title::before {
+    width: 50px;
+    height: 50px;
+  }
+
+  .navbar-title::after {
+    animation-name:
+      navbarOrbitDotMobile;
+  }
+
+  .navbar-name {
+    font-size: 11px;
+
+    letter-spacing: 1.3px;
+  }
+
+  .desktop-navigation {
+    display: none;
+  }
+
+  .navbar-menu-toggle {
+    display: flex;
+  }
+
+  .mobile-navigation {
+    display: flex;
+  }
+}
+
+
+@keyframes navbarOrbitDotMobile {
   from {
     transform:
       rotate(0deg)
-      translateX(29px);
+      translateX(25px);
   }
 
   to {
     transform:
       rotate(360deg)
-      translateX(29px);
+      translateX(25px);
   }
 }
 
+
 /* ==========================================================
-   DESKTOP
+   VERY SMALL PHONES
 ========================================================== */
 
-@media only screen and (min-width: 900px) {
+@media only screen and (max-width: 380px) {
 
-  .navbar-connect {
-    display: block;
+  .header {
+    width:
+      calc(100% - 24px);
   }
 
+  .navbar-title {
+    width: 36px;
+    height: 36px;
+  }
+
+  .navbar-name {
+    font-size: 10px;
+
+    letter-spacing: 1px;
+  }
+
+  .mobile-navigation nav {
+    padding:
+      82px 24px 30px;
+  }
+
+  .mobile-navigation a {
+    min-height: 54px;
+
+    font-size: 15px;
+  }
+}
+
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+
+  .header {
+    width:
+      calc(100% - 40px);
+
+    height: 68px;
+
+    padding:
+      13px 0;
+
+    gap: 8px;
+  }
+
+  .navbar-title {
+    width: 40px;
+    height: 40px;
+  }
+
+  .navbar-title::before {
+    width: 52px;
+    height: 52px;
+  }
+
+  .navbar-title::after {
+    animation-name:
+      navbarOrbitDotTablet;
+  }
+
+  .navbar-name {
+    font-size: 10px;
+
+    letter-spacing: 1.1px;
+  }
+
+  .desktop-navigation {
+    margin-left: 8px;
+  }
+
+  .desktop-navigation ul {
+    gap:
+      clamp(7px, 1.1vw, 13px);
+  }
+
+  .desktop-navigation li {
+    font-size:
+      clamp(7px, 1.05vw, 10px);
+
+    letter-spacing:
+      0.3px;
+  }
+}
+
+
+@keyframes navbarOrbitDotTablet {
+  from {
+    transform:
+      rotate(0deg)
+      translateX(26px);
+  }
+
+  to {
+    transform:
+      rotate(360deg)
+      translateX(26px);
+  }
+}
+
+
+/* ==========================================================
+   LAPTOP
+========================================================== */
+
+@media only screen and (min-width: 1025px) and (max-width: 1199px) {
+
+  .header {
+    width:
+      calc(100% - 56px);
+
+    height: 70px;
+
+    padding:
+      14px 0;
+  }
+
+  .navbar-title {
+    width: 42px;
+    height: 42px;
+  }
+
+  .desktop-navigation ul {
+    gap:
+      clamp(9px, 1vw, 15px);
+  }
+
+  .desktop-navigation li {
+    font-size:
+      clamp(8px, 0.82vw, 11px);
+  }
 }
 
 
@@ -690,41 +888,62 @@
 @media only screen and (min-width: 1200px) {
 
   .header {
-    padding: 30px 0;
+    height: 82px;
+
+    padding:
+      20px 0;
   }
 
-  .header ul {
-    gap: 42px;
-
-    font-size: 14px;
-
-    letter-spacing: 1.1px;
-  }
-
-  .navbar-connect {
-    font-size: 15px;
-  }
-
-  .navbar-profile-image {
+  .navbar-title {
     width: 48px;
     height: 48px;
   }
 
+  .navbar-title::before {
+    width: 62px;
+    height: 62px;
+  }
+
+  .navbar-title::after {
+    animation-name:
+      navbarOrbitDotDesktop;
+  }
+
+  .navbar-name {
+    font-size: 13px;
+
+    letter-spacing: 1.5px;
+  }
+
+  .desktop-navigation ul {
+    gap:
+      clamp(15px, 1.45vw, 30px);
+  }
+
+  .desktop-navigation li {
+    font-size:
+      clamp(10px, 0.78vw, 13px);
+
+    letter-spacing:
+      0.5px;
+  }
 }
 
-@keyframes navbarOrbitDesktop {
+
+@keyframes navbarOrbitDotDesktop {
   from {
     transform:
       rotate(0deg)
-      translateX(32px);
+      translateX(31px);
   }
 
   to {
     transform:
       rotate(360deg)
-      translateX(32px);
+      translateX(31px);
   }
 }
+
 
 /* ==========================================================
    EXTRA LARGE DESKTOP
@@ -732,48 +951,12 @@
 
 @media only screen and (min-width: 1600px) {
 
-  .header ul {
-    gap: 52px;
-
-    font-size: 15px;
+  .desktop-navigation ul {
+    gap:
+      clamp(20px, 1.55vw, 36px);
   }
 
-  .navbar-connect {
-    font-size: 15px;
+  .desktop-navigation li {
+    font-size: 13px;
   }
-
-}
-
-
-/* ==========================================================
-   MOBILE
-========================================================== */
-
-@media only screen and (max-width: 499px) {
-
-  .header {
-    padding: 14px 0;
-  }
-
-  .navbar-title {
-    width: 38px;
-    height: 38px;
-  }
-
-  .navbar-profile-image {
-    width: 38px;
-    height: 38px;
-  }
-
-}
-
-
-/* ==========================================================
-   NAVBAR DECORATIVE ELEMENTS
-========================================================== */
-
-.nav-fade,
-.landing-circle1,
-.landing-circle2 {
-  pointer-events: none;
 }

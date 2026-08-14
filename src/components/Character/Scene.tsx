@@ -47,12 +47,6 @@ const Scene = () => {
      * ========================================================
      * LIFECYCLE GUARD
      * ========================================================
-     *
-     * This is extremely important.
-     *
-     * If React unmounts this component while the
-     * encrypted GLTF is still loading, the old load
-     * must NOT add a character when it finishes.
      */
 
     let cancelled = false;
@@ -65,9 +59,6 @@ const Scene = () => {
 
     const scene = sceneRef.current;
 
-    /*
-     * Remove any previous objects from the scene.
-     */
     while (scene.children.length > 0) {
       scene.remove(scene.children[0]);
     }
@@ -75,6 +66,7 @@ const Scene = () => {
     /*
      * Kill ONLY character-related ScrollTriggers.
      */
+
     const characterTriggerIds = [
       "character-landing",
       "character-about",
@@ -202,7 +194,9 @@ const Scene = () => {
       | THREE.AnimationMixer
       | null = null;
 
-    let animationsCleanup: (() => void) | null = null;
+    let animationsCleanup:
+      | (() => void)
+      | null = null;
 
     const clock =
       new THREE.Clock();
@@ -249,10 +243,8 @@ const Scene = () => {
     loadCharacter()
       .then((gltf) => {
         /*
-         * IMPORTANT:
-         *
          * If this component has already been
-         * cleaned up, DO NOT add this model.
+         * cleaned up, do not add the model.
          */
 
         if (cancelled) {
@@ -326,7 +318,9 @@ const Scene = () => {
 
         mixer =
           animations.mixer;
-        animationsCleanup = animations.cleanup;
+
+        animationsCleanup =
+          animations.cleanup;
 
         /*
          * ====================================================
@@ -346,10 +340,6 @@ const Scene = () => {
         /*
          * ====================================================
          * GSAP
-         *
-         * IMPORTANT:
-         * Create timelines AFTER the model
-         * has actually been added to the scene.
          * ====================================================
          */
 
@@ -379,10 +369,6 @@ const Scene = () => {
             light.turnOnLights();
 
             animations.startIntro();
-
-            /*
-             * Refresh only after everything exists.
-             */
 
             requestAnimationFrame(() => {
               if (!cancelled) {
@@ -425,7 +411,10 @@ const Scene = () => {
       handleMouseMove(
         event,
         (x, y) => {
-          mouse = { x, y };
+          mouse = {
+            x,
+            y,
+          };
         }
       );
     };
@@ -434,11 +423,21 @@ const Scene = () => {
      * ========================================================
      * TOUCH
      * ========================================================
+     *
+     * IMPORTANT:
+     *
+     * Do not dynamically attach touchmove to
+     * event.target.
+     *
+     * That caused the listener to be attached to
+     * whichever child element received the initial touch.
+     *
+     * We instead attach one stable passive listener
+     * directly to landingDiv.
+     *
+     * Passive listeners allow the browser to maintain
+     * normal vertical scrolling.
      */
-
-    let debounce:
-      | ReturnType<typeof setTimeout>
-      | undefined;
 
     const onTouchMove = (
       event: TouchEvent
@@ -446,23 +445,12 @@ const Scene = () => {
       handleTouchMove(
         event,
         (x, y) => {
-          mouse = { x, y };
+          mouse = {
+            x,
+            y,
+          };
         }
       );
-    };
-
-    const onTouchStart = (
-      event: TouchEvent
-    ) => {
-      const element =
-        event.target as HTMLElement;
-
-      debounce = setTimeout(() => {
-        element?.addEventListener(
-          "touchmove",
-          onTouchMove
-        );
-      }, 200);
     };
 
     const onTouchEnd = () => {
@@ -504,13 +492,19 @@ const Scene = () => {
 
     if (landingDiv) {
       landingDiv.addEventListener(
-        "touchstart",
-        onTouchStart
+        "touchmove",
+        onTouchMove,
+        {
+          passive: true,
+        }
       );
 
       landingDiv.addEventListener(
         "touchend",
-        onTouchEnd
+        onTouchEnd,
+        {
+          passive: true,
+        }
       );
     }
 
@@ -611,6 +605,7 @@ const Scene = () => {
        */
 
       cancelled = true;
+
       progress.clear();
 
       /*
@@ -620,14 +615,6 @@ const Scene = () => {
       cancelAnimationFrame(
         animationFrameId
       );
-
-      /*
-       * Clear timeout.
-       */
-
-      if (debounce) {
-        clearTimeout(debounce);
-      }
 
       /*
        * Remove events.
@@ -643,20 +630,20 @@ const Scene = () => {
         onResize
       );
 
+      /*
+       * Remove exactly the touch listeners
+       * that were actually added.
+       */
+
       if (landingDiv) {
         landingDiv.removeEventListener(
-          "touchstart",
-          onTouchStart
+          "touchmove",
+          onTouchMove
         );
 
         landingDiv.removeEventListener(
           "touchend",
           onTouchEnd
-        );
-
-        landingDiv.removeEventListener(
-          "touchmove",
-          onTouchMove
         );
       }
 
@@ -733,15 +720,27 @@ const Scene = () => {
       }
 
       /*
-       * Stop character-specific animation resources.
+       * Stop character-specific
+       * animation resources.
        */
 
-      const intensityInterval = loadedCharacter?.userData.intensityInterval;
-      if (typeof intensityInterval === "number") {
-        window.clearInterval(intensityInterval);
+      const intensityInterval =
+        loadedCharacter?.userData
+          .intensityInterval;
+
+      if (
+        typeof intensityInterval ===
+        "number"
+      ) {
+        window.clearInterval(
+          intensityInterval
+        );
       }
 
-      loadedCharacter?.userData.screenLightFlickerTimeline?.kill?.();
+      loadedCharacter?.userData
+        .screenLightFlickerTimeline
+        ?.kill?.();
+
       animationsCleanup?.();
 
       /*
@@ -768,13 +767,13 @@ const Scene = () => {
 
   return (
     <div
-  ref={canvasDiv}
-  className="character-model"
-  style={{
-    width: "100%",
-    height: "100%",
-  }}
->
+      ref={canvasDiv}
+      className="character-model"
+      style={{
+        width: "100%",
+        height: "100%",
+      }}
+    >
       <div
         ref={hoverDivRef}
         style={{

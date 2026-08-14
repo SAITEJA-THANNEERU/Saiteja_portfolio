@@ -5,19 +5,37 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 /**
- * Controls the 3D character throughout the main portfolio.
+ * ============================================================
+ * CHARACTER SCROLL SYSTEM
+ * ============================================================
  *
- * Character lifecycle:
+ * Character lifecycle on ALL devices:
  *
- * Landing     -> visible
- * About       -> visible
- * WHAT I BUILD   -> visible
- * After What  -> hidden
+ * LANDING
+ *   ↓
+ * visible + animated
  *
- * Scrolling back up:
+ * ABOUT
+ *   ↓
+ * visible + animated
  *
- * WHAT I BUILD   -> character becomes visible again
+ * WHAT I BUILD
+ *   ↓
+ * visible + animated
+ *
+ * CAREER / EXPERIENCE
+ *   ↓
+ * hidden
+ *
+ * Scrolling upward reverses the visibility automatically.
+ *
+ * Desktop / Laptop / Tablet / Mobile all use the same
+ * ScrollTrigger lifecycle.
+ *
+ * Only device-specific POSITIONING is different.
+ * ============================================================
  */
+
 export function setCharTimeline(
   character: THREE.Object3D<THREE.Object3DEventMap> | null,
   camera: THREE.PerspectiveCamera
@@ -37,15 +55,10 @@ export function setCharTimeline(
     return;
   }
 
+  const isDesktop = window.innerWidth > 1024;
+
   /*
-   * Reset the character to its normal CSS position.
-   *
-   * IMPORTANT:
-   * Landing.css already contains:
-   *
-   * transform: translateX(-50%);
-   *
-   * Therefore we do NOT use xPercent:-50 here.
+   * Make sure every device starts with the character visible.
    */
   gsap.set(characterModel, {
     x: 0,
@@ -67,6 +80,7 @@ export function setCharTimeline(
 
   /* ==========================================================
      LANDING TIMELINE
+     SAME ON ALL DEVICES
   ========================================================== */
 
   const tl1 = gsap.timeline({
@@ -82,6 +96,7 @@ export function setCharTimeline(
 
   /* ==========================================================
      ABOUT TIMELINE
+     SAME ON ALL DEVICES
   ========================================================== */
 
   const tl2 = gsap.timeline({
@@ -97,18 +112,19 @@ export function setCharTimeline(
 
   /* ==========================================================
      WHAT I BUILD TIMELINE
+     SAME ON ALL DEVICES
   ========================================================== */
 
   const tl3 = gsap.timeline({
-  scrollTrigger: {
-    id: "character-what-build",
-    trigger: ".what-section",
-    start: "top top",
-    end: "bottom top",
-    scrub: true,
-    invalidateOnRefresh: true,
-  },
-});
+    scrollTrigger: {
+      id: "character-what-build",
+      trigger: ".what-section",
+      start: "top top",
+      end: "bottom top",
+      scrub: true,
+      invalidateOnRefresh: true,
+    },
+  });
 
   /* ==========================================================
      CHARACTER PARTS
@@ -180,7 +196,8 @@ export function setCharTimeline(
           delay: () => Math.random() * 0.1,
         });
 
-      character.userData.screenLightFlickerTimeline = flickerTimeline;
+      character.userData.screenLightFlickerTimeline =
+        flickerTimeline;
 
       screenLight = object;
     }
@@ -193,300 +210,471 @@ export function setCharTimeline(
   const neckBone = character.getObjectByName("spine005");
 
   /* ==========================================================
-     DESKTOP
+     LANDING ANIMATION
+     ALL DEVICES
   ========================================================== */
 
-  if (window.innerWidth > 1024) {
-    /* ========================================================
-       LANDING
-    ======================================================== */
+  tl1
+    .fromTo(
+      character.rotation,
+      {
+        y: 0,
+      },
+      {
+        y: 0.7,
+        duration: 1,
+      },
+      0
+    )
 
-    tl1
-      .fromTo(
-        character.rotation,
-        { y: 0 },
-        {
-          y: 0.7,
-          duration: 1,
-        },
-        0
-      )
+    .to(
+      camera.position,
+      {
+        z: 22,
+        duration: 1,
+      },
+      0
+    )
 
-      .to(
-        camera.position,
-        {
-          z: 22,
-          duration: 1,
-        },
-        0
-      )
+    /*
+     * Desktop / Laptop:
+     * move character toward the left.
+     *
+     * Mobile / Tablet:
+     * keep character centered.
+     */
+    .fromTo(
+      characterModel,
+      {
+        x: 0,
+        y: 0,
+      },
+      {
+        x: isDesktop ? "-25vw" : "0vw",
+        y: 0,
+        duration: 1,
+        ease: "power2.out",
+      },
+      0
+    )
 
-      /*
-       * Keep character container centered.
-       *
-       * Do NOT use xPercent here.
-       */
-      .fromTo(
-  characterModel,
-  {
-    x: 0,
-    y: 0,
-  },
-  {
-    x: "-25vw",
-    y: 0,
-    duration: 1,
-    ease: "power2.out",
-  },
-  0
-)
+    .to(
+      ".landing-container",
+      {
+        opacity: 0,
+        duration: 0.4,
+      },
+      0
+    )
 
-      .to(
-        ".landing-container",
-        {
-          opacity: 0,
-          duration: 0.4,
-        },
-        0
-      )
+    .to(
+      ".landing-container",
+      {
+        y: "40%",
+        duration: 0.8,
+      },
+      0
+    )
 
-      .to(
-        ".landing-container",
-        {
-          y: "40%",
-          duration: 0.8,
-        },
-        0
-      )
+    .fromTo(
+      ".about-me",
+      {
+        y: "-50%",
+      },
+      {
+        y: "0%",
+      },
+      0
+    );
 
-      .fromTo(
-        ".about-me",
-        {
-          y: "-50%",
-        },
-        {
-          y: "0%",
-        },
-        0
-      );
+  /* ==========================================================
+     DESKTOP LANDING POSITION
+  ========================================================== */
 
-      ScrollTrigger.create({
-  id: "character-landing-position",
-  trigger: ".landing-section",
-  start: "top top",
-  end: "bottom top",
-  scrub: true,
-  onUpdate: (self) => {
-    gsap.set(characterModel, {
-      x: `${-25 * self.progress}vw`,
-    });
-  },
-});
+  /*
+   * This keeps the desktop/laptop movement exactly as before.
+   *
+   * Mobile/tablet do not need this extra position controller.
+   */
 
-    /* ========================================================
-       ABOUT
-    ======================================================== */
+  if (isDesktop) {
+    ScrollTrigger.create({
+      id: "character-landing-position",
+      trigger: ".landing-section",
+      start: "top top",
+      end: "bottom top",
+      scrub: true,
+      invalidateOnRefresh: true,
 
-    tl2
-      .to(
-        camera.position,
-        {
-          z: 75,
-          y: 8.4,
-          duration: 6,
-          delay: 2,
-          ease: "power3.inOut",
-        },
-        0
-      )
-
-      
-      
-
-     /*
- * Move the character canvas to the left
- * so the About content remains visible
- * on the right.
- */
-
-      .to(
-        character.rotation,
-        {
-          y: 0.92,
-          x: 0.12,
-          delay: 3,
-          duration: 3,
-        },
-        0
-      );
-
-    /* --------------------------------------------------------
-       NECK
-    -------------------------------------------------------- */
-
-    if (neckBone) {
-      tl2.to(
-        neckBone.rotation,
-        {
-          x: 0.6,
-          delay: 2,
-          duration: 3,
-        },
-        0
-      );
-    }
-
-    /* --------------------------------------------------------
-       MONITOR
-    -------------------------------------------------------- */
-
-    const monitorObject = monitor as THREE.Object3D | null;
-    if (monitorObject) {
-      const monitorMesh = monitorObject as THREE.Mesh;
-      const material = monitorMesh.material;
-
-      if (material && !Array.isArray(material)) {
-        tl2.to(
-          material,
-          {
-            opacity: 1,
-            duration: 0.8,
-            delay: 3.2,
-          },
-          0
-        );
-      }
-
-      tl2.fromTo(
-        monitorObject.position,
-        {
-          y: -10,
-          z: 2,
-        },
-        {
-          y: 0,
-          z: 0,
-          delay: 1.5,
-          duration: 3,
-        },
-        0
-      );
-    }
-
-    /* --------------------------------------------------------
-       SCREEN LIGHT
-    -------------------------------------------------------- */
-
-    if (screenLight) {
-      const screenLightMesh = screenLight as THREE.Mesh;
-      const material = screenLightMesh.material;
-
-      if (material && !Array.isArray(material)) {
-        tl2.to(
-          material,
-          {
-            opacity: 1,
-            duration: 0.8,
-            delay: 4.5,
-          },
-          0
-        );
-      }
-    }
-
-    /* --------------------------------------------------------
-       CHARACTER RIM
-    -------------------------------------------------------- */
-
-    const characterRim =
-      document.querySelector(".character-rim");
-
-    if (characterRim) {
-      tl2.fromTo(
-        characterRim,
-        {
-          opacity: 1,
-          scaleX: 1.4,
-        },
-        {
-          opacity: 0,
-          scale: 0,
-          y: "-70%",
-          duration: 5,
-          delay: 2,
-        },
-        0.3
-      );
-    }
-
- /* ========================================================
-   WHAT I BUILD
-   ======================================================== */
-
-tl3
-  .to(
-  characterModel,
-  {
-    y: 0,
-    opacity: 1,
-    visibility: "visible",
-    duration: 2,
-    ease: "power2.out",
-  },
-  0
-)
-  .to(
-    character.rotation,
-    {
-      x: -0.04,
-      duration: 2,
-      delay: 1,
-      ease: "power2.out",
-    },
-    0
-  );
-
-/* ========================================================
-   CHARACTER STOPS AT CAREER
-======================================================== */
-
-ScrollTrigger.create({
-  id: "character-visibility",
-  trigger: ".career-section",
-  start: "top top",
-  onEnter: () => {
-    gsap.to(characterModel, {
-      opacity: 0,
-      visibility: "hidden",
-      duration: 0.3,
-      overwrite: true,
-    });
-  },
-  onLeaveBack: () => {
-    gsap.to(characterModel, {
-      opacity: 1,
-      visibility: "visible",
-      duration: 0.3,
-      overwrite: true,
-    });
-  },
-});
-
-
-  } else {
-    /* ========================================================
-MOBILE / TABLET
-    ======================================================== */
-
-    gsap.set(characterModel, {
-      opacity: 0,
-      visibility: "hidden",
-      pointerEvents: "none",
+      onUpdate: (self) => {
+        gsap.set(characterModel, {
+          x: `${-25 * self.progress}vw`,
+        });
+      },
     });
   }
 
   /* ==========================================================
-STORE CLEANUP INFORMATION
+     ABOUT ANIMATION
+     ALL DEVICES
+  ========================================================== */
+
+  tl2
+    .to(
+      camera.position,
+      {
+        z: 75,
+        y: 8.4,
+        duration: 6,
+        delay: 2,
+        ease: "power3.inOut",
+      },
+      0
+    )
+
+    .to(
+      character.rotation,
+      {
+        y: 0.92,
+        x: 0.12,
+        delay: 3,
+        duration: 3,
+      },
+      0
+    );
+
+  /* ==========================================================
+     NECK
+  ========================================================== */
+
+  if (neckBone) {
+    tl2.to(
+      neckBone.rotation,
+      {
+        x: 0.6,
+        delay: 2,
+        duration: 3,
+      },
+      0
+    );
+  }
+
+  /* ==========================================================
+     MONITOR
+  ========================================================== */
+
+  const monitorObject =
+    monitor as THREE.Object3D | null;
+
+  if (monitorObject) {
+    const monitorMesh =
+      monitorObject as THREE.Mesh;
+
+    const material =
+      monitorMesh.material;
+
+    if (
+      material &&
+      !Array.isArray(material)
+    ) {
+      tl2.to(
+        material,
+        {
+          opacity: 1,
+          duration: 0.8,
+          delay: 3.2,
+        },
+        0
+      );
+    }
+
+    tl2.fromTo(
+      monitorObject.position,
+      {
+        y: -10,
+        z: 2,
+      },
+      {
+        y: 0,
+        z: 0,
+        delay: 1.5,
+        duration: 3,
+      },
+      0
+    );
+  }
+
+  /* ==========================================================
+     SCREEN LIGHT
+  ========================================================== */
+
+  if (screenLight) {
+    const screenLightMesh =
+      screenLight as THREE.Mesh;
+
+    const material =
+      screenLightMesh.material;
+
+    if (
+      material &&
+      !Array.isArray(material)
+    ) {
+      tl2.to(
+        material,
+        {
+          opacity: 1,
+          duration: 0.8,
+          delay: 4.5,
+        },
+        0
+      );
+    }
+  }
+
+  /* ==========================================================
+     CHARACTER RIM
+  ========================================================== */
+
+  const characterRim =
+    document.querySelector(".character-rim");
+
+  if (characterRim) {
+    tl2.fromTo(
+      characterRim,
+      {
+        opacity: 1,
+        scaleX: 1.4,
+      },
+      {
+        opacity: 0,
+        scale: 0,
+        y: "-70%",
+        duration: 5,
+        delay: 2,
+      },
+      0.3
+    );
+  }
+
+  /* ==========================================================
+     WHAT I BUILD
+     ALL DEVICES
+  ========================================================== */
+
+  tl3
+    .to(
+      characterModel,
+      {
+        y: 0,
+        opacity: 1,
+        visibility: "visible",
+        duration: 2,
+        ease: "power2.out",
+      },
+      0
+    )
+
+    .to(
+      character.rotation,
+      {
+        x: -0.04,
+        duration: 2,
+        delay: 1,
+        ease: "power2.out",
+      },
+      0
+    );
+
+  /* ==========================================================
+     CHARACTER VISIBILITY
+     SAME RULE FOR EVERY DEVICE
+  ========================================================== */
+
+  /*
+   * IMPORTANT:
+   *
+   * This controls ONLY character visibility.
+   *
+   * It does NOT modify:
+   *
+   * - character rotation
+   * - camera animation
+   * - neck animation
+   * - monitor animation
+   * - screen-light animation
+   * - What I Build animation
+   *
+   * The character stays visible until the TOP of the
+   * Career section reaches the TOP of the viewport.
+   *
+   * At that exact point:
+   *
+   *     Career top <= viewport top
+   *              ↓
+   *     Character disappears
+   *
+   * When scrolling back upward:
+   *
+   *     Career top > viewport top
+   *              ↓
+   *     Character appears again
+   */
+
+  /*
+   * Remove any previous visibility trigger.
+   *
+   * This is important during Vite hot reloads and prevents
+   * multiple visibility controllers fighting each other.
+   */
+  const existingCharacterVisibility =
+    ScrollTrigger.getById("character-visibility");
+
+  if (existingCharacterVisibility) {
+    existingCharacterVisibility.kill();
+  }
+
+  /* ==========================================================
+     CHARACTER VISIBILITY TRIGGER
+  ========================================================== */
+
+  ScrollTrigger.create({
+    id: "character-visibility",
+
+    /*
+     * Use the actual Career section as the trigger.
+     */
+    trigger: ".career-section",
+
+    /*
+     * Start tracking when Career enters the viewport.
+     */
+    start: "top bottom",
+
+    /*
+     * Stop tracking after Career has completely passed
+     * through the viewport.
+     */
+    end: "bottom top",
+
+    invalidateOnRefresh: true,
+
+    /*
+     * Check the REAL position of Career on every scroll
+     * update.
+     *
+     * This avoids relying on onEnter timing alone.
+     */
+    onUpdate: (self) => {
+      const careerSection =
+        self.trigger as HTMLElement;
+
+      if (!careerSection) {
+        return;
+      }
+
+      /*
+       * Get the actual position relative to the viewport.
+       */
+      const careerTop =
+        careerSection.getBoundingClientRect().top;
+
+      /*
+       * ======================================================
+       * CAREER HAS REACHED THE TOP
+       * ======================================================
+       *
+       * This is the exact point where the character should
+       * disappear.
+       */
+      if (careerTop <= 0) {
+        gsap.set(characterModel, {
+          opacity: 0,
+          visibility: "hidden",
+        });
+
+        return;
+      }
+
+      /*
+       * ======================================================
+       * CAREER HAS NOT REACHED THE TOP YET
+       * ======================================================
+       *
+       * Keep the character visible.
+       */
+      gsap.set(characterModel, {
+        opacity: 1,
+        visibility: "visible",
+      });
+    },
+
+    /*
+     * ========================================================
+     * SCROLLING BACK UP
+     * ========================================================
+     *
+     * When Career moves back below the viewport top,
+     * the character becomes visible again.
+     */
+    onLeaveBack: () => {
+      gsap.set(characterModel, {
+        opacity: 1,
+        visibility: "visible",
+      });
+    },
+
+    /*
+     * ========================================================
+     * CAREER COMPLETELY PASSED
+     * ========================================================
+     *
+     * Once Career has completely moved through the viewport,
+     * keep the character hidden.
+     */
+    onLeave: () => {
+      gsap.set(characterModel, {
+        opacity: 0,
+        visibility: "hidden",
+      });
+    },
+
+    /*
+     * ========================================================
+     * PAGE REFRESH
+     * ========================================================
+     *
+     * Correct the initial state if the page is refreshed
+     * while Career is already visible.
+     */
+    onRefresh: () => {
+      const careerSection =
+        document.querySelector(
+          ".career-section"
+        ) as HTMLElement | null;
+
+      if (!careerSection) {
+        return;
+      }
+
+      const careerTop =
+        careerSection.getBoundingClientRect().top;
+
+      if (careerTop <= 0) {
+        gsap.set(characterModel, {
+          opacity: 0,
+          visibility: "hidden",
+        });
+      } else {
+        gsap.set(characterModel, {
+          opacity: 1,
+          visibility: "visible",
+        });
+      }
+    },
+  });
+
+  /* ==========================================================
+     STORE CLEANUP INFORMATION
   ========================================================== */
 
   character.userData.intensityInterval =
@@ -509,6 +697,10 @@ export function setAllTimeline() {
     },
   });
 
+  /* ==========================================================
+     CAREER TIMELINE
+  ========================================================== */
+
   careerTimeline
     .fromTo(
       ".career-timeline",
@@ -522,6 +714,10 @@ export function setAllTimeline() {
       },
       0
     )
+
+    /* --------------------------------------------------------
+       CAREER INFORMATION
+    -------------------------------------------------------- */
 
     .fromTo(
       ".career-timeline",
@@ -548,6 +744,10 @@ export function setAllTimeline() {
       0
     )
 
+    /* --------------------------------------------------------
+       CAREER DOT
+    -------------------------------------------------------- */
+
     .fromTo(
       ".career-dot",
       {
@@ -561,7 +761,16 @@ export function setAllTimeline() {
       0
     );
 
+  /* ==========================================================
+     CAREER SECTION POSITION
+  ========================================================== */
+
   if (window.innerWidth > 1024) {
+    /*
+     * Desktop / Laptop
+     *
+     * Preserve existing desktop movement.
+     */
     careerTimeline.fromTo(
       ".career-section",
       {
@@ -574,10 +783,12 @@ export function setAllTimeline() {
       },
       0
     );
-
-
-
   } else {
+    /*
+     * Tablet / Mobile
+     *
+     * Keep Career in its normal position.
+     */
     careerTimeline.fromTo(
       ".career-section",
       {
