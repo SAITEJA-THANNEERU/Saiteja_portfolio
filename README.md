@@ -1,6 +1,3 @@
-Absolutely. Your current README is too generic for the portfolio you have built now. It doesn't showcase the **3D character, loading experience, GSAP animations, Lenis smooth scrolling, responsive layouts, career/education sections, projects, certifications, and interactive UI** that are actually part of the project.
-
-Below is a **complete replacement `README.md`** tailored to your current portfolio.
 
 ````markdown
 # 🚀 SAI TEJA — 3D Developer Portfolio
