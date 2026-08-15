@@ -1058,5 +1058,4 @@ Interested in:
 <p align="center">
   ⭐ If you like the project, consider starring the repository.
 </p>
-```
 
