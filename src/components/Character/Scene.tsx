@@ -546,48 +546,89 @@ const Scene = () => {
      * ========================================================
      */
 
-    let animationFrameId =
-      0;
+let animationFrameId = 0;
 
-    const animate = () => {
-      if (cancelled) {
-        return;
-      }
+let isTouching = false;
 
-      animationFrameId =
-        requestAnimationFrame(
-          animate
-        );
+const onTouchStartForRender = () => {
+  isTouching = true;
+};
 
-      if (headBone) {
-        handleHeadRotation(
-          headBone,
-          mouse.x,
-          mouse.y,
-          interpolation.x,
-          interpolation.y,
-          THREE.MathUtils.lerp
-        );
+const onTouchEndForRender = () => {
+  isTouching = false;
+};
 
-        light.setPointLight(
-          screenLight
-        );
-      }
+document.addEventListener(
+  "touchstart",
+  onTouchStartForRender,
+  { passive: true }
+);
 
-      const delta =
-        clock.getDelta();
+document.addEventListener(
+  "touchend",
+  onTouchEndForRender,
+  { passive: true }
+);
 
-      if (mixer) {
-        mixer.update(delta);
-      }
+document.addEventListener(
+  "touchcancel",
+  onTouchEndForRender,
+  { passive: true }
+);
 
-      renderer.render(
-        scene,
-        camera
-      );
-    };
+const animate = () => {
+  if (cancelled) {
+    return;
+  }
 
-    animate();
+  animationFrameId =
+    requestAnimationFrame(
+      animate
+    );
+
+  /*
+   * IMPORTANT:
+   *
+   * While the user is actively touching
+   * the screen, let the browser prioritize
+   * native touch scrolling.
+   *
+   * The 3D model remains visible in its
+   * current rendered state.
+   */
+  if (isTouching) {
+    return;
+  }
+
+  if (headBone) {
+    handleHeadRotation(
+      headBone,
+      mouse.x,
+      mouse.y,
+      interpolation.x,
+      interpolation.y,
+      THREE.MathUtils.lerp
+    );
+
+    light.setPointLight(
+      screenLight
+    );
+  }
+
+  const delta =
+    clock.getDelta();
+
+  if (mixer) {
+    mixer.update(delta);
+  }
+
+  renderer.render(
+    scene,
+    camera
+  );
+};
+
+animate();
 
     /*
      * ========================================================
@@ -624,6 +665,21 @@ const Scene = () => {
         "mousemove",
         onMouseMove
       );
+
+      document.removeEventListener(
+  "touchstart",
+  onTouchStartForRender
+);
+
+document.removeEventListener(
+  "touchend",
+  onTouchEndForRender
+);
+
+document.removeEventListener(
+  "touchcancel",
+  onTouchEndForRender
+);
 
       window.removeEventListener(
         "resize",
