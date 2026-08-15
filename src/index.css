@@ -37,6 +37,13 @@ body {
   overflow: hidden;
 }
 
+@media (pointer: coarse) {
+  html,
+  body {
+    overflow-y: auto !important;
+  }
+}
+
 *,
 *::before,
 *::after {
