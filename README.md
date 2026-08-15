@@ -1,10 +1,9 @@
 
-````markdown
 # 🚀 SAI TEJA — 3D Developer Portfolio
 
 [![3D Developer Portfolio](./Screenshot_2026-04-08_22-10-00.png)](./screen-capture%20(13).webm)
 
-A premium, interactive **3D developer portfolio website** built with **React, TypeScript, Three.js, GSAP, WebGL, and Lenis**.
+A premium, interactive **3D developer portfolio website** built with **React, TypeScript, Three.js, WebGL, GSAP, ScrollTrigger, and Lenis**.
 
 The portfolio combines a cinematic loading experience, interactive 3D character, smooth scrolling, animated sections, responsive layouts, and a modern dark visual system to create a memorable developer experience.
 
@@ -15,7 +14,7 @@ The portfolio combines a cinematic loading experience, interactive 3D character,
 ## 🌐 Live Portfolio
 
 **Portfolio:**  
-https://saitejathanneeru.in/
+https://saiteja-portfolio-mikey.vercel.app/
 
 **GitHub:**  
 https://github.com/SAITEJA-THANNEERU
@@ -23,8 +22,6 @@ https://github.com/SAITEJA-THANNEERU
 **LinkedIn:**  
 https://linkedin.com/in/saiteja-thanneeru
 
-**SKAITE Technologies:**  
-https://skaitetechnologies.in/
 
 ---
 
@@ -32,7 +29,7 @@ https://skaitetechnologies.in/
 
 ## 🎬 Cinematic Loading Experience
 
-The portfolio begins with a custom loading experience instead of immediately displaying the landing page.
+The portfolio begins with a custom loading experience before displaying the main landing page.
 
 Features include:
 
@@ -47,13 +44,13 @@ Features include:
 - Smooth loading-screen exit transition
 - Landing page reveal after initialization
 
-The loading experience is designed to make the transition into the portfolio feel intentional rather than instantaneous.
+The loading experience creates a cinematic transition into the portfolio rather than immediately displaying the landing page.
 
 ---
 
 # 🤖 Interactive 3D Character
 
-The landing page features an interactive **3D character rendered with Three.js/WebGL**.
+The landing page features an interactive **3D character rendered using Three.js and WebGL**.
 
 The character supports:
 
@@ -66,34 +63,35 @@ The character supports:
 - GLTF/GLB model rendering
 - Bone-based animation control
 
-The animation system separates specific bone animations to prevent unrelated animations from interfering with the character's body movement.
+The animation system separates specific bone animations so individual animations can run without unnecessarily controlling the entire character.
 
 ---
 
 # 🖱️ Smooth Scrolling
 
-The portfolio uses **Lenis** together with **GSAP** and **ScrollTrigger** for smooth desktop scrolling and synchronized scroll-based animations.
+The portfolio uses **Lenis** together with **GSAP** and **ScrollTrigger** for smooth scrolling and scroll-based animations.
 
-The scrolling system is designed to provide:
+The scrolling system provides:
 
 - Smooth wheel scrolling
 - Natural easing
+- Scroll-based animations
 - Section transitions
 - GSAP synchronization
 - ScrollTrigger integration
 - Responsive behavior
 - Native touch scrolling on mobile devices
 
-The animation loop is synchronized through GSAP's ticker to reduce unnecessary animation loops and improve consistency.
+GSAP's ticker is synchronized with Lenis to maintain a consistent animation loop.
 
 ---
 
 # 🎨 Modern Visual Design
 
-The portfolio uses a dark, futuristic visual system with:
+The portfolio uses a dark, futuristic visual system featuring:
 
 - Near-black backgrounds
-- Purple/lavender accent colors
+- Purple and lavender accent colors
 - Soft gradients
 - Atmospheric glows
 - Glass-like surfaces
@@ -102,7 +100,7 @@ The portfolio uses a dark, futuristic visual system with:
 - Hover interactions
 - Minimal editorial layouts
 
-The design intentionally avoids a traditional resume-style portfolio and focuses on creating an immersive digital experience.
+The design is intentionally different from a traditional resume-style portfolio and focuses on creating an immersive digital experience.
 
 ---
 
@@ -116,7 +114,7 @@ Supported layouts include:
 - Large mobile phones
 - Tablets
 - Tablet landscape
-- Laptop screens
+- Laptops
 - 15.6-inch laptops
 - Desktop monitors
 - Large desktop displays
@@ -136,35 +134,27 @@ Responsive behavior includes:
 
 ---
 
-# 🧭 Navigation
+# 🧭 Responsive Navigation
 
 The portfolio includes a responsive navigation system.
 
 ### Desktop
 
-Desktop displays use a horizontal navigation bar with links to:
-
-- Home
-- About
-- What I Build
-- Career
-- Education
-- Tech Stack
-- Work
-- Game / Hire
-- Contact
+Large screens use a horizontal navigation bar with access to the major portfolio sections.
 
 ### Mobile
 
 Smaller devices use a dedicated mobile navigation menu to preserve screen space and usability.
 
+The navigation also includes an interactive profile-image viewer.
+
 ---
 
 # 🖼️ Profile Image Viewer
 
-The profile image in the navigation can be clicked to open an image viewer.
+The profile image in the navigation can be clicked to open a dedicated image viewer.
 
-The viewer supports:
+The viewer is designed to work across:
 
 - Desktop
 - Laptop
@@ -173,7 +163,7 @@ The viewer supports:
 - Portrait
 - Landscape
 
-The existing navigation functionality remains intact while the image can be viewed independently.
+The existing navigation functionality remains intact while allowing visitors to view the profile image separately.
 
 ---
 
@@ -188,8 +178,8 @@ with a focus on:
 - AI Engineering
 - Data Analysis
 - Software Development
-- Full-stack development
-- Interactive web experiences
+- Full-Stack Development
+- Interactive Web Experiences
 
 The landing section also contains animated typography and an interactive 3D character.
 
@@ -197,9 +187,9 @@ The landing section also contains animated typography and an interactive 3D char
 
 # 💼 Career & Experience
 
-The career section presents professional experience using an animated editorial timeline.
+The career section presents professional experience through an animated editorial timeline.
 
-Each experience includes:
+Each experience can include:
 
 - Position
 - Organization
@@ -207,10 +197,9 @@ Each experience includes:
 - Description
 - Timeline position
 - Interactive styling
+- External company link
 
-External company links can also be displayed where applicable.
-
-For example:
+One of the featured organizations is:
 
 **SKAITE Technologies**
 
@@ -222,9 +211,7 @@ https://skaitetechnologies.in/
 
 # 🎓 Education
 
-The education section presents academic history in chronological timeline form.
-
-Current education history includes:
+The education section presents academic history in a timeline format.
 
 ### Bachelor of Technology
 
@@ -254,9 +241,9 @@ MPC
 
 ---
 
-# 🧠 Tech Stack
+# 🧠 Technical Skills
 
-The portfolio presents technical skills and technologies through an interactive technology section.
+The portfolio presents technical skills across multiple areas.
 
 ### Programming
 
@@ -308,29 +295,37 @@ The portfolio presents technical skills and technologies through an interactive 
 
 # 🛠️ Projects & Work
 
-The portfolio contains a dedicated work/project section showcasing development and data-oriented projects.
+The portfolio contains a dedicated work/project section showcasing software development, AI, data science, and interactive projects.
 
-Projects represented across the portfolio include areas such as:
+Projects cover areas such as:
 
-- AI applications
-- Data science
-- Full-stack web development
-- Machine learning
-- Interactive applications
-- Game development
-- Developer tools
+- Artificial Intelligence
+- Data Science
+- Full-Stack Development
+- Machine Learning
+- Web Applications
+- Interactive Applications
+- Game Development
+- Developer Tools
 
-The portfolio is designed so projects can be expanded and updated without redesigning the entire website.
+The project structure is designed so projects can be updated without rebuilding the entire portfolio architecture.
 
 ---
 
-# 🎮 Interactive Game / Hire Experience
+# 🎮 Interactive Game Experience
 
-The portfolio also contains an interactive **Game / Hire** experience.
+The portfolio also includes an interactive game-oriented experience.
 
-This section is designed to make the portfolio more engaging than a traditional static resume.
+The game section adds an additional interactive layer to the portfolio while maintaining the same overall visual language.
 
-It provides an additional interactive layer while maintaining the overall portfolio visual language.
+The project demonstrates the ability to combine:
+
+- Frontend development
+- Interactive UI
+- Game interfaces
+- Responsive design
+- User interaction
+- Modern web technologies
 
 ---
 
@@ -338,30 +333,31 @@ It provides an additional interactive layer while maintaining the overall portfo
 
 The portfolio contains a dedicated certifications section for professional learning and technical credentials.
 
-Certifications include areas such as:
+Certifications cover areas such as:
 
-- AI
+- Artificial Intelligence
+- AI Foundations
+- AI Agents
 - Networking
 - SQL
 - Data Visualization
 - Python
-- AI Agents
-- AI Foundations
 
-The certification data is maintained separately so new certifications can be added without changing the section structure.
+Certification data is maintained separately so additional certifications can be added easily.
 
 ---
 
 # 📬 Contact
 
-The portfolio includes a dedicated contact section for professional communication.
+The portfolio provides dedicated channels for professional communication.
 
-It provides access to relevant professional channels such as:
+Visitors can connect through:
 
 - Email
 - LinkedIn
 - GitHub
-- Other professional links
+- Professional websites
+- Social platforms
 
 ---
 
@@ -374,14 +370,14 @@ It provides access to relevant professional channels such as:
 | Vite | Development server and build tooling |
 | Three.js | 3D rendering |
 | WebGL | Hardware-accelerated graphics |
-| GSAP | Animations |
+| GSAP | Animation system |
 | ScrollTrigger | Scroll-based animations |
 | Lenis | Smooth scrolling |
 | CSS3 | Styling and responsive layouts |
 | HTML5 | Application structure |
 | JavaScript | Application logic |
 | Git | Version control |
-| GitHub | Source control and deployment workflow |
+| GitHub | Source control |
 | Vercel | Production deployment |
 
 ---
@@ -452,7 +448,7 @@ Make sure you have installed:
 * npm
 * Git
 
-You can verify your installation with:
+Verify the installations:
 
 ```bash
 node --version
@@ -518,23 +514,9 @@ npm run preview
 
 ---
 
-# 🔧 Development
+# 🔧 Customization
 
-During development, the project can be started with:
-
-```bash
-npm run dev
-```
-
-The application uses Vite's development server with hot module replacement.
-
-Changes made to React, TypeScript, and CSS files are reflected automatically during development.
-
----
-
-# 🎨 Customization
-
-The portfolio is structured so the main content can be customized without rebuilding the application architecture.
+The portfolio is structured so the main content can be customized without rebuilding the entire application architecture.
 
 ## Developer Information
 
@@ -577,7 +559,7 @@ Education entries can be updated inside:
 src/components/Education.tsx
 ```
 
-Current structure supports:
+The education structure supports:
 
 * Institution
 * Degree
@@ -631,7 +613,7 @@ and:
 src/components/styles/Loading.css
 ```
 
-The loading screen controls:
+The loading system controls:
 
 * Progress percentage
 * Loading animation
@@ -653,7 +635,7 @@ src/components/Character/
 The character system is responsible for:
 
 * Loading the 3D model
-* Rendering the scene
+* Rendering the Three.js scene
 * Camera
 * Lighting
 * Animation mixer
@@ -694,7 +676,7 @@ Used for:
 
 Used for:
 
-* Smooth desktop scrolling
+* Smooth scrolling
 * Scroll easing
 * Scroll navigation
 * GSAP synchronization
@@ -711,9 +693,9 @@ Used for:
 
 # 📱 Responsive Strategy
 
-The website uses responsive CSS rather than relying on a single fixed layout.
+The website uses responsive CSS to adapt the interface to different screen sizes.
 
-The design is tested across:
+The layout is designed for:
 
 ```text
 Small Mobile
@@ -750,17 +732,17 @@ Performance considerations include:
 * Optimized animation loops
 * GSAP ticker synchronization
 * Responsive layouts
-* Lazy/conditional animation behavior
-* Avoiding unnecessary animation loops
+* Conditional animation behavior
+* Reduced unnecessary animation loops
 * Native touch scrolling on mobile devices
 
-The portfolio also uses GSAP ticker synchronization with Lenis to maintain a consistent animation loop.
+The portfolio synchronizes Lenis with the GSAP ticker to maintain a consistent animation loop.
 
 ---
 
 # 🔄 Git & Deployment Workflow
 
-The project uses GitHub as the source repository and Vercel for deployment.
+The project uses GitHub as the source repository and Vercel for production deployment.
 
 The deployment workflow is:
 
@@ -782,25 +764,25 @@ After making changes:
 git add .
 ```
 
-Commit:
+Commit the changes:
 
 ```bash
 git commit -m "Update portfolio"
 ```
 
-Push:
+Push to GitHub:
 
 ```bash
 git push origin main
 ```
 
-Vercel automatically detects the new commit and starts a deployment.
+Vercel automatically detects the new commit and starts a deployment when the repository is connected to the Vercel project.
 
 ---
 
 # ☁️ Vercel Deployment
 
-The project is configured to work with Vercel.
+The project is designed to work with Vercel.
 
 For a new deployment:
 
@@ -821,7 +803,7 @@ Typical output directory:
 dist
 ```
 
-Once GitHub is connected to Vercel, pushing to the configured branch automatically triggers a new deployment.
+Once GitHub is connected to Vercel, pushing changes to the configured branch automatically triggers a new deployment.
 
 ---
 
@@ -829,15 +811,9 @@ Once GitHub is connected to Vercel, pushing to the configured branch automatical
 
 ## Development server doesn't start
 
-Try:
+Remove the existing dependencies and reinstall them.
 
-```bash
-rm -rf node_modules
-npm install
-npm run dev
-```
-
-On Windows PowerShell:
+### Windows PowerShell
 
 ```powershell
 Remove-Item -Recurse -Force node_modules
@@ -845,9 +821,17 @@ npm install
 npm run dev
 ```
 
+### macOS / Linux
+
+```bash
+rm -rf node_modules
+npm install
+npm run dev
+```
+
 ---
 
-## TypeScript errors
+## TypeScript or build errors
 
 Run:
 
@@ -855,7 +839,7 @@ Run:
 npm run build
 ```
 
-The production build will reveal TypeScript and compilation issues that may not immediately appear during development.
+The production build can reveal TypeScript and compilation issues that may not immediately appear during development.
 
 ---
 
@@ -867,8 +851,9 @@ Check:
 * Public asset path
 * GLTF/GLB file
 * Browser console
-* Three.js loading errors
 * Network tab
+* Three.js loading errors
+* Model file availability
 
 ---
 
@@ -878,7 +863,7 @@ Check:
 
 * GSAP imports
 * ScrollTrigger registration
-* Animation names in the GLTF file
+* Animation names inside the GLTF/GLB file
 * Animation mixer
 * Component lifecycle
 * Browser console
@@ -892,7 +877,7 @@ Check:
 * Lenis initialization
 * GSAP ticker
 * ScrollTrigger synchronization
-* Whether another component is calling `overflow: hidden`
+* Whether another component is setting `overflow: hidden`
 * Loading screen scroll lock
 * Mobile/native scrolling behavior
 
@@ -921,7 +906,7 @@ Traditional developer portfolios often behave like digital resumes.
 
 This project takes a different approach.
 
-Instead of simply listing:
+Instead of simply presenting:
 
 ```text
 About
@@ -937,18 +922,17 @@ The goal is to demonstrate not only **what I know**, but also:
 
 * How I build
 * How I design
-* How I think about interaction
+* How I approach interaction
 * How I work with 3D
 * How I approach animation
 * How I combine engineering with visual design
+* How I build responsive experiences
 
 ---
 
 # 📸 Screenshots & Demo
 
-Add additional screenshots to the repository if you want to showcase specific sections.
-
-Recommended screenshots:
+Recommended screenshots for the repository:
 
 ```text
 Landing Page
@@ -962,11 +946,13 @@ Contact
 Mobile Layout
 ```
 
-The main preview can be placed at:
+The main preview image can be placed at:
 
 ```text
 Screenshot_2026-04-08_22-10-00.png
 ```
+
+A screen recording can also be linked from the repository.
 
 ---
 
@@ -1052,7 +1038,7 @@ See the [`LICENSE`](LICENSE) file for more information.
 
 ## Sai Teja Thanneeru
 
-Software Engineer | AI Engineer | Data Analyst
+**Software Engineer | AI Engineer | Data Analyst**
 
 Interested in:
 
@@ -1073,3 +1059,4 @@ Interested in:
   ⭐ If you like the project, consider starring the repository.
 </p>
 ```
+
