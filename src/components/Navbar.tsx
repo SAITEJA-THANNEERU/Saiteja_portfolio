@@ -17,51 +17,91 @@ const Navbar = () => {
 
   /*
    * ==========================================================
-   * LENIS SMOOTH SCROLL
+   * PROFILE IMAGE VIEWER
    * ==========================================================
-   *
-   * Existing scrolling behavior is preserved.
+   */
+
+  const [profileViewerOpen, setProfileViewerOpen] =
+    useState(false);
+
+  /*
+   * ==========================================================
+   * LENIS + GSAP SMOOTH SCROLL
+   * ==========================================================
    */
 
   useEffect(() => {
-    const instance = new Lenis({
-      duration: 1.7,
-      easing: (t) =>
-        Math.min(
-          1,
-          1.001 - Math.pow(2, -10 * t)
-        ),
-      orientation: "vertical",
-      gestureOrientation: "vertical",
-      smoothWheel: true,
-      wheelMultiplier: 1.7,
-      touchMultiplier: 2,
-      infinite: false,
-    });
+    const isTouchDevice =
+      window.matchMedia("(pointer: coarse)").matches;
+
+const instance = new Lenis({
+  duration: 1.6,
+
+  easing: (t) =>
+    1 - Math.pow(1 - t, 5),
+
+  orientation: "vertical",
+
+  gestureOrientation: "vertical",
+
+  smoothWheel: !isTouchDevice,
+
+  wheelMultiplier: 0.85,
+
+  touchMultiplier: 1,
+
+  infinite: false,
+});
 
     lenis = instance;
 
     /*
-     * Desktop:
-     * Loading animation controls scrolling.
+     * ========================================================
+     * TOUCH DEVICES
+     * ========================================================
      *
-     * Mobile / Tablet:
-     * Start scrolling immediately.
+     * Mobile and tablets use the browser's native touch
+     * scrolling. This avoids fighting with the browser's
+     * natural gesture system.
      */
-    if (window.innerWidth <= 1024) {
-      instance.start();
-    } else {
+
+    if (isTouchDevice) {
       instance.stop();
+    } else {
+      instance.start();
     }
 
-    let frameId = 0;
+    /*
+     * ========================================================
+     * LENIS → GSAP
+     * ========================================================
+     *
+     * Keep ScrollTrigger synchronized with Lenis.
+     */
 
-    const raf = (time: number) => {
-      instance.raf(time);
-      frameId = requestAnimationFrame(raf);
+    instance.on("scroll", ScrollTrigger.update);
+
+    /*
+     * ========================================================
+     * GSAP TICKER → LENIS
+     * ========================================================
+     *
+     * One animation loop only.
+     * This prevents competing requestAnimationFrame loops.
+     */
+
+    const updateLenis = (time: number) => {
+      instance.raf(time * 1000);
     };
 
-    frameId = requestAnimationFrame(raf);
+    gsap.ticker.add(updateLenis);
+
+    /*
+     * Prevent GSAP from artificially slowing its ticker.
+     * This makes the Lenis movement more consistent.
+     */
+
+    gsap.ticker.lagSmoothing(500, 33);
 
     /*
      * ========================================================
@@ -83,9 +123,10 @@ const Navbar = () => {
     links.forEach((element) => {
       const handler = (event: MouseEvent) => {
         /*
-         * Mobile navigation uses normal anchor navigation.
+         * Mobile navigation keeps normal browser behavior.
          */
-        if (window.innerWidth <= 768) {
+
+        if (window.matchMedia("(pointer: coarse)").matches) {
           return;
         }
 
@@ -99,15 +140,20 @@ const Navbar = () => {
         const target =
           document.querySelector(section);
 
-        if (target) {
-          instance.scrollTo(
-            target as HTMLElement,
-            {
-              offset: 0,
-              duration: 1.5,
-            }
-          );
-        }
+        if (!target) return;
+
+        /*
+         * Use Lenis for smooth section navigation.
+         */
+
+        instance.scrollTo(
+          target as HTMLElement,
+          {
+            offset: 0,
+            duration: 1.2,
+            immediate: false,
+          }
+        );
       };
 
       linkHandlers.set(
@@ -125,23 +171,30 @@ const Navbar = () => {
      * ========================================================
      * RESIZE
      * ========================================================
+     *
+     * Recalculate Lenis and correctly switch between
+     * desktop and touch-device behavior.
      */
 
     const handleResize = () => {
       instance.resize();
 
-      /*
-       * Make sure scrolling is enabled when entering
-       * mobile/tablet size.
-       */
-      if (window.innerWidth <= 1024) {
+      const touchDevice =
+        window.matchMedia("(pointer: coarse)").matches;
+
+      if (touchDevice) {
+        instance.stop();
+      } else {
         instance.start();
       }
+
+      ScrollTrigger.refresh();
     };
 
     window.addEventListener(
       "resize",
-      handleResize
+      handleResize,
+      { passive: true }
     );
 
     /*
@@ -151,8 +204,6 @@ const Navbar = () => {
      */
 
     return () => {
-      cancelAnimationFrame(frameId);
-
       window.removeEventListener(
         "resize",
         handleResize
@@ -166,6 +217,13 @@ const Navbar = () => {
           );
         }
       );
+
+      instance.off(
+        "scroll",
+        ScrollTrigger.update
+      );
+
+      gsap.ticker.remove(updateLenis);
 
       instance.destroy();
 
@@ -186,11 +244,90 @@ const Navbar = () => {
   };
 
   /*
-   * Prevent background scrolling while the mobile menu
-   * is open.
+   * ==========================================================
+   * PROFILE VIEWER
+   * ==========================================================
    */
+
+  const openProfileViewer = () => {
+    setMenuOpen(false);
+
+    setProfileViewerOpen(true);
+  };
+
+  const closeProfileViewer = () => {
+    setProfileViewerOpen(false);
+  };
+
+  /*
+   * ==========================================================
+   * PROFILE VIEWER SCROLL LOCK
+   * ==========================================================
+   */
+
   useEffect(() => {
-    if (menuOpen && window.innerWidth <= 768) {
+    if (!profileViewerOpen) {
+      return;
+    }
+
+    const previousOverflow =
+      document.body.style.overflow;
+
+    document.body.style.overflow = "hidden";
+
+    if (lenis) {
+      lenis.stop();
+    }
+
+    const handleEscape = (
+      event: KeyboardEvent
+    ) => {
+      if (event.key === "Escape") {
+        setProfileViewerOpen(false);
+      }
+    };
+
+    document.addEventListener(
+      "keydown",
+      handleEscape
+    );
+
+    return () => {
+      document.body.style.overflow =
+        previousOverflow;
+
+      /*
+       * Only restart Lenis on non-touch devices.
+       */
+
+      if (
+        lenis &&
+        !window.matchMedia(
+          "(pointer: coarse)"
+        ).matches
+      ) {
+        lenis.start();
+      }
+
+      document.removeEventListener(
+        "keydown",
+        handleEscape
+      );
+    };
+  }, [profileViewerOpen]);
+
+  /*
+   * ==========================================================
+   * MOBILE MENU SCROLL LOCK
+   * ==========================================================
+   */
+
+  useEffect(() => {
+    if (
+      menuOpen &&
+      window.innerWidth <= 768 &&
+      !profileViewerOpen
+    ) {
       document.body.classList.add(
         "navbar-menu-open"
       );
@@ -205,7 +342,10 @@ const Navbar = () => {
         "navbar-menu-open"
       );
     };
-  }, [menuOpen]);
+  }, [
+    menuOpen,
+    profileViewerOpen,
+  ]);
 
   return (
     <>
@@ -213,16 +353,18 @@ const Navbar = () => {
 
         {/* ==================================================
             PROFILE
-            IMPORTANT:
-            Existing profile image + orbit animation preserved.
         ================================================== */}
 
         <a
           href="#landingDiv"
           className="navbar-title"
           data-cursor="disable"
-          aria-label="Home"
-          onClick={closeMenu}
+          aria-label="View profile image"
+          onClick={(event) => {
+            event.preventDefault();
+
+            openProfileViewer();
+          }}
         >
           <img
             src={profileImage}
@@ -230,6 +372,7 @@ const Navbar = () => {
             className="navbar-profile-image"
           />
         </a>
+
 
         {/* ==================================================
             NAME
@@ -244,8 +387,9 @@ const Navbar = () => {
           SAI TEJA
         </a>
 
+
         {/* ==================================================
-            DESKTOP / TABLET NAVIGATION
+            DESKTOP NAVIGATION
         ================================================== */}
 
         <nav
@@ -254,7 +398,6 @@ const Navbar = () => {
         >
           <ul>
 
-            {/* HOME */}
             <li>
               <a
                 data-href="#landingDiv"
@@ -264,7 +407,6 @@ const Navbar = () => {
               </a>
             </li>
 
-            {/* ABOUT */}
             <li>
               <a
                 data-href="#about"
@@ -274,7 +416,6 @@ const Navbar = () => {
               </a>
             </li>
 
-            {/* BUILD */}
             <li>
               <a
                 data-href=".what-section"
@@ -284,7 +425,6 @@ const Navbar = () => {
               </a>
             </li>
 
-            {/* CAREER */}
             <li>
               <a
                 data-href="#career"
@@ -294,7 +434,6 @@ const Navbar = () => {
               </a>
             </li>
 
-            {/* EDUCATION */}
             <li>
               <a
                 data-href="#education"
@@ -304,7 +443,6 @@ const Navbar = () => {
               </a>
             </li>
 
-            {/* TECH */}
             <li>
               <a
                 data-href="#techstack"
@@ -314,7 +452,6 @@ const Navbar = () => {
               </a>
             </li>
 
-            {/* WORK */}
             <li>
               <a
                 data-href="#work"
@@ -324,7 +461,6 @@ const Navbar = () => {
               </a>
             </li>
 
-            {/* GAME */}
             <li>
               <a
                 data-href="#game-hire"
@@ -334,7 +470,6 @@ const Navbar = () => {
               </a>
             </li>
 
-            {/* CONTACT */}
             <li>
               <a
                 data-href="#contact"
@@ -346,6 +481,7 @@ const Navbar = () => {
 
           </ul>
         </nav>
+
 
         {/* ==================================================
             MOBILE MENU BUTTON
@@ -359,7 +495,9 @@ const Navbar = () => {
               : ""
           }`}
           onClick={() =>
-            setMenuOpen((previous) => !previous)
+            setMenuOpen(
+              (previous) => !previous
+            )
           }
           aria-label={
             menuOpen
@@ -375,8 +513,50 @@ const Navbar = () => {
 
       </header>
 
+
       {/* ======================================================
-          MOBILE NAVIGATION OVERLAY
+          PROFILE IMAGE VIEWER
+      ====================================================== */}
+
+      {profileViewerOpen && (
+        <div
+          className="profile-image-viewer"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Profile image viewer"
+          onClick={closeProfileViewer}
+        >
+
+          <div
+            className="profile-image-viewer-content"
+            onClick={(event) => {
+              event.stopPropagation();
+            }}
+          >
+
+            <button
+              type="button"
+              className="profile-image-viewer-close"
+              aria-label="Close profile image"
+              onClick={closeProfileViewer}
+            >
+              ×
+            </button>
+
+            <img
+              src={profileImage}
+              alt={config.developer.fullName}
+              draggable={false}
+            />
+
+          </div>
+
+        </div>
+      )}
+
+
+      {/* ======================================================
+          MOBILE NAVIGATION
       ====================================================== */}
 
       <div
@@ -477,13 +657,17 @@ const Navbar = () => {
         </nav>
       </div>
 
+
       {/* ======================================================
-          EXISTING DECORATIVE ELEMENTS
+          DECORATIVE ELEMENTS
       ====================================================== */}
 
       <div className="landing-circle1" />
+
       <div className="landing-circle2" />
+
       <div className="nav-fade" />
+
     </>
   );
 };

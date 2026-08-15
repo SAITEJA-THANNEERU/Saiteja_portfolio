@@ -960,3 +960,487 @@ body.navbar-menu-open {
     font-size: 13px;
   }
 }
+
+
+/* ==========================================================
+   PROFILE IMAGE VIEWER
+   ----------------------------------------------------------
+   ADDED FEATURE ONLY
+   Does NOT affect:
+   - Desktop navbar
+   - Mobile navbar
+   - Profile orbit
+   - Glow dot
+   - Existing navigation
+   ========================================================== */
+
+
+/* ----------------------------------------------------------
+   PROFILE IMAGE CLICK
+---------------------------------------------------------- */
+
+.navbar-title {
+  cursor: zoom-in;
+}
+
+
+/* ----------------------------------------------------------
+   PROFILE VIEWER OVERLAY
+---------------------------------------------------------- */
+
+.profile-image-viewer {
+  position: fixed;
+
+  inset: 0;
+
+  width: 100vw;
+  height: 100dvh;
+
+  z-index: 999999;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding:
+    clamp(14px, 3vw, 50px);
+
+  box-sizing: border-box;
+
+  background:
+    rgba(5, 3, 8, 0.90);
+
+  backdrop-filter:
+    blur(16px);
+
+  -webkit-backdrop-filter:
+    blur(16px);
+
+  cursor: zoom-out;
+
+  animation:
+    profileViewerFadeIn
+    0.25s
+    ease
+    both;
+}
+
+
+/* ----------------------------------------------------------
+   VIEWER CONTENT
+---------------------------------------------------------- */
+
+.profile-image-viewer-content {
+  position: relative;
+
+  width:
+    min(92vw, 760px);
+
+  height:
+    min(88dvh, 860px);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding:
+    clamp(8px, 2vw, 24px);
+
+  box-sizing: border-box;
+
+  border-radius:
+    clamp(16px, 2vw, 30px);
+
+  background:
+    rgba(12, 8, 16, 0.48);
+
+  border:
+    1px solid
+    rgba(194, 164, 255, 0.22);
+
+  box-shadow:
+    0 0 35px
+    rgba(194, 164, 255, 0.14),
+
+    0 0 90px
+    rgba(168, 124, 255, 0.08);
+
+  cursor: default;
+
+  animation:
+    profileViewerScaleIn
+    0.3s
+    ease
+    both;
+}
+
+
+/* ----------------------------------------------------------
+   VIEWER IMAGE
+---------------------------------------------------------- */
+
+.profile-image-viewer-content img {
+  display: block;
+
+  width: auto;
+  height: auto;
+
+  max-width: 100%;
+  max-height: 100%;
+
+  object-fit: contain;
+
+  border-radius:
+    clamp(12px, 1.5vw, 24px);
+
+  user-select: none;
+
+  -webkit-user-select: none;
+
+  -webkit-user-drag: none;
+
+  box-shadow:
+    0 0 30px
+    rgba(194, 164, 255, 0.22);
+
+  animation:
+    profileImageGlow
+    3s
+    ease-in-out
+    infinite;
+}
+
+
+/* ----------------------------------------------------------
+   CLOSE BUTTON
+---------------------------------------------------------- */
+
+.profile-image-viewer-close {
+  position: absolute;
+
+  top:
+    clamp(8px, 1.5vw, 18px);
+
+  right:
+    clamp(8px, 1.5vw, 18px);
+
+  width:
+    clamp(34px, 3.5vw, 46px);
+
+  height:
+    clamp(34px, 3.5vw, 46px);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.18);
+
+  border-radius: 50%;
+
+  background:
+    rgba(10, 7, 14, 0.78);
+
+  color: #ffffff;
+
+  cursor: pointer;
+
+  z-index: 5;
+
+  font-size: 24px;
+
+  line-height: 1;
+
+  padding: 0;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+
+.profile-image-viewer-close:hover {
+  background:
+    rgba(194, 164, 255, 0.14);
+
+  border-color:
+    var(--accentColor);
+
+  color:
+    var(--accentColor);
+
+  transform:
+    rotate(90deg)
+    scale(1.06);
+
+  box-shadow:
+    0 0 18px
+    rgba(194, 164, 255, 0.28);
+}
+
+
+/* ==========================================================
+   VIEWER ANIMATIONS
+========================================================== */
+
+@keyframes profileViewerFadeIn {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+
+}
+
+
+@keyframes profileViewerScaleIn {
+
+  from {
+    opacity: 0;
+
+    transform:
+      scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      scale(1);
+  }
+
+}
+
+
+@keyframes profileImageGlow {
+
+  0%,
+  100% {
+
+    box-shadow:
+      0 0 25px
+      rgba(194, 164, 255, 0.20);
+
+  }
+
+  50% {
+
+    box-shadow:
+      0 0 38px
+      rgba(194, 164, 255, 0.32);
+
+  }
+
+}
+
+
+/* ==========================================================
+   MOBILE VIEWER
+========================================================== */
+
+@media only screen and (max-width: 768px) {
+
+  .profile-image-viewer {
+
+    padding:
+      14px;
+
+  }
+
+
+  .profile-image-viewer-content {
+
+    width:
+      min(94vw, 560px);
+
+    height:
+      min(88dvh, 760px);
+
+    padding:
+      10px;
+
+    border-radius:
+      20px;
+
+  }
+
+
+  .profile-image-viewer-content img {
+
+    max-width:
+      100%;
+
+    max-height:
+      100%;
+
+    border-radius:
+      14px;
+
+  }
+
+}
+
+
+/* ==========================================================
+   SMALL MOBILE
+========================================================== */
+
+@media only screen and (max-width: 380px) {
+
+  .profile-image-viewer {
+
+    padding:
+      10px;
+
+  }
+
+
+  .profile-image-viewer-content {
+
+    width:
+      96vw;
+
+    height:
+      90dvh;
+
+    padding:
+      8px;
+
+    border-radius:
+      16px;
+
+  }
+
+
+  .profile-image-viewer-close {
+
+    width:
+      34px;
+
+    height:
+      34px;
+
+    font-size:
+      21px;
+
+  }
+
+}
+
+
+/* ==========================================================
+   LANDSCAPE MOBILE
+========================================================== */
+
+@media only screen
+  and (max-width: 900px)
+  and (orientation: landscape) {
+
+  .profile-image-viewer {
+
+    padding:
+      8px 18px;
+
+  }
+
+
+  .profile-image-viewer-content {
+
+    width:
+      min(92vw, 900px);
+
+    height:
+      94dvh;
+
+    padding:
+      8px;
+
+  }
+
+
+  .profile-image-viewer-content img {
+
+    max-height:
+      90dvh;
+
+  }
+
+}
+
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@media only screen
+  and (min-width: 769px)
+  and (max-width: 1024px) {
+
+  .profile-image-viewer {
+
+    padding:
+      20px;
+
+  }
+
+
+  .profile-image-viewer-content {
+
+    width:
+      min(90vw, 720px);
+
+    height:
+      min(88dvh, 900px);
+
+  }
+
+}
+
+
+/* ==========================================================
+   LARGE DESKTOP
+========================================================== */
+
+@media only screen and (min-width: 1200px) {
+
+  .profile-image-viewer-content {
+
+    width:
+      min(88vw, 820px);
+
+    height:
+      min(88dvh, 900px);
+
+  }
+
+}
+
+
+/* ==========================================================
+   EXTRA LARGE DESKTOP
+========================================================== */
+
+@media only screen and (min-width: 1600px) {
+
+  .profile-image-viewer-content {
+
+    width:
+      min(82vw, 900px);
+
+    height:
+      min(88dvh, 950px);
+
+  }
+
+}

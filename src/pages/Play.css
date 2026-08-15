@@ -1117,13 +1117,7 @@
   min-width: 0;
   min-height: 0;
 
-  display: grid;
-
-  grid-template-rows:
-    122px
-    minmax(0, 1fr);
-
-  gap: 15px;
+  display: block;
 
   overflow: hidden;
 }
@@ -1327,376 +1321,12 @@
   color: #c7a5ff;
 }
 
-.move-san {
-  color: rgba(255, 255, 255, 0.76);
 
-  font-size: 11px;
-  font-weight: 800;
 
-  white-space: nowrap;
-}
-
-.move-san.white-move {
-  color: rgba(255, 255, 255, 0.82);
-}
-
-.move-san.black-move {
-  color: #c7a5ff;
-}
 
 
 /* ============================================================
-   22. CHAT
-   ============================================================ */
-
-.chat-card {
-  width: 100%;
-  height: 100%;
-
-  min-width: 0;
-  min-height: 0;
-
-  display: flex;
-  flex-direction: column;
-
-  border:
-    1px solid rgba(255, 255, 255, 0.085);
-
-  border-radius: 21px;
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.025),
-      rgba(255, 255, 255, 0.007)
-    );
-
-  overflow: hidden;
-}
-
-.chat-header {
-  width: 100%;
-  height: 73px;
-
-  flex: 0 0 73px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  padding: 0 24px;
-
-  border-bottom:
-    1px solid rgba(255, 255, 255, 0.065);
-}
-
-.chat-title {
-  display: flex;
-  align-items: center;
-
-  gap: 10px;
-
-  color: rgba(255, 255, 255, 0.82);
-
-  font-size: 13px;
-  font-weight: 800;
-
-  letter-spacing: 0.04em;
-}
-
-.chat-title-icon {
-  color: #c29aff;
-
-  font-size: 17px;
-}
-
-.chat-minimize {
-  width: 36px;
-  height: 36px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border: 0;
-  border-radius: 10px;
-
-  background:
-    rgba(255, 255, 255, 0.035);
-
-  color: rgba(255, 255, 255, 0.42);
-
-  font-size: 17px;
-
-  cursor: pointer;
-
-  transition:
-    background 0.2s ease,
-    color 0.2s ease;
-}
-
-.chat-minimize:hover {
-  color: #ffffff;
-
-  background:
-    rgba(255, 255, 255, 0.07);
-}
-
-
-/* ============================================================
-   23. CHAT MESSAGES
-   ============================================================ */
-
-.chat-messages {
-  flex: 1 1 auto;
-
-  min-width: 0;
-  min-height: 0;
-
-  padding: 16px 24px;
-
-  overflow-y: auto;
-  overflow-x: hidden;
-
-  scrollbar-width: thin;
-
-  scrollbar-color:
-    rgba(194, 164, 255, 0.25)
-    transparent;
-}
-
-.chat-messages::-webkit-scrollbar {
-  width: 4px;
-}
-
-.chat-messages::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.chat-messages::-webkit-scrollbar-thumb {
-  border-radius: 999px;
-
-  background:
-    rgba(194, 164, 255, 0.25);
-}
-
-.chat-message {
-  width: fit-content;
-  max-width: 90%;
-
-  display: flex;
-  flex-direction: column;
-
-  margin: 0 0 15px;
-}
-
-.chat-message.user {
-  margin-left: auto;
-
-  align-items: flex-end;
-}
-
-.chat-message.assistant {
-  align-items: flex-start;
-}
-
-.message-content {
-  padding: 14px 16px;
-
-  border:
-    1px solid rgba(255, 255, 255, 0.07);
-
-  border-radius: 13px;
-
-  background:
-    rgba(255, 255, 255, 0.026);
-
-  color: rgba(255, 255, 255, 0.76);
-
-  font-size: 13px;
-
-  line-height: 1.5;
-
-  word-break: break-word;
-}
-
-.chat-message.user .message-content {
-  background:
-    linear-gradient(
-      135deg,
-      #6d42aa,
-      #513080
-    );
-
-  border-color:
-    rgba(194, 164, 255, 0.10);
-
-  color: #ffffff;
-}
-
-.message-time {
-  margin-top: 6px;
-
-  color: rgba(255, 255, 255, 0.22);
-
-  font-size: 9px;
-  font-weight: 500;
-}
-
-.message-content.typing {
-  min-height: 39px;
-
-  display: flex;
-  align-items: center;
-
-  gap: 5px;
-}
-
-.message-content.typing span {
-  width: 6px;
-  height: 6px;
-
-  border-radius: 50%;
-
-  background: #c19aff;
-
-  animation:
-    typing-dot 1.2s ease-in-out infinite;
-}
-
-.message-content.typing span:nth-child(2) {
-  animation-delay: 0.15s;
-}
-
-.message-content.typing span:nth-child(3) {
-  animation-delay: 0.30s;
-}
-
-@keyframes typing-dot {
-  0%,
-  60%,
-  100% {
-    opacity: 0.3;
-    transform: translateY(0);
-  }
-
-  30% {
-    opacity: 1;
-    transform: translateY(-3px);
-  }
-}
-
-
-/* ============================================================
-   24. CHAT INPUT
-   ============================================================ */
-
-.chat-input-area {
-  width: 100%;
-  height: 78px;
-
-  flex: 0 0 78px;
-
-  display: flex;
-  align-items: center;
-
-  gap: 13px;
-
-  padding: 14px 24px;
-
-  border-top:
-    1px solid rgba(255, 255, 255, 0.065);
-}
-
-.chat-input {
-  min-width: 0;
-
-  flex: 1;
-
-  height: 48px;
-
-  padding: 0 15px;
-
-  border:
-    1px solid rgba(255, 255, 255, 0.085);
-
-  border-radius: 12px;
-
-  outline: none;
-
-  background:
-    rgba(255, 255, 255, 0.016);
-
-  color: #ffffff;
-
-  font-size: 12px;
-
-  transition:
-    border-color 0.2s ease,
-    background 0.2s ease;
-}
-
-.chat-input::placeholder {
-  color: rgba(255, 255, 255, 0.25);
-}
-
-.chat-input:focus {
-  border-color:
-    rgba(194, 164, 255, 0.40);
-
-  background:
-    rgba(194, 164, 255, 0.025);
-}
-
-.chat-send-btn {
-  width: 49px;
-  height: 49px;
-
-  min-width: 49px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border: 0;
-  border-radius: 12px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #c39aff,
-      #a16eea
-    );
-
-  color: #17101f;
-
-  font-size: 18px;
-  font-weight: 900;
-
-  cursor: pointer;
-
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    opacity 0.2s ease;
-}
-
-.chat-send-btn:hover:not(:disabled) {
-  transform: translateY(-1px);
-
-  box-shadow:
-    0 8px 22px rgba(171, 118, 239, 0.30);
-}
-
-.chat-send-btn:disabled {
-  opacity: 0.42;
-
-  cursor: default;
-}
-
-
-/* ============================================================
-   25. TIP
+   21. TIP
    ============================================================ */
 
 .game-tip {
@@ -1705,7 +1335,7 @@
 
 
 /* ============================================================
-   26. COLOR PICKER
+   22. COLOR PICKER
    ============================================================ */
 
 .color-picker-overlay,
@@ -1855,7 +1485,7 @@
 
 
 /* ============================================================
-   27. GAME RESULT
+   23. GAME RESULT
    ============================================================ */
 
 .game-result-card {
@@ -1916,7 +1546,7 @@
 
 
 /* ============================================================
-   28. TURN GLOW
+   24. TURN GLOW
    ============================================================ */
 
 .turn-glow {
@@ -1926,7 +1556,7 @@
 
 
 /* ============================================================
-   29. LARGE DESKTOP
+   25. LARGE DESKTOP
    ============================================================ */
 
 @media (min-width: 1500px) {
@@ -1958,155 +1588,9 @@
 }
 
 
-/* ============================================================
-   30. 1366px — 1499px
-   ============================================================ */
-
-@media (
-  min-width: 1200px
-) and (
-  max-width: 1499px
-) {
-
-  .play-page {
-    padding:
-      13px
-      20px
-      15px;
-  }
-
-  .game-layout {
-    height: calc(100dvh - 154px);
-
-    grid-template-columns:
-      minmax(250px, 0.80fr)
-      minmax(540px, 1.85fr)
-      minmax(330px, 1.12fr);
-
-    gap: 10px;
-  }
-
-  .players-panel {
-    padding: 19px;
-  }
-
-  .player-card {
-    gap: 13px;
-
-    padding-left: 14px;
-    padding-right: 14px;
-  }
-
-  .player-avatar {
-    width: 68px;
-    height: 68px;
-
-    min-width: 68px;
-  }
-
-  .player-name {
-    font-size: 16px;
-  }
-
-  .player-rating,
-  .player-color {
-    font-size: 9px;
-  }
-
-  .game-status-card {
-    padding:
-      15px;
-  }
-
-  .game-control-btn {
-    height: 55px;
-    flex-basis: 55px;
-
-    font-size: 12px;
-  }
-
-  .board-card {
-    padding:
-      15px
-      16px
-      0;
-  }
-
-  .chess-board {
-    width: min(
-      100%,
-      calc(100dvh - 250px)
-    );
-
-    max-width: 620px;
-  }
-
-  .board-footer {
-    height: 76px;
-    flex-basis: 76px;
-  }
-
-  .board-stat-value {
-    font-size: 12px;
-  }
-
-  .board-stat-label {
-    font-size: 8px;
-  }
-
-  .right-panel {
-    grid-template-rows:
-      105px
-      minmax(0, 1fr);
-
-    gap: 10px;
-  }
-
-  .move-history-card {
-    padding: 15px;
-  }
-
-  .chat-header {
-    height: 58px;
-    flex-basis: 58px;
-
-    padding:
-      0 16px;
-  }
-
-  .chat-messages {
-    padding:
-      12px
-      16px;
-  }
-
-  .message-content {
-    font-size: 11px;
-  }
-
-  .chat-input-area {
-    height: 66px;
-    flex-basis: 66px;
-
-    padding:
-      9px
-      16px;
-  }
-
-  .chat-input {
-    height: 43px;
-  }
-
-  .chat-send-btn {
-    width: 43px;
-    min-width: 43px;
-    height: 43px;
-  }
-}
-
 
 /* ============================================================
-   31. 1001px — 1199px
+   27. 1001px — 1199px
    ============================================================ */
 
 @media (
@@ -2297,13 +1781,11 @@
     font-size: 6px;
   }
 
-  .right-panel {
-    grid-template-rows:
-      82px
-      minmax(0, 1fr);
-
-    gap: 7px;
-  }
+.right-panel {
+  display: block;
+  height: 100%;
+  overflow: hidden;
+}
 
   .move-history-card {
     padding: 10px;
@@ -2412,7 +1894,7 @@
 
 
 /* ============================================================
-   32. TABLET LANDSCAPE
+   28. TABLET LANDSCAPE
    ============================================================ */
 
 @media (
@@ -2619,13 +2101,11 @@
     font-size: 5px;
   }
 
-  .right-panel {
-    grid-template-rows:
-      68px
-      minmax(0, 1fr);
-
-    gap: 6px;
-  }
+.right-panel {
+  display: block;
+  height: 100%;
+  overflow: hidden;
+}
 
   .move-history-card {
     padding: 8px;
@@ -2754,7 +2234,7 @@
 
 
 /* ============================================================
-   33. MOBILE PORTRAIT
+   29. MOBILE PORTRAIT
    ------------------------------------------------------------
    IMPORTANT:
    - The complete 8x8 chess board must always be visible.
@@ -3347,27 +2827,20 @@
      RIGHT PANEL
      ========================================================== */
 
-  .right-panel {
-    grid-column: 1;
-    grid-row: 3;
+.right-panel {
+  grid-column: 1;
+  grid-row: 3;
 
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 72px;
 
-    min-width: 0;
-    min-height: 0;
+  min-width: 0;
+  min-height: 0;
 
-    display: grid;
+  display: block;
 
-    grid-template-rows:
-      72px
-      minmax(0, 1fr);
-
-    gap: 5px;
-
-    overflow: hidden;
-  }
-
+  overflow: hidden;
+}
 
   /* ==========================================================
      MOVE HISTORY
@@ -3863,176 +3336,346 @@
 }
 
 /* ============================================================
-   34. MOBILE LANDSCAPE
+   31. SMALL PORTRAIT PHONES
+   ------------------------------------------------------------
+   IMPORTANT:
+   - Keep Move History compact.
+   - Give the chess board a real square row.
+   - Never force the board to an arbitrary 80px height.
    ============================================================ */
 
-@media (
-  max-width: 800px
-) and (
-  orientation: landscape
-) and (
-  max-height: 650px
-) {
+@media (max-width: 500px) and (orientation: portrait) {
 
   .play-page {
     padding:
       5px
-      8px;
+      5px;
   }
 
   .play-header {
     height: 26px;
+    flex-basis: 26px;
   }
 
   .back-button,
   .online-status {
-    height: 24px;
+    height: 25px;
   }
 
   .play-title-area {
-    height: 39px;
+    height: 43px;
+    flex-basis: 43px;
   }
 
   .play-title {
-    font-size: 21px;
+    font-size:
+      clamp(21px, 7vw, 27px);
   }
 
   .play-subtitle {
-    display: none;
+    font-size: 7px;
   }
+
+
+  /* ----------------------------------------------------------
+     MAIN MOBILE LAYOUT
+     ----------------------------------------------------------
+
+     Row 1 = players / controls
+     Row 2 = FULL chess board
+     Row 3 = compact move history
+
+     The board is limited by viewport width so the complete
+     8x8 board remains visible.
+     ---------------------------------------------------------- */
 
   .game-layout {
-    height: calc(100dvh - 73px);
-
-    grid-template-columns:
-      minmax(170px, 0.72fr)
-      minmax(320px, 1.45fr)
-      minmax(200px, 0.92fr);
+    height: calc(
+      100dvh - 69px
+    );
 
     grid-template-rows:
-      minmax(0, 1fr);
+      minmax(145px, 1fr)
+      min(
+        calc(100vw - 10px),
+        56dvh
+      )
+      65px;
 
-    gap: 5px;
+    gap: 4px;
+
+    overflow: hidden;
   }
 
-  .players-panel {
-    grid-column: 1;
-    grid-row: 1;
 
-    padding: 7px;
+  /* ----------------------------------------------------------
+     PLAYERS
+     ---------------------------------------------------------- */
+
+  .players-panel {
+    padding: 6px;
+
+    border-radius: 10px;
+
+    overflow: hidden;
   }
 
   .players-panel-title {
-    height: 13px;
-    flex-basis: 13px;
+    height: 15px;
+    flex-basis: 15px;
 
-    font-size: 6px;
+    font-size: 8px;
   }
+
+
+  /* ----------------------------------------------------------
+     PLAYER CARDS
+     ---------------------------------------------------------- */
 
   .saiteja-player,
   .you-player {
-    height: 52px;
-  }
+    height: 42px;
+    min-height: 42px;
 
-  .saiteja-player {
-    margin-top: 5px;
-  }
+    padding:
+      4px
+      6px;
 
-  .you-player {
-    margin-top: 3px;
-  }
-
-  .player-card {
-    padding: 5px;
+    gap: 6px;
   }
 
   .player-avatar {
-    width: 36px;
-    height: 36px;
+    width: 31px;
+    height: 31px;
 
-    min-width: 36px;
+    min-width: 31px;
+
+    border-radius: 7px;
   }
 
   .player-name {
-    font-size: 8px;
+    font-size: 9px;
   }
 
   .player-rating,
   .player-color {
+    margin-top: 2px;
+
     font-size: 5px;
   }
 
-  .game-status-card {
-    height: 49px;
-    flex-basis: 49px;
 
-    margin-top: 4px;
+  /* ----------------------------------------------------------
+     VS
+     ---------------------------------------------------------- */
 
-    padding: 5px;
+  .players-divider {
+    height: 7px;
   }
 
-  .game-status-title,
-  .game-status-description {
+  .players-divider strong {
+    font-size: 4px;
+  }
+
+
+  /* ----------------------------------------------------------
+     GAME STATUS
+     ---------------------------------------------------------- */
+
+  .game-status-card {
+    height: 38px;
+    flex-basis: 38px;
+
+    margin-top: 2px;
+
+    padding:
+      4px
+      6px;
+  }
+
+  .game-status-title {
     font-size: 5px;
   }
 
   .game-status-main {
-    margin-top: 4px;
+    margin-top: 2px;
 
-    font-size: 6px;
+    font-size: 7px;
   }
 
-  .game-controls {
-    gap: 3px;
-
-    margin-top: 4px;
-  }
-
-  .game-control-btn {
-    height: 31px;
-    flex-basis: 31px;
+  .game-status-description {
+    margin-top: 2px;
 
     font-size: 5px;
   }
 
+
+  /* ----------------------------------------------------------
+     CONTROLS
+     ---------------------------------------------------------- */
+
+  .game-controls {
+    gap: 3px;
+
+    margin-top: 3px;
+  }
+
+  .game-control-btn {
+    height: 26px;
+    min-height: 26px;
+    flex-basis: 26px;
+
+    font-size: 6px;
+
+    border-radius: 6px;
+  }
+
+  .game-control-btn span {
+    font-size: 8px;
+  }
+
+
+  /* ==========================================================
+     BOARD
+     ========================================================== */
+
   .board-column {
-    grid-column: 2;
-    grid-row: 1;
+    grid-column: 1;
+    grid-row: 2;
+
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
   }
 
   .board-card {
-    padding: 4px;
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    padding: 3px;
+
+    border-radius: 9px;
+
+    overflow: hidden;
   }
+
+  .view-mode-banner {
+    padding:
+      2px
+      4px;
+
+    margin-bottom: 2px;
+
+    font-size: 4px;
+  }
+
+  .chess-board-wrapper {
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+  }
+
+  /*
+     CRITICAL:
+     The board is constrained by BOTH width and height.
+
+     This prevents the board from becoming a horizontal
+     strip and guarantees all 64 squares remain visible.
+  */
 
   .chess-board {
     width: min(
-      100%,
-      calc(100dvh - 92px)
+      calc(100vw - 16px),
+      100%
     );
+
+    height: auto;
+
+    max-width: 100%;
+    max-height: 100%;
+
+    aspect-ratio: 1 / 1;
+
+    flex:
+      0 0 auto;
+
+    margin: 0 auto;
+
+    border-radius: 4px;
   }
+
+  .chess-piece {
+    width: 92%;
+    height: 92%;
+  }
+
+  .coord-rank,
+  .coord-file {
+    font-size: 5px;
+  }
+
+
+  /* ----------------------------------------------------------
+     BOARD FOOTER
+     ---------------------------------------------------------- */
 
   .board-footer {
     display: none;
   }
 
+
+  /* ==========================================================
+     MOVE HISTORY
+     ========================================================== */
+
   .right-panel {
-    grid-column: 3;
-    grid-row: 1;
+    grid-column: 1;
+    grid-row: 3;
 
-    grid-template-rows:
-      65px
-      minmax(0, 1fr);
+    width: 100%;
+    height: 65px;
 
-    gap: 5px;
+    min-width: 0;
+    min-height: 0;
+
+    display: block;
+
+    overflow: hidden;
   }
 
   .move-history-card {
-    padding: 6px;
+    width: 100%;
+    height: 65px;
+
+    padding: 5px;
+
+    border-radius: 9px;
   }
 
   .move-history-header {
-    height: 14px;
-    flex-basis: 14px;
+    height: 13px;
+    flex-basis: 13px;
   }
 
   .move-history-title {
@@ -4040,142 +3683,25 @@
   }
 
   .move-history-columns {
-    height: 12px;
-    flex-basis: 12px;
+    height: 10px;
+    flex-basis: 10px;
 
     font-size: 4px;
   }
 
   .move-history-row {
-    min-height: 19px;
+    min-height: 18px;
+    height: 18px;
   }
 
   .move-number,
   .move-san {
     font-size: 5px;
   }
-
-  .chat-header {
-    height: 31px;
-    flex-basis: 31px;
-
-    padding:
-      0 7px;
-  }
-
-  .chat-title {
-    font-size: 6px;
-  }
-
-  .chat-minimize {
-    width: 21px;
-    height: 21px;
-  }
-
-  .chat-messages {
-    padding:
-      5px
-      6px;
-  }
-
-  .message-content {
-    padding:
-      5px
-      6px;
-
-    font-size: 6px;
-  }
-
-  .chat-input-area {
-    height: 37px;
-    flex-basis: 37px;
-
-    padding:
-      4px
-      6px;
-  }
-
-  .chat-input {
-    height: 27px;
-
-    font-size: 6px;
-  }
-
-  .chat-send-btn {
-    width: 27px;
-    min-width: 27px;
-    height: 27px;
-  }
 }
 
-
 /* ============================================================
-   35. VERY SMALL PHONES
-   ============================================================ */
-
-@media (max-width: 500px) {
-
-  .play-page {
-    padding:
-      5px
-      6px;
-  }
-
-  .play-title {
-    font-size: 23px;
-  }
-
-  .game-layout {
-    height: calc(100dvh - 89px);
-
-    grid-template-rows:
-      minmax(0, 0.72fr)
-      80px
-      minmax(0, 1fr);
-  }
-
-  .players-panel {
-    padding: 7px;
-  }
-
-  .saiteja-player,
-  .you-player {
-    height: 49px;
-  }
-
-  .player-avatar {
-    width: 34px;
-    height: 34px;
-
-    min-width: 34px;
-  }
-
-  .player-name {
-    font-size: 8px;
-  }
-
-  .game-status-card {
-    height: 45px;
-    flex-basis: 45px;
-  }
-
-  .game-control-btn {
-    height: 29px;
-    flex-basis: 29px;
-
-    font-size: 5px;
-  }
-
-  .right-panel {
-    grid-template-rows:
-      80px
-      minmax(0, 1fr);
-  }
-}
-
-
-/* ============================================================
-   36. REDUCED MOTION
+   32. REDUCED MOTION
    ============================================================ */
 
 @media (prefers-reduced-motion: reduce) {
@@ -4190,7 +3716,7 @@
 
 
 /* ============================================================
-   FINAL DESKTOP FIT OVERRIDE
+   33. FINAL DESKTOP FIT OVERRIDE
    ------------------------------------------------------------
    IMPORTANT:
    The original desktop values were larger than the available
@@ -4214,7 +3740,7 @@ body:has(.play-page),
 
 
 /* ------------------------------------------------------------
-   1200px+ DESKTOP / LAPTOP
+   34. 1200px+ DESKTOP / LAPTOP
    ------------------------------------------------------------ */
 
 @media (min-width: 1200px) {
@@ -4457,13 +3983,11 @@ body:has(.play-page),
 
   /* ---------- RIGHT COLUMN ---------- */
 
-  .right-panel {
-    grid-template-rows:
-      clamp(88px, 12.5vh, 110px)
-      minmax(0, 1fr);
-
-    gap: clamp(8px, 0.9vh, 12px);
-  }
+.right-panel {
+  display: block;
+  height: 100%;
+  overflow: hidden;
+}
 
   .move-history-card {
     padding:
@@ -5068,5 +4592,2882 @@ body:has(.play-page),
     min-width: 26px;
     height: 26px;
     font-size: 9px;
+  }
+}
+
+
+/* ============================================================
+   LARGE DEVICE CONTROL PLACEMENT + ANIMATION
+   ------------------------------------------------------------
+   Applies to:
+   - Tablets in landscape
+   - Laptops
+   - Desktops
+   - Large desktop screens
+
+   Controls now sit directly below Game Status instead of
+   being pushed to the bottom of the players panel.
+   ============================================================ */
+
+@media (min-width: 801px) {
+
+  .game-controls {
+    margin-top: clamp(10px, 1.8vh, 18px);
+
+    gap: clamp(7px, 1vh, 10px);
+
+    /* Override the desktop flex:auto behavior */
+    flex: 0 0 auto;
+  }
+
+
+  /* ==========================================================
+     BUTTON ENTRANCE ANIMATION
+     ========================================================== */
+
+  .game-control-btn {
+    position: relative;
+
+    overflow: hidden;
+
+    animation:
+      control-button-enter
+      0.55s
+      cubic-bezier(0.22, 1, 0.36, 1)
+      both;
+
+    will-change: transform;
+  }
+
+  .game-control-btn:nth-child(1) {
+    animation-delay: 0.05s;
+  }
+
+  .game-control-btn:nth-child(2) {
+    animation-delay: 0.12s;
+  }
+
+  .game-control-btn:nth-child(3) {
+    animation-delay: 0.19s;
+  }
+
+
+  /* ==========================================================
+     PREMIUM LIGHT SWEEP
+     ========================================================== */
+
+  .game-control-btn::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 65%;
+    height: 100%;
+
+    background:
+      linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.12),
+        transparent
+      );
+
+    transform: skewX(-18deg);
+
+    pointer-events: none;
+
+    transition:
+      left 0.55s ease;
+  }
+
+  .game-control-btn:hover::before {
+    left: 140%;
+  }
+
+
+  /* ==========================================================
+     HOVER MOTION
+     ========================================================== */
+
+  .game-control-btn:hover {
+    transform:
+      translateY(-3px)
+      scale(1.012);
+
+    box-shadow:
+      0 10px 24px rgba(0, 0, 0, 0.22);
+
+    border-color:
+      rgba(194, 164, 255, 0.38);
+  }
+
+
+  /* ==========================================================
+     PRIMARY BUTTON
+     ========================================================== */
+
+  .game-control-btn.primary {
+    box-shadow:
+      0 8px 22px rgba(161, 108, 236, 0.16);
+  }
+
+  .game-control-btn.primary:hover {
+    transform:
+      translateY(-3px)
+      scale(1.015);
+
+    box-shadow:
+      0 13px 30px rgba(161, 108, 236, 0.30);
+  }
+
+
+  /* ==========================================================
+     CLICK FEEDBACK
+     ========================================================== */
+
+  .game-control-btn:active {
+    transform:
+      translateY(0)
+      scale(0.985);
+
+    transition:
+      transform 0.08s ease;
+  }
+}
+
+
+/* ============================================================
+   CONTROL ENTRANCE KEYFRAMES
+   ============================================================ */
+
+@keyframes control-button-enter {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(12px)
+      scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+
+/* ============================================================
+   PLAYER CARD PREMIUM ANIMATION
+   ============================================================ */
+
+@media (min-width: 801px) {
+
+  .player-card {
+    position: relative;
+    overflow: hidden;
+
+    animation:
+      player-card-enter
+      0.65s
+      cubic-bezier(0.22, 1, 0.36, 1)
+      both;
+
+    transition:
+      transform 0.3s ease,
+      border-color 0.3s ease,
+      box-shadow 0.3s ease,
+      background 0.3s ease;
+  }
+
+  .saiteja-player {
+    animation-delay: 0.08s;
+  }
+
+  .you-player {
+    animation-delay: 0.18s;
+  }
+
+
+  /* ----------------------------------------------------------
+     GLOSSY LIGHT SWEEP
+     ---------------------------------------------------------- */
+
+  .player-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -130%;
+
+    width: 60%;
+    height: 100%;
+
+    background:
+      linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.08),
+        transparent
+      );
+
+    transform: skewX(-18deg);
+
+    pointer-events: none;
+
+    transition:
+      left 0.7s ease;
+  }
+
+  .player-card:hover::before {
+    left: 140%;
+  }
+
+
+  /* ----------------------------------------------------------
+     HOVER
+     ---------------------------------------------------------- */
+
+  .player-card:hover {
+    transform:
+      translateY(-3px);
+
+    border-color:
+      rgba(194, 164, 255, 0.42);
+
+    box-shadow:
+      0 10px 28px rgba(0, 0, 0, 0.22),
+      0 0 18px rgba(194, 164, 255, 0.08);
+  }
+
+
+  /* ----------------------------------------------------------
+     AVATAR MICRO-ANIMATION
+     ---------------------------------------------------------- */
+
+  .player-card:hover .player-avatar {
+    transform:
+      scale(1.035);
+
+    transition:
+      transform 0.3s ease;
+  }
+
+
+  /* ----------------------------------------------------------
+     PLAYER NAME
+     ---------------------------------------------------------- */
+
+  .player-card:hover .player-name {
+    text-shadow:
+      0 0 12px rgba(194, 164, 255, 0.18);
+  }
+}
+
+
+/* ============================================================
+   PLAYER CARD ENTRANCE
+   ============================================================ */
+
+@keyframes player-card-enter {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateX(-14px)
+      scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateX(0)
+      scale(1);
+  }
+}
+
+
+@keyframes player-card-enter {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateX(-14px)
+      scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateX(0)
+      scale(1);
+  }
+}
+/* ============================================================
+   FINAL PORTRAIT DEVICE OVERRIDE — V2
+   ------------------------------------------------------------
+   Portrait-only responsive system.
+
+   Goals:
+   - Keep all 3 control buttons visible
+   - Never let the board overlap the controls
+   - Move the board directly below the controls
+   - Give Move History the remaining viewport space
+   - Keep the chess board perfectly square
+   - Make the rotation message clearly visible
+   - Scale typography according to device size
+   - Do NOT affect landscape or desktop layouts
+   ============================================================ */
+
+
+/* ============================================================
+   PORTRAIT TABLETS
+   ------------------------------------------------------------
+   iPad Mini
+   iPad Air
+   iPad Pro
+   Surface Pro
+   Other portrait tablets
+   ============================================================ */
+
+@media (min-width: 501px) and (max-width: 1199px) and (orientation: portrait) {
+
+  /* ----------------------------------------------------------
+     PAGE
+     ---------------------------------------------------------- */
+
+  .play-page {
+    width: 100%;
+    height: 100dvh;
+
+    padding:
+      8px
+      10px;
+
+    overflow: hidden;
+  }
+
+
+  /* ----------------------------------------------------------
+     HEADER
+     ---------------------------------------------------------- */
+
+  .play-header {
+    height: 32px;
+    flex-basis: 32px;
+
+    margin-bottom: 3px;
+  }
+
+  .back-button,
+  .online-status {
+    height: 30px;
+  }
+
+  .back-button {
+    padding:
+      0 10px;
+
+    font-size: 9px;
+  }
+
+  .online-status {
+    padding:
+      0 10px;
+
+    font-size: 8px;
+  }
+
+
+  /* ----------------------------------------------------------
+     TITLE AREA
+     ---------------------------------------------------------- */
+
+  .play-title-area {
+    position: relative;
+
+    height: 69px;
+    flex-basis: 69px;
+
+    justify-content: flex-start;
+
+    overflow: visible;
+  }
+
+  .play-title {
+    font-size:
+      clamp(29px, 4.5vw, 42px);
+
+    line-height: 0.95;
+  }
+
+  .play-subtitle {
+    margin-top: 5px;
+
+    font-size:
+      clamp(9px, 1.25vw, 11px);
+
+    color:
+      rgba(255, 255, 255, 0.70);
+  }
+
+
+  /* ----------------------------------------------------------
+     ROTATE MESSAGE — TABLET
+     ---------------------------------------------------------- */
+
+  .play-title-area::after {
+    content:
+      "↻ For a better experience, rotate your device. Landscape mode is recommended.";
+
+    display: block;
+
+    width: 100%;
+
+    margin-top: 7px;
+
+    padding:
+      5px
+      10px;
+
+    box-sizing: border-box;
+
+    border:
+      1px solid
+      rgba(194, 164, 255, 0.28);
+
+    border-radius: 7px;
+
+    background:
+      linear-gradient(
+        90deg,
+        rgba(194, 164, 255, 0.10),
+        rgba(194, 164, 255, 0.04)
+      );
+
+    color:
+      #d9c7ff;
+
+    font-size:
+      clamp(9px, 1.25vw, 11px);
+
+    font-weight: 600;
+
+    line-height: 1.25;
+
+    text-align: center;
+
+    letter-spacing:
+      0.01em;
+
+    text-shadow:
+      0 0 10px
+      rgba(194, 164, 255, 0.28);
+
+    white-space: nowrap;
+  }
+
+
+  /* ----------------------------------------------------------
+     MAIN LAYOUT
+     
+     Row 1 = Players + Controls
+     Row 2 = Board
+     Row 3 = Move History
+     ---------------------------------------------------------- */
+
+  .game-layout {
+    width: 100%;
+
+    height:
+      calc(100dvh - 112px);
+
+    min-height: 0;
+
+    display: grid;
+
+    grid-template-columns:
+      minmax(0, 1fr);
+
+    /*
+       Slightly taller first row than V1.
+       This prevents the controls from being clipped.
+    */
+    grid-template-rows:
+      215px
+      min(
+        calc(100vw - 20px),
+        54dvh
+      )
+      minmax(95px, 1fr);
+
+    gap: 6px;
+
+    overflow: hidden;
+  }
+
+
+  /* ==========================================================
+     PLAYERS PANEL
+     ========================================================== */
+
+  .players-panel {
+    grid-column: 1;
+    grid-row: 1;
+
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    padding:
+      8px;
+
+    box-sizing: border-box;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+  }
+
+  .players-panel-title {
+    height: 17px;
+    flex-basis: 17px;
+
+    font-size: 9px;
+
+    gap: 6px;
+  }
+
+  .players-panel-icon {
+    font-size: 12px;
+  }
+
+
+  /* ==========================================================
+     PLAYER CARDS
+     ========================================================== */
+
+  .saiteja-player,
+  .you-player {
+    width: 100%;
+
+    height: 47px;
+    min-height: 47px;
+
+    padding:
+      5px
+      8px;
+
+    gap: 8px;
+
+    border-radius: 9px;
+
+    box-sizing: border-box;
+  }
+
+  .saiteja-player {
+    margin-top: 5px;
+  }
+
+  .you-player {
+    margin-top: 4px;
+  }
+
+  .player-avatar {
+    width: 36px;
+    height: 36px;
+
+    min-width: 36px;
+
+    border-radius: 8px;
+
+    font-size: 18px;
+  }
+
+  .you-avatar {
+    font-size: 20px;
+  }
+
+  .player-name {
+    font-size: 10px;
+
+    line-height: 1.05;
+  }
+
+  .player-rating,
+  .player-color {
+    margin-top: 3px;
+
+    font-size: 6px;
+
+    line-height: 1;
+  }
+
+
+  /* ==========================================================
+     VS
+     ========================================================== */
+
+  .players-divider {
+    width: 100%;
+
+    height: 7px;
+
+    gap: 5px;
+
+    margin:
+      1px 0;
+  }
+
+  .players-divider strong {
+    font-size: 5px;
+  }
+
+
+  /* ==========================================================
+     GAME STATUS
+     ========================================================== */
+
+  .game-status-card {
+    width: 100%;
+
+    height: 39px;
+    flex-basis: 39px;
+
+    margin-top: 3px;
+
+    padding:
+      5px
+      8px;
+
+    border-radius: 8px;
+
+    box-sizing: border-box;
+  }
+
+  .game-status-title {
+    font-size: 6px;
+
+    line-height: 1;
+  }
+
+  .game-status-main {
+    margin-top: 3px;
+
+    gap: 5px;
+
+    font-size: 8px;
+
+    line-height: 1;
+  }
+
+  .game-status-dot {
+    width: 5px;
+    height: 5px;
+
+    flex-basis: 5px;
+  }
+
+  .game-status-description {
+    margin-top: 3px;
+
+    font-size: 6px;
+
+    line-height: 1;
+  }
+
+
+  /* ==========================================================
+     CONTROLS
+     ----------------------------------------------------------
+     New Game | Switch to View | Exit Game
+     ========================================================== */
+
+  .game-controls {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+
+    gap: 5px;
+
+    margin-top: 4px;
+
+    flex:
+      0 0 auto;
+
+    box-sizing: border-box;
+  }
+
+  .game-control-btn {
+    width: 100%;
+
+    height: 32px;
+    min-height: 32px;
+    flex-basis: 32px;
+
+    padding:
+      0 5px;
+
+    border-radius: 7px;
+
+    gap: 4px;
+
+    font-size: 8px;
+
+    line-height: 1;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+  }
+
+  .game-control-btn span {
+    font-size: 11px;
+  }
+
+
+  /* ==========================================================
+     BOARD COLUMN
+     ========================================================== */
+
+  .board-column {
+    grid-column: 1;
+    grid-row: 2;
+
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+  }
+
+
+  /* ==========================================================
+     BOARD CARD
+     ========================================================== */
+
+  .board-card {
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    padding:
+      4px;
+
+    border-radius: 11px;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+  }
+
+
+  /* ----------------------------------------------------------
+     VIEW MODE
+     ---------------------------------------------------------- */
+
+  .view-mode-banner {
+    width: 100%;
+
+    padding:
+      3px
+      5px;
+
+    margin:
+      0 0 3px;
+
+    border-radius: 6px;
+
+    font-size: 5px;
+
+    line-height: 1;
+  }
+
+
+  /* ==========================================================
+     BOARD WRAPPER
+     ========================================================== */
+
+  .chess-board-wrapper {
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+  }
+
+
+  /* ==========================================================
+     CHESS BOARD
+     ========================================================== */
+
+  .chess-board {
+    width:
+      min(
+        calc(100vw - 20px),
+        54dvh
+      );
+
+    height:
+      auto;
+
+    max-width: 100%;
+    max-height: 100%;
+
+    aspect-ratio:
+      1 / 1;
+
+    flex:
+      0 0 auto;
+
+    margin:
+      0 auto;
+
+    border-radius: 5px;
+  }
+
+  .chess-piece {
+    width: 91%;
+    height: 91%;
+  }
+
+  .coord-rank,
+  .coord-file {
+    font-size:
+      clamp(6px, 1.1vw, 9px);
+  }
+
+
+  /* ----------------------------------------------------------
+     BOARD FOOTER
+     ---------------------------------------------------------- */
+
+  .board-footer {
+    display: none;
+  }
+
+
+  /* ==========================================================
+     MOVE HISTORY
+     ========================================================== */
+
+  .right-panel {
+    grid-column: 1;
+    grid-row: 3;
+
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    display: block;
+
+    overflow: hidden;
+  }
+
+  .move-history-card {
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    padding:
+      7px;
+
+    border-radius: 10px;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+  }
+
+  .move-history-header {
+    height: 16px;
+    flex-basis: 16px;
+
+    margin-bottom: 2px;
+  }
+
+  .move-history-title {
+    font-size: 7px;
+  }
+
+  .move-history-count {
+    font-size: 6px;
+  }
+
+  .move-history-columns {
+    height: 13px;
+    flex-basis: 13px;
+
+    grid-template-columns:
+      22px
+      minmax(0, 1fr)
+      minmax(0, 1fr);
+
+    gap: 5px;
+
+    padding:
+      0
+      4px;
+
+    font-size: 5px;
+  }
+
+  .move-history-list {
+    min-height: 0;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .move-history-row {
+    min-height: 22px;
+    height: 22px;
+
+    grid-template-columns:
+      22px
+      minmax(0, 1fr)
+      minmax(0, 1fr);
+
+    gap: 5px;
+
+    padding:
+      0
+      4px;
+  }
+
+  .move-number,
+  .move-san {
+    font-size: 7px;
+  }
+}
+
+
+/* ============================================================
+   SHORT PORTRAIT TABLETS
+   ------------------------------------------------------------
+   Specifically fixes:
+   Surface Duo 540 × 720
+   Other short portrait devices
+   ============================================================ */
+
+@media (min-width: 501px)
+and (max-width: 1199px)
+and (orientation: portrait)
+and (max-height: 800px) {
+
+  .play-title-area {
+    height: 62px;
+    flex-basis: 62px;
+  }
+
+  .play-title {
+    font-size:
+      clamp(26px, 5vw, 34px);
+  }
+
+  .play-subtitle {
+    font-size: 8px;
+  }
+
+  .play-title-area::after {
+    margin-top: 5px;
+
+    padding:
+      4px
+      7px;
+
+    font-size: 9px;
+
+    line-height: 1.15;
+  }
+
+
+  /*
+     Surface Duo was clipping the controls because the first
+     row was too small while the board was too tall.
+  */
+  .game-layout {
+    height:
+      calc(100dvh - 105px);
+
+    grid-template-rows:
+      218px
+      min(
+        calc(100vw - 24px),
+        330px
+      )
+      minmax(78px, 1fr);
+
+    gap: 5px;
+  }
+
+
+  .players-panel {
+    padding:
+      7px;
+  }
+
+  .players-panel-title {
+    height: 15px;
+    flex-basis: 15px;
+
+    font-size: 8px;
+  }
+
+
+  .saiteja-player,
+  .you-player {
+    height: 42px;
+    min-height: 42px;
+
+    padding:
+      4px
+      7px;
+  }
+
+  .saiteja-player {
+    margin-top: 4px;
+  }
+
+  .you-player {
+    margin-top: 3px;
+  }
+
+
+  .player-avatar {
+    width: 32px;
+    height: 32px;
+
+    min-width: 32px;
+  }
+
+  .player-name {
+    font-size: 9px;
+  }
+
+  .player-rating,
+  .player-color {
+    font-size: 5px;
+  }
+
+
+  .players-divider {
+    height: 6px;
+  }
+
+  .players-divider strong {
+    font-size: 4px;
+  }
+
+
+  .game-status-card {
+    height: 35px;
+    flex-basis: 35px;
+
+    margin-top: 2px;
+
+    padding:
+      4px
+      7px;
+  }
+
+  .game-status-title {
+    font-size: 5px;
+  }
+
+  .game-status-main {
+    margin-top: 2px;
+
+    font-size: 7px;
+  }
+
+  .game-status-description {
+    margin-top: 2px;
+
+    font-size: 5px;
+  }
+
+
+  /*
+     Controls remain fully inside the panel.
+  */
+  .game-controls {
+    margin-top: 3px;
+
+    gap: 4px;
+  }
+
+  .game-control-btn {
+    height: 30px;
+    min-height: 30px;
+    flex-basis: 30px;
+
+    padding:
+      0
+      3px;
+
+    font-size: 7px;
+
+    border-radius: 6px;
+  }
+
+  .game-control-btn span {
+    font-size: 9px;
+  }
+
+
+  /*
+     IMPORTANT:
+     Board is intentionally smaller on short portrait devices.
+     This creates room for Move History.
+  */
+  .chess-board {
+    width:
+      min(
+        calc(100vw - 24px),
+        330px
+      );
+
+    max-width:
+      330px;
+  }
+
+
+  .move-history-card {
+    padding:
+      6px;
+  }
+
+  .move-history-title {
+    font-size: 6px;
+  }
+
+  .move-history-count {
+    font-size: 5px;
+  }
+
+  .move-history-columns {
+    font-size: 4px;
+  }
+
+  .move-history-row {
+    min-height: 19px;
+    height: 19px;
+  }
+
+  .move-number,
+  .move-san {
+    font-size: 6px;
+  }
+}
+
+
+/* ============================================================
+   SMALL PORTRAIT PHONES
+   ------------------------------------------------------------
+   Pixel 8 / Android / iPhone
+   ============================================================ */
+
+@media (max-width: 500px) and (orientation: portrait) {
+
+  .play-page {
+    width: 100%;
+    height: 100dvh;
+
+    padding:
+      5px;
+
+    overflow: hidden;
+  }
+
+
+  /* ----------------------------------------------------------
+     HEADER
+     ---------------------------------------------------------- */
+
+  .play-header {
+    height: 26px;
+    flex-basis: 26px;
+
+    margin-bottom: 2px;
+  }
+
+  .back-button,
+  .online-status {
+    height: 25px;
+  }
+
+  .back-button {
+    padding:
+      0 8px;
+
+    font-size: 7px;
+  }
+
+  .online-status {
+    padding:
+      0 8px;
+
+    font-size: 6px;
+  }
+
+
+  /* ----------------------------------------------------------
+     TITLE
+     ---------------------------------------------------------- */
+
+  .play-title-area {
+    position: relative;
+
+    height: 59px;
+    flex-basis: 59px;
+
+    justify-content: flex-start;
+
+    overflow: visible;
+  }
+
+  .play-title {
+    font-size:
+      clamp(22px, 7vw, 28px);
+
+    line-height: 0.95;
+  }
+
+  .play-subtitle {
+    margin-top: 3px;
+
+    font-size: 7px;
+
+    color:
+      rgba(255, 255, 255, 0.70);
+  }
+
+
+  /* ----------------------------------------------------------
+     ROTATE MESSAGE — PHONE
+     ---------------------------------------------------------- */
+
+  .play-title-area::after {
+    content:
+      "↻ Rotate your device for a better experience • Landscape mode recommended";
+
+    display: block;
+
+    width: 100%;
+
+    margin-top: 5px;
+
+    padding:
+      5px
+      7px;
+
+    box-sizing: border-box;
+
+    border:
+      1px solid
+      rgba(194, 164, 255, 0.30);
+
+    border-radius: 7px;
+
+    background:
+      rgba(194, 164, 255, 0.08);
+
+    color:
+      #d9c7ff;
+
+    font-size:
+      clamp(8px, 2.15vw, 9px);
+
+    font-weight: 600;
+
+    line-height: 1.2;
+
+    text-align: center;
+
+    text-shadow:
+      0 0 8px
+      rgba(194, 164, 255, 0.30);
+
+    white-space: normal;
+  }
+
+
+  /* ==========================================================
+     MAIN LAYOUT
+     ========================================================== */
+
+  .game-layout {
+    width: 100%;
+
+    height:
+      calc(100dvh - 90px);
+
+    min-height: 0;
+
+    display: grid;
+
+    grid-template-columns:
+      minmax(0, 1fr);
+
+    grid-template-rows:
+      202px
+      min(
+        calc(100vw - 16px),
+        52dvh
+      )
+      minmax(88px, 1fr);
+
+    gap: 4px;
+
+    overflow: hidden;
+  }
+
+
+  /* ==========================================================
+     PLAYERS
+     ========================================================== */
+
+  .players-panel {
+    grid-column: 1;
+    grid-row: 1;
+
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    padding:
+      6px;
+
+    box-sizing: border-box;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+  }
+
+  .players-panel-title {
+    height: 14px;
+    flex-basis: 14px;
+
+    font-size: 8px;
+
+    gap: 5px;
+  }
+
+  .players-panel-icon {
+    font-size: 10px;
+  }
+
+
+  /* ==========================================================
+     PLAYER CARDS
+     ========================================================== */
+
+  .saiteja-player,
+  .you-player {
+    width: 100%;
+
+    height: 40px;
+    min-height: 40px;
+
+    padding:
+      4px
+      6px;
+
+    gap: 6px;
+
+    border-radius: 8px;
+
+    box-sizing: border-box;
+  }
+
+  .saiteja-player {
+    margin-top: 4px;
+  }
+
+  .you-player {
+    margin-top: 3px;
+  }
+
+  .player-avatar {
+    width: 30px;
+    height: 30px;
+
+    min-width: 30px;
+
+    border-radius: 7px;
+
+    font-size: 15px;
+  }
+
+  .you-avatar {
+    font-size: 17px;
+  }
+
+  .player-name {
+    font-size: 9px;
+
+    line-height: 1;
+  }
+
+  .player-rating,
+  .player-color {
+    margin-top: 2px;
+
+    font-size: 5px;
+
+    line-height: 1;
+  }
+
+
+  /* ==========================================================
+     VS
+     ========================================================== */
+
+  .players-divider {
+    height: 6px;
+
+    gap: 4px;
+
+    margin-top: 1px;
+  }
+
+  .players-divider strong {
+    font-size: 4px;
+  }
+
+
+  /* ==========================================================
+     GAME STATUS
+     ========================================================== */
+
+  .game-status-card {
+    width: 100%;
+
+    height: 34px;
+    flex-basis: 34px;
+
+    margin-top: 2px;
+
+    padding:
+      4px
+      6px;
+
+    border-radius: 7px;
+
+    box-sizing: border-box;
+  }
+
+  .game-status-title {
+    font-size: 5px;
+  }
+
+  .game-status-main {
+    margin-top: 2px;
+
+    gap: 4px;
+
+    font-size: 7px;
+  }
+
+  .game-status-dot {
+    width: 4px;
+    height: 4px;
+
+    flex-basis: 4px;
+  }
+
+  .game-status-description {
+    margin-top: 2px;
+
+    font-size: 5px;
+  }
+
+
+  /* ==========================================================
+     CONTROLS
+     ========================================================== */
+
+  .game-controls {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+
+    gap: 3px;
+
+    margin-top: 3px;
+
+    flex:
+      0 0 auto;
+  }
+
+  .game-control-btn {
+    width: 100%;
+
+    height: 26px;
+    min-height: 26px;
+    flex-basis: 26px;
+
+    padding:
+      0
+      2px;
+
+    border-radius: 6px;
+
+    gap: 3px;
+
+    font-size: 6.5px;
+
+    line-height: 1;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+  }
+
+  .game-control-btn span {
+    font-size: 8px;
+  }
+
+
+  /* ==========================================================
+     BOARD
+     ========================================================== */
+
+  .board-column {
+    grid-column: 1;
+    grid-row: 2;
+
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+  }
+
+  .board-card {
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    padding:
+      3px;
+
+    border-radius: 9px;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+  }
+
+  .chess-board-wrapper {
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+  }
+
+  .chess-board {
+    width:
+      min(
+        calc(100vw - 16px),
+        52dvh
+      );
+
+    height: auto;
+
+    max-width: 100%;
+    max-height: 100%;
+
+    aspect-ratio:
+      1 / 1;
+
+    flex:
+      0 0 auto;
+
+    margin:
+      0 auto;
+
+    border-radius: 4px;
+  }
+
+  .chess-piece {
+    width: 92%;
+    height: 92%;
+  }
+
+  .coord-rank,
+  .coord-file {
+    font-size: 5px;
+  }
+
+
+  /* ----------------------------------------------------------
+     FOOTER
+     ---------------------------------------------------------- */
+
+  .board-footer {
+    display: none;
+  }
+
+
+  /* ==========================================================
+     MOVE HISTORY
+     ========================================================== */
+
+  .right-panel {
+    grid-column: 1;
+    grid-row: 3;
+
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    display: block;
+
+    overflow: hidden;
+  }
+
+  .move-history-card {
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    padding:
+      5px;
+
+    border-radius: 9px;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+  }
+
+  .move-history-header {
+    height: 13px;
+    flex-basis: 13px;
+
+    margin-bottom: 1px;
+  }
+
+  .move-history-title {
+    font-size: 6px;
+  }
+
+  .move-history-count {
+    font-size: 5px;
+  }
+
+  .move-history-columns {
+    height: 10px;
+    flex-basis: 10px;
+
+    grid-template-columns:
+      19px
+      minmax(0, 1fr)
+      minmax(0, 1fr);
+
+    gap: 4px;
+
+    padding:
+      0
+      3px;
+
+    font-size: 4px;
+  }
+
+  .move-history-list {
+    min-height: 0;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .move-history-row {
+    min-height: 19px;
+    height: 19px;
+
+    grid-template-columns:
+      19px
+      minmax(0, 1fr)
+      minmax(0, 1fr);
+
+    gap: 4px;
+
+    padding:
+      0
+      3px;
+  }
+
+  .move-number,
+  .move-san {
+    font-size: 6px;
+  }
+}
+
+
+/* ============================================================
+   VERY SHORT PHONES
+   ------------------------------------------------------------
+   Handles 720px and shorter portrait screens.
+   This is especially important for Surface Duo-like sizes.
+   ============================================================ */
+
+@media (max-width: 500px)
+and (orientation: portrait)
+and (max-height: 760px) {
+
+  .play-title-area {
+    height: 55px;
+    flex-basis: 55px;
+  }
+
+  .play-title-area::after {
+    margin-top: 4px;
+
+    padding:
+      4px
+      5px;
+
+    font-size: 8px;
+  }
+
+
+  .game-layout {
+    height:
+      calc(100dvh - 86px);
+
+    /*
+       The player section gets enough room for ALL controls.
+
+       The board is deliberately smaller so Move History
+       still remains visible underneath it.
+    */
+    grid-template-rows:
+      198px
+      min(
+        calc(100vw - 22px),
+        330px
+      )
+      minmax(82px, 1fr);
+
+    gap: 4px;
+  }
+
+
+  .players-panel {
+    padding:
+      5px;
+  }
+
+
+  .saiteja-player,
+  .you-player {
+    height: 38px;
+    min-height: 38px;
+  }
+
+
+  .player-avatar {
+    width: 28px;
+    height: 28px;
+
+    min-width: 28px;
+  }
+
+
+  .game-status-card {
+    height: 32px;
+    flex-basis: 32px;
+  }
+
+
+  .game-controls {
+    margin-top: 2px;
+
+    gap: 3px;
+  }
+
+  .game-control-btn {
+    height: 25px;
+    min-height: 25px;
+    flex-basis: 25px;
+
+    font-size: 6px;
+  }
+
+
+  .chess-board {
+    width:
+      min(
+        calc(100vw - 22px),
+        330px
+      );
+
+    max-width:
+      330px;
+  }
+
+
+  .move-history-card {
+    padding:
+      4px;
+  }
+}
+
+
+/* ============================================================
+   ACCESSIBILITY
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .play-title-area::after {
+    animation: none !important;
+  }
+}
+/* ============================================================
+   FINAL MOBILE LANDSCAPE SYSTEM
+   ------------------------------------------------------------
+   IMPORTANT:
+   Do NOT use max-width: 800px here.
+
+   Chrome DevTools / device emulation / browser scaling can
+   make a phone's CSS viewport wider than 800px.
+
+   Landscape + short viewport is the reliable condition.
+
+   TARGET:
+   - Pixel 8 landscape
+   - iPhone landscape
+   - Android landscape
+   - Small tablets in landscape
+   - DevTools device emulation at 125% scaling
+
+   DOES NOT AFFECT:
+   - Portrait phones
+   - Normal desktop
+   - Desktop landscape with >650px height
+   ============================================================ */
+
+@media (
+  orientation: landscape
+) and (
+  max-height: 650px
+) and (
+  max-width: 1199px
+) {
+
+  /* ==========================================================
+     PAGE
+     ========================================================== */
+
+  .play-page {
+    width: 100% !important;
+    height: 100dvh !important;
+
+    min-width: 0 !important;
+    min-height: 0 !important;
+
+    padding:
+      5px 8px !important;
+
+    overflow: hidden !important;
+
+    box-sizing: border-box !important;
+  }
+
+
+  /* ==========================================================
+     HEADER
+     ========================================================== */
+
+  .play-header {
+    width: 100% !important;
+
+    height: 26px !important;
+    min-height: 26px !important;
+
+    margin:
+      0 0 2px !important;
+  }
+
+
+  .back-button,
+  .online-status {
+    height: 24px !important;
+    min-height: 24px !important;
+
+    box-sizing: border-box !important;
+  }
+
+
+  .back-button {
+    padding:
+      0 9px !important;
+
+    font-size: 8px !important;
+  }
+
+
+  .online-status {
+    padding:
+      0 9px !important;
+
+    font-size: 7px !important;
+  }
+
+
+  .online-dot {
+    width: 6px !important;
+    height: 6px !important;
+
+    flex:
+      0 0 6px !important;
+  }
+
+
+  /* ==========================================================
+     TITLE
+     ========================================================== */
+
+  .play-title-area {
+    width: 100% !important;
+
+    height: 39px !important;
+    min-height: 39px !important;
+
+    margin: 0 !important;
+
+    justify-content: center !important;
+
+    overflow: hidden !important;
+  }
+
+
+  .play-title {
+    font-size: 21px !important;
+
+    line-height: 0.95 !important;
+  }
+
+
+  .play-subtitle {
+    display: none !important;
+  }
+
+
+  /* ==========================================================
+     MAIN GAME GRID
+     ----------------------------------------------------------
+     LEFT:
+       Players
+
+     CENTER:
+       Board
+
+     RIGHT:
+       Move History
+
+     This deliberately uses flexible columns so the layout
+     works even when the CSS viewport is wider than 800px.
+     ========================================================== */
+
+  .game-layout {
+    width: 100% !important;
+
+    height:
+      calc(100dvh - 73px) !important;
+
+    min-width: 0 !important;
+    min-height: 0 !important;
+
+    display: grid !important;
+
+    grid-template-columns:
+      minmax(170px, 0.72fr)
+      minmax(300px, 1.45fr)
+      minmax(200px, 0.92fr) !important;
+
+    grid-template-rows:
+      minmax(0, 1fr) !important;
+
+    gap: 5px !important;
+
+    align-items: stretch !important;
+
+    overflow: hidden !important;
+  }
+
+
+  /* ==========================================================
+     LEFT — PLAYERS PANEL
+     ========================================================== */
+
+  .players-panel {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+
+    width: 100% !important;
+    height: 100% !important;
+
+    min-width: 0 !important;
+    min-height: 0 !important;
+
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    padding:
+      6px 7px !important;
+
+    box-sizing: border-box !important;
+
+    overflow: hidden !important;
+  }
+
+
+  /* ==========================================================
+     PLAYERS TITLE
+     ========================================================== */
+
+  .players-panel-title {
+    width: 100% !important;
+
+    height: 13px !important;
+    min-height: 13px !important;
+
+    flex:
+      0 0 13px !important;
+
+    display: flex !important;
+    align-items: center !important;
+
+    gap: 5px !important;
+
+    font-size: 6px !important;
+
+    line-height: 1 !important;
+  }
+
+
+  .players-panel-icon {
+    font-size: 8px !important;
+  }
+
+
+  /* ==========================================================
+     PLAYER CARDS
+     ----------------------------------------------------------
+     THE IMPORTANT PART
+
+     flex: 0 0 prevents the cards from being compressed by
+     the vertical flex container.
+     ========================================================== */
+
+  .player-card,
+  .saiteja-player,
+  .you-player {
+
+    width: 100% !important;
+
+    box-sizing: border-box !important;
+
+    display: flex !important;
+    align-items: center !important;
+
+    flex-shrink: 0 !important;
+
+    overflow: hidden !important;
+  }
+
+
+  .saiteja-player {
+
+    height: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
+
+    flex:
+      0 0 44px !important;
+
+    margin-top: 4px !important;
+
+    padding:
+      4px 6px !important;
+
+    gap: 7px !important;
+
+    border-radius: 8px !important;
+  }
+
+
+  .you-player {
+
+    height: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
+
+    flex:
+      0 0 44px !important;
+
+    margin-top: 3px !important;
+
+    padding:
+      4px 6px !important;
+
+    gap: 7px !important;
+
+    border-radius: 8px !important;
+  }
+
+
+  /* ==========================================================
+     AVATARS
+     ========================================================== */
+
+  .player-avatar {
+
+    width: 34px !important;
+    height: 34px !important;
+
+    min-width: 34px !important;
+    min-height: 34px !important;
+
+    max-width: 34px !important;
+    max-height: 34px !important;
+
+    flex:
+      0 0 34px !important;
+
+    box-sizing: border-box !important;
+
+    border-radius: 7px !important;
+
+    overflow: hidden !important;
+  }
+
+
+  .saiteja-avatar img {
+
+    position: absolute !important;
+
+    inset: 0 !important;
+
+    width: 100% !important;
+    height: 100% !important;
+
+    max-width: none !important;
+
+    object-fit: cover !important;
+
+    display: block !important;
+  }
+
+
+  /* ==========================================================
+     PLAYER INFORMATION
+     ========================================================== */
+
+  .player-info {
+
+    min-width: 0 !important;
+    min-height: 0 !important;
+
+    flex:
+      1 1 auto !important;
+
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    justify-content: center !important;
+
+    overflow: hidden !important;
+  }
+
+
+  .player-name {
+
+    width: 100% !important;
+
+    margin: 0 !important;
+
+    font-size: 8px !important;
+
+    line-height: 1 !important;
+
+    white-space: nowrap !important;
+
+    overflow: hidden !important;
+
+    text-overflow: ellipsis !important;
+  }
+
+
+  .player-rating,
+  .player-color {
+
+    width: 100% !important;
+
+    margin-top: 3px !important;
+
+    font-size: 5px !important;
+
+    line-height: 1 !important;
+
+    white-space: nowrap !important;
+
+    overflow: hidden !important;
+
+    text-overflow: ellipsis !important;
+  }
+
+
+  /* ==========================================================
+     VS DIVIDER
+     ========================================================== */
+
+  .players-divider {
+
+    width: 100% !important;
+
+    height: 6px !important;
+    min-height: 6px !important;
+
+    flex:
+      0 0 6px !important;
+
+    display: grid !important;
+
+    grid-template-columns:
+      1fr auto 1fr !important;
+
+    align-items: center !important;
+
+    gap: 4px !important;
+
+    margin:
+      1px 0 !important;
+  }
+
+
+  .players-divider strong {
+    font-size: 4px !important;
+
+    line-height: 1 !important;
+  }
+
+
+  .players-divider span {
+    height: 1px !important;
+  }
+
+
+  /* ==========================================================
+     GAME STATUS
+     ========================================================== */
+
+  .game-status-card {
+
+    width: 100% !important;
+
+    height: 36px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
+
+    flex:
+      0 0 36px !important;
+
+    box-sizing: border-box !important;
+
+    margin-top: 3px !important;
+
+    padding:
+      4px 6px !important;
+
+    border-radius: 7px !important;
+
+    overflow: hidden !important;
+  }
+
+
+  .game-status-title {
+
+    font-size: 5px !important;
+
+    line-height: 1 !important;
+  }
+
+
+  .game-status-main {
+
+    margin-top: 3px !important;
+
+    gap: 4px !important;
+
+    font-size: 7px !important;
+
+    line-height: 1 !important;
+
+    white-space: nowrap !important;
+  }
+
+
+  .game-status-dot {
+
+    width: 4px !important;
+    height: 4px !important;
+
+    min-width: 4px !important;
+    min-height: 4px !important;
+
+    flex:
+      0 0 4px !important;
+  }
+
+
+  .game-status-description {
+
+    margin-top: 2px !important;
+
+    font-size: 5px !important;
+
+    line-height: 1 !important;
+
+    white-space: nowrap !important;
+  }
+
+
+  /* ==========================================================
+     CONTROLS
+     ========================================================== */
+
+  .game-controls {
+
+    width: 100% !important;
+
+    display: grid !important;
+
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr)) !important;
+
+    gap: 3px !important;
+
+    margin-top: 3px !important;
+
+    flex:
+      0 0 auto !important;
+  }
+
+
+  .game-control-btn {
+
+    width: 100% !important;
+
+    height: 27px !important;
+    min-height: 27px !important;
+    max-height: 27px !important;
+
+    flex:
+      0 0 27px !important;
+
+    box-sizing: border-box !important;
+
+    padding:
+      0 3px !important;
+
+    border-radius: 6px !important;
+
+    font-size: 6px !important;
+
+    line-height: 1 !important;
+
+    white-space: nowrap !important;
+
+    overflow: hidden !important;
+
+    text-overflow: ellipsis !important;
+  }
+
+
+  .game-control-btn span {
+    font-size: 8px !important;
+  }
+
+
+  /* ==========================================================
+     CENTER — BOARD COLUMN
+     ========================================================== */
+
+  .board-column {
+
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    align-items: center !important;
+
+    overflow: hidden !important;
+  }
+
+
+  .board-card {
+
+    width: 100% !important;
+
+    min-width: 0 !important;
+    min-height: 0 !important;
+
+    padding:
+      4px !important;
+
+    box-sizing: border-box !important;
+
+    overflow: hidden !important;
+  }
+
+
+  /* ==========================================================
+     CHESS BOARD
+
+     320px maximum on a 412px-high viewport.
+
+     This leaves room for the header/title and stats.
+     ========================================================== */
+
+  .chess-board {
+
+    width:
+      min(
+        100%,
+        calc(100dvh - 92px),
+        560px
+      ) !important;
+
+    max-width:
+      560px !important;
+
+    height: auto !important;
+
+    aspect-ratio:
+      1 / 1 !important;
+
+    flex:
+      0 0 auto !important;
+
+    margin:
+      0 auto !important;
+  }
+
+
+  .chess-piece {
+
+    width: 92% !important;
+    height: 92% !important;
+  }
+
+
+  .coord-rank,
+  .coord-file {
+
+    font-size: 5px !important;
+  }
+
+
+  /* ==========================================================
+     BOARD FOOTER
+     ========================================================== */
+
+  .board-footer {
+    display: none !important;
+  }
+
+
+  /* ==========================================================
+     RIGHT — MOVE HISTORY
+     ========================================================== */
+
+  .right-panel {
+
+    grid-column: 3 !important;
+    grid-row: 1 !important;
+
+    width: 100% !important;
+    height: 100% !important;
+
+    min-width: 0 !important;
+    min-height: 0 !important;
+
+    display: block !important;
+
+    overflow: hidden !important;
+  }
+
+
+  .move-history-card {
+
+    width: 100% !important;
+    height: 100% !important;
+
+    min-width: 0 !important;
+    min-height: 0 !important;
+
+    padding: 6px !important;
+
+    box-sizing: border-box !important;
+
+    border-radius: 9px !important;
+
+    overflow: hidden !important;
+  }
+
+
+  .move-history-header {
+
+    height: 14px !important;
+
+    flex:
+      0 0 14px !important;
+  }
+
+
+  .move-history-title {
+    font-size: 6px !important;
+  }
+
+
+  .move-history-columns {
+
+    height: 12px !important;
+
+    flex:
+      0 0 12px !important;
+
+    font-size: 4px !important;
+  }
+
+
+  .move-history-row {
+
+    min-height: 19px !important;
+
+    height: 19px !important;
+  }
+
+
+  .move-number,
+  .move-san {
+    font-size: 5px !important;
+  }
+
+
+  /* ==========================================================
+     CHAT
+
+     The current Play(2).tsx no longer renders chat inside
+     the right panel, so this is intentionally hidden.
+     ========================================================== */
+
+  .chat-card {
+    display: none !important;
+  }
+
+
+  /* ==========================================================
+     TIP
+     ========================================================== */
+
+  .game-tip {
+    display: none !important;
+  }
+}
+
+
+/* ============================================================
+   EXTRA-COMPACT LANDSCAPE
+   ------------------------------------------------------------
+   For extremely short landscape screens.
+   ============================================================ */
+
+@media (
+  orientation: landscape
+) and (
+  max-height: 450px
+) and (
+  max-width: 1199px
+) {
+
+  .play-page {
+    padding:
+      4px 6px !important;
+  }
+
+
+  .play-header {
+    height: 24px !important;
+    min-height: 24px !important;
+
+    margin-bottom: 1px !important;
+  }
+
+
+  .back-button,
+  .online-status {
+    height: 22px !important;
+    min-height: 22px !important;
+  }
+
+
+  .play-title-area {
+    height: 35px !important;
+    min-height: 35px !important;
+  }
+
+
+  .play-title {
+    font-size: 19px !important;
+  }
+
+
+  .game-layout {
+    height:
+      calc(100dvh - 64px) !important;
+
+    grid-template-columns:
+      minmax(155px, 0.72fr)
+      minmax(280px, 1.45fr)
+      minmax(185px, 0.92fr) !important;
+
+    gap: 4px !important;
+  }
+
+
+  .players-panel {
+    padding:
+      5px 6px !important;
+  }
+
+
+  .players-panel-title {
+    height: 11px !important;
+    min-height: 11px !important;
+
+    flex:
+      0 0 11px !important;
+
+    font-size: 5px !important;
+  }
+
+
+  .players-panel-icon {
+    font-size: 7px !important;
+  }
+
+
+  .saiteja-player,
+  .you-player {
+
+    height: 41px !important;
+    min-height: 41px !important;
+    max-height: 41px !important;
+
+    flex:
+      0 0 41px !important;
+
+    padding:
+      3px 5px !important;
+
+    gap: 6px !important;
+  }
+
+
+  .player-avatar {
+
+    width: 31px !important;
+    height: 31px !important;
+
+    min-width: 31px !important;
+    min-height: 31px !important;
+
+    max-width: 31px !important;
+    max-height: 31px !important;
+
+    flex:
+      0 0 31px !important;
+  }
+
+
+  .player-name {
+    font-size: 7px !important;
+  }
+
+
+  .player-rating,
+  .player-color {
+    font-size: 4px !important;
+
+    margin-top: 2px !important;
+  }
+
+
+  .players-divider {
+
+    height: 5px !important;
+    min-height: 5px !important;
+
+    flex:
+      0 0 5px !important;
+  }
+
+
+  .players-divider strong {
+    font-size: 3px !important;
+  }
+
+
+  .game-status-card {
+
+    height: 33px !important;
+    min-height: 33px !important;
+    max-height: 33px !important;
+
+    flex:
+      0 0 33px !important;
+
+    margin-top: 2px !important;
+
+    padding:
+      3px 5px !important;
+  }
+
+
+  .game-status-title {
+    font-size: 4px !important;
+  }
+
+
+  .game-status-main {
+    margin-top: 2px !important;
+
+    font-size: 6px !important;
+  }
+
+
+  .game-status-description {
+    font-size: 4px !important;
+  }
+
+
+  .game-controls {
+
+    gap: 2px !important;
+
+    margin-top: 2px !important;
+  }
+
+
+  .game-control-btn {
+
+    height: 24px !important;
+    min-height: 24px !important;
+    max-height: 24px !important;
+
+    flex:
+      0 0 24px !important;
+
+    padding:
+      0 2px !important;
+
+    font-size: 5px !important;
+  }
+
+
+  .game-control-btn span {
+    font-size: 7px !important;
+  }
+
+
+  .chess-board {
+
+    width:
+      min(
+        100%,
+        calc(100dvh - 80px),
+        520px
+      ) !important;
+
+    max-width:
+      520px !important;
   }
 }

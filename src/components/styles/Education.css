@@ -773,6 +773,92 @@
 }
 
 /* ==========================================================
+   SCORE / CGPA
+========================================================== */
+
+.education-score {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-top: 14px;
+
+  width: fit-content;
+
+  padding: 8px 13px;
+
+  border-radius: 10px;
+
+  background:
+    rgba(168, 124, 255, 0.055);
+
+  border: 1px solid
+    rgba(194, 164, 255, 0.16);
+
+  box-shadow:
+    0 0 18px
+    rgba(168, 124, 255, 0.045);
+
+  transition:
+    border-color 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+
+/* SCORE LABEL */
+
+.education-score-label {
+  color:
+    rgba(255, 255, 255, 0.38);
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.14em;
+
+  white-space: nowrap;
+}
+
+
+/* SCORE VALUE */
+
+.education-score-value {
+  color: #c2a4ff;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.02em;
+
+  white-space: nowrap;
+
+  text-shadow:
+    0 0 12px
+    rgba(194, 164, 255, 0.28);
+}
+
+
+/* HOVER */
+
+.education-score:hover {
+  background:
+    rgba(168, 124, 255, 0.09);
+
+  border-color:
+    rgba(194, 164, 255, 0.32);
+
+  box-shadow:
+    0 0 22px
+    rgba(168, 124, 255, 0.10);
+}
+
+
+/* ==========================================================
    DIVIDER
 ========================================================== */
 
@@ -1095,6 +1181,25 @@
     text-align: center;
   }
 
+  .education-score {
+  margin-top: 12px;
+
+  padding:
+    7px 10px;
+
+  gap: 9px;
+
+  border-radius: 8px;
+}
+
+.education-score-label {
+  font-size: 8px;
+}
+
+.education-score-value {
+  font-size: 11px;
+}
+
   /* ========================================================
      MOBILE TIMELINE
   ======================================================== */
@@ -1332,6 +1437,25 @@
 
     font-size: 9px;
   }
+}
+
+.education-score {
+  margin-top: 10px;
+
+  padding:
+    6px 9px;
+
+  gap: 8px;
+}
+
+.education-score-label {
+  font-size: 7px;
+
+  letter-spacing: 0.11em;
+}
+
+.education-score-value {
+  font-size: 10px;
 }
 
 /* ==========================================================

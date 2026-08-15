@@ -1,6 +1,12 @@
 import { useEffect, useRef } from "react";
 import "./styles/Education.css";
 
+import {
+  FaGraduationCap,
+  FaBookOpen,
+  FaSchool,
+} from "react-icons/fa6";
+
 const Education = () => {
   const sectionRef = useRef<HTMLElement | null>(null);
 
@@ -10,23 +16,35 @@ const Education = () => {
    *
    * Display order:
    *
-   * SSC
+   * B.Tech
    * ↓
    * Intermediate
    * ↓
-   * B.Tech
+   * SSC
    * ==========================================================
    */
 
   const education = [
     {
-      period: "JUN 2019 — APR 2020",
-      institution: "Krishnaveni Talent School - India",
-      degree: "Secondary Education",
-      field: "General",
-      skills: [],
-      icon: "◇",
-      featured: false,
+      period: "NOV 2022 — MAR 2026",
+      institution:
+        "Malla Reddy College of Engineering & Technology",
+      degree: "Bachelor of Technology",
+      field: "Computer Science & Engineering",
+
+      scoreLabel: "CGPA",
+      score: "7.94",
+
+      skills: [
+        "Python",
+        "Java",
+        "Data Structures",
+        "Data Analysis",
+      ],
+
+      icon: FaGraduationCap,
+      featured: true,
+      badge: "GRADUATED",
     },
 
     {
@@ -34,25 +52,32 @@ const Education = () => {
       institution: "Sri Kakatiya Junior College",
       degree: "Intermediate",
       field: "MPC",
+
+      scoreLabel: "PERCENTAGE",
+      score: "68.8%",
+
       skills: ["Mathematical Skills"],
-      icon: "◈",
+
+      icon: FaBookOpen,
       featured: false,
+      badge: "",
     },
 
     {
-      period: "NOV 2022 — MAR 2026",
+      period: "JUN 2019 — APR 2020",
       institution:
-        "Malla Reddy College of Engineering & Technology",
-      degree: "Bachelor of Technology",
-      field: "Computer Science & Engineering",
-      skills: [
-        "Python",
-        "Java",
-        "Data Structures",
-        "Data Analysis",
-      ],
-      icon: "🎓",
-      featured: true,
+        "Krishnaveni Talent School - India",
+      degree: "Secondary Education",
+      field: "General",
+
+      scoreLabel: "CGPA",
+      score: "9.8",
+
+      skills: [],
+
+      icon: FaSchool,
+      featured: false,
+      badge: "",
     },
   ];
 
@@ -85,6 +110,7 @@ const Education = () => {
            * Once the item has appeared, we no longer
            * need to observe it.
            */
+
           observer.unobserve(entry.target);
         });
       },
@@ -141,6 +167,7 @@ const Education = () => {
         <div className="education-heading">
 
           <div className="education-eyebrow">
+
             <span
               className="education-eyebrow-line"
               aria-hidden="true"
@@ -152,6 +179,7 @@ const Education = () => {
               className="education-eyebrow-line"
               aria-hidden="true"
             />
+
           </div>
 
           <h2>
@@ -188,143 +216,169 @@ const Education = () => {
               EDUCATION ITEMS
           =============================================== */}
 
-          {education.map((item) => (
-            <article
-              className={`education-item ${
-                item.featured
-                  ? "education-item-featured"
-                  : ""
-              }`}
-              key={`${item.institution}-${item.period}`}
-            >
+          {education.map((item) => {
 
-              {/* =========================================
-                  TIMELINE NODE
-              ========================================= */}
+            const Icon = item.icon;
 
-              <div
-                className="education-node"
-                aria-hidden="true"
-              />
+            return (
+              <article
+                className={`education-item ${
+                  item.featured
+                    ? "education-item-featured"
+                    : ""
+                }`}
+                key={`${item.institution}-${item.period}`}
+              >
 
-              {/* =========================================
-                  EDUCATION CARD
-              ========================================= */}
-
-              <div className="education-card">
-
-                {/* Card glow */}
+                {/* =========================================
+                    TIMELINE NODE
+                ========================================= */}
 
                 <div
-                  className="education-card-shine"
+                  className="education-node"
                   aria-hidden="true"
                 />
 
-                <div className="education-card-content">
+                {/* =========================================
+                    EDUCATION CARD
+                ========================================= */}
 
-                  {/* =====================================
-                      TOP ROW
-                  ===================================== */}
+                <div className="education-card">
 
-                  <div className="education-card-top">
-
-                    <div className="education-period">
-                      {item.period}
-                    </div>
-
-                    <div
-                      className="education-icon"
-                      aria-hidden="true"
-                    >
-                      <span>{item.icon}</span>
-                    </div>
-
-                  </div>
-
-                  {/* =====================================
-                      INSTITUTION
-                  ===================================== */}
-
-                  <h3>
-                    {item.institution}
-                  </h3>
-
-                  {/* =====================================
-                      DEGREE
-                  ===================================== */}
-
-                  <div className="education-degree">
-                    {item.degree}
-                  </div>
-
-                  {/* =====================================
-                      FIELD
-                  ===================================== */}
-
-                  <div className="education-field">
-                    {item.field}
-                  </div>
-
-                  {/* =====================================
-                      DIVIDER
-                  ===================================== */}
+                  {/* Card glow */}
 
                   <div
-                    className="education-divider"
+                    className="education-card-shine"
                     aria-hidden="true"
-                  >
-                    <span />
-                  </div>
+                  />
 
-                  {/* =====================================
-                      SKILLS
-                  ===================================== */}
+                  <div className="education-card-content">
 
-                  {item.skills.length > 0 && (
-                    <div className="education-skills">
+                    {/* =====================================
+                        TOP ROW
+                    ===================================== */}
 
-                      <span className="education-skills-label">
-                        SKILLS
-                      </span>
+                    <div className="education-card-top">
 
-                      <div className="education-skill-list">
+                      <div className="education-period">
+                        {item.period}
+                      </div>
 
-                        {item.skills.map((skill) => (
-                          <span
-                            className="education-skill"
-                            key={skill}
-                          >
-                            {skill}
-                          </span>
-                        ))}
+                      {/* PREMIUM EDUCATION ICON */}
 
+                      <div
+                        className="education-icon"
+                        aria-hidden="true"
+                      >
+                        <Icon
+                          size={20}
+                          strokeWidth={1.8}
+                        />
                       </div>
 
                     </div>
-                  )}
 
-                  {/* =====================================
-                      FEATURED / B.TECH BADGE
-                  ===================================== */}
+                    {/* =====================================
+                        INSTITUTION
+                    ===================================== */}
 
-                  {item.featured && (
-                    <div className="education-current-badge">
+                    <h3>
+                      {item.institution}
+                    </h3>
 
-                      <span
-                        className="education-badge-dot"
-                        aria-hidden="true"
-                      />
+                    {/* =====================================
+                        DEGREE
+                    ===================================== */}
 
-                      PRIMARY EDUCATION
+                    <div className="education-degree">
+                      {item.degree}
+                    </div>
+
+                    {/* =====================================
+                        FIELD
+                    ===================================== */}
+
+                    <div className="education-field">
+                      {item.field}
+                    </div>
+
+                    {/* =====================================
+                        SCORE / CGPA
+                    ===================================== */}
+
+                    <div className="education-score">
+
+                      <span className="education-score-label">
+                        {item.scoreLabel}
+                      </span>
+
+                      <span className="education-score-value">
+                        {item.score}
+                      </span>
 
                     </div>
-                  )}
 
+                    {/* =====================================
+                        DIVIDER
+                    ===================================== */}
+
+                    <div
+                      className="education-divider"
+                      aria-hidden="true"
+                    >
+                      <span />
+                    </div>
+
+                    {/* =====================================
+                        SKILLS
+                    ===================================== */}
+
+                    {item.skills.length > 0 && (
+                      <div className="education-skills">
+
+                        <span className="education-skills-label">
+                          SKILLS
+                        </span>
+
+                        <div className="education-skill-list">
+
+                          {item.skills.map((skill) => (
+                            <span
+                              className="education-skill"
+                              key={skill}
+                            >
+                              {skill}
+                            </span>
+                          ))}
+
+                        </div>
+
+                      </div>
+                    )}
+
+                    {/* =====================================
+                        FEATURED / B.TECH BADGE
+                    ===================================== */}
+
+                    {item.featured && (
+                      <div className="education-current-badge">
+
+                        <span
+                          className="education-badge-dot"
+                          aria-hidden="true"
+                        />
+
+                        {item.badge}
+
+                      </div>
+                    )}
+
+                  </div>
                 </div>
-              </div>
 
-            </article>
-          ))}
+              </article>
+            );
+          })}
 
         </div>
 

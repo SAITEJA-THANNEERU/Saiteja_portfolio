@@ -161,11 +161,11 @@
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
 
-  transition:
-    transform .45s ease,
-    border-color .45s ease,
-    box-shadow .45s ease,
-    background .45s ease;
+transition:
+  transform .55s cubic-bezier(.22, .61, .36, 1),
+  border-color .55s ease,
+  box-shadow .55s ease,
+  background .55s ease;
 }
 
 .featured-card {
@@ -449,7 +449,7 @@
 }
 
 .cert-card:hover {
-  transform: translateY(-12px);
+  transform: translate3d(0, -8px, 0);
 
   border-color: rgba(194,164,255,.45);
 
@@ -524,10 +524,10 @@
 
 .cert-preview-image {
   transition:
-    transform .8s cubic-bezier(.22,.61,.36,1),
-    filter .45s ease;
+    transform 1s cubic-bezier(.22, .61, .36, 1),
+    filter .7s cubic-bezier(.22, .61, .36, 1);
+  will-change: transform, filter;
 }
-
 .cert-card:hover .cert-preview-image {
   transform: scale(1.08);
   filter: brightness(1.05);
@@ -734,22 +734,22 @@
 ========================== */
 
 @keyframes floatingCard {
-
   0% {
-    transform: translateY(0px);
+    transform: translate3d(0, 0, 0);
   }
 
   50% {
-    transform: translateY(-4px);
+    transform: translate3d(0, -3px, 0);
   }
 
   100% {
-    transform: translateY(0px);
+    transform: translate3d(0, 0, 0);
   }
 }
 
 .featured-card {
-  animation: floatingCard 5s ease-in-out infinite;
+  animation: floatingCard 6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  will-change: transform;
 }
 
 /* ==========================

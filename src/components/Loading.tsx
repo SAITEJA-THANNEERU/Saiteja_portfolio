@@ -55,6 +55,9 @@ const Loading = ({ percent }: { percent: number }) => {
     import("./utils/initialFX").then((module) => {
       if (cancelled) return;
 
+      /*
+       * Fade the ENTIRE loading screen.
+       */
       setClicked(true);
 
       exitTimer = window.setTimeout(() => {
@@ -85,7 +88,6 @@ const Loading = ({ percent }: { percent: number }) => {
     e: React.MouseEvent<HTMLElement>
   ) {
     const target = e.currentTarget;
-
     const rect = target.getBoundingClientRect();
 
     const x = e.clientX - rect.left;
@@ -114,9 +116,17 @@ const Loading = ({ percent }: { percent: number }) => {
   );
 
   return (
-    <>
+    <div
+      className={`loading-screen ${
+        clicked ? "loading-clicked" : ""
+      }`}
+    >
+
       {/* =====================================================
-          TOP HEADER
+          HEADER
+          IMPORTANT:
+          Header is INSIDE loading-screen so it disappears
+          together with the loader.
       ===================================================== */}
 
       <div className="loading-header">
@@ -129,11 +139,7 @@ const Loading = ({ percent }: { percent: number }) => {
           {config.developer.fullName}
         </a>
 
-        <div
-          className={`loader-status ${
-            clicked ? "loader-out" : ""
-          }`}
-        >
+        <div className="loader-status">
           <span className="loader-status-dot"></span>
 
           SYSTEM INITIALIZING
@@ -141,122 +147,75 @@ const Loading = ({ percent }: { percent: number }) => {
 
       </div>
 
+
       {/* =====================================================
-          LOADING SCREEN
+          MAIN LOADING WRAP
       ===================================================== */}
 
-      <div className="loading-screen">
+      <div
+        className="loading-wrap"
+        onMouseMove={handleMouseMove}
+      >
+
+        {/* Mouse glow */}
+
+        <div className="loading-hover"></div>
+
 
         {/* Background particles */}
+
         <div className="loading-stars"></div>
 
 
         {/* =================================================
-            MAIN LOADING WRAP
+            UIVERSE SPEEDER
         ================================================= */}
 
-        <div
-          className={`loading-wrap ${
-            clicked ? "loading-clicked" : ""
-          }`}
-          onMouseMove={handleMouseMove}
-        >
+        <div className="loading-speeder-area">
 
-          {/* Mouse glow */}
-          <div className="loading-hover"></div>
+          {/* Clouds */}
 
-          {/* =================================================
-              ENERGY ORB
-          ================================================= */}
+          <div className="clouds">
 
-          <div className="loading-orb-area">
-
-            <div className="orb-energy energy-left"></div>
-
-            <div className="orb-energy energy-right"></div>
-
-            <div className="energy-orb">
-
-              <div className="orb-glow"></div>
-
-              <div className="orb-ring orb-ring-1"></div>
-
-              <div className="orb-ring orb-ring-2"></div>
-
-              <div className="orb-ring orb-ring-3"></div>
-
-              <div className="orb-core">
-                <div className="orb-core-inner"></div>
-              </div>
-
-            </div>
+            <div className="cloud cloud1"></div>
+            <div className="cloud cloud2"></div>
+            <div className="cloud cloud3"></div>
+            <div className="cloud cloud4"></div>
+            <div className="cloud cloud5"></div>
 
           </div>
 
-          {/* =================================================
-              MAIN CONTENT
-          ================================================= */}
 
-          <div
-            className={`loading-button ${
-              loaded ? "loading-complete" : ""
-            }`}
-          >
+          {/* Long speed lines */}
 
-            <div className="loading-main-content">
+          <div className="longfazers">
 
-              {/* =================================================
-                  TITLE
-              ================================================= */}
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
 
-              <div className="loading-title">
-  ENTERING <span>THE WORLD</span> OF SAITEJA
-</div>
+          </div>
 
-              {/* =================================================
-                  PROGRESS BAR
-              ================================================= */}
 
-              <div className="progress-area">
+          {/* Speeder */}
 
-                <div className="progress-track">
+          <div className="loader">
 
-                  {/* Filled progress */}
-                  <div
-                    className="progress-fill"
-                    style={{
-                      width: `${safePercent}%`,
-                    }}
-                  >
+            <span>
 
-                    <div className="progress-shine"></div>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
 
-                  </div>
+            </span>
 
-                  {/* Glowing progress endpoint */}
-                  <div
-                    className="progress-dot"
-                    style={{
-                      left: `${safePercent}%`,
-                    }}
-                  ></div>
+            <div className="base">
 
-                </div>
+              <span></span>
 
-                {/* Percentage */}
-                <span className="progress-percent">
-                  {safePercent}%
-                </span>
-
-              </div>
-
-              {/* =================================================
-                  STATUS MESSAGE
-              ================================================= */}
-
-              <div className="loading-message">
-  Your experience is loading...
-</div>
+              <div className="face"></div>
 
             </div>
 
@@ -264,18 +223,81 @@ const Loading = ({ percent }: { percent: number }) => {
 
         </div>
 
-        {/* =====================================================
-            FOOTER
-        ===================================================== */}
 
-        <div className="loading-footer">
-  <span>
-    {config.developer.fullName}
-  </span>
-</div>
+        {/* =================================================
+            LOADING CONTENT
+        ================================================= */}
+
+        <div
+          className={`loading-button ${
+            loaded ? "loading-complete" : ""
+          }`}
+        >
+
+          <div className="loading-main-content">
+
+            {/* TITLE */}
+
+            <div className="loading-title">
+
+              ENTERING{" "}
+
+              <span>THE WORLD</span>{" "}
+
+              OF SAITEJA
+
+            </div>
+
+
+            {/* PROGRESS */}
+
+            <div className="progress-area">
+
+              <div className="progress-track">
+
+                <div
+                  className="progress-fill"
+                  style={{
+                    width: `${safePercent}%`,
+                  }}
+                >
+
+                  <div className="progress-shine"></div>
+
+                </div>
+
+
+                <div
+                  className="progress-dot"
+                  style={{
+                    left: `${safePercent}%`,
+                  }}
+                ></div>
+
+              </div>
+
+
+              <span className="progress-percent">
+                {safePercent}%
+              </span>
+
+            </div>
+
+
+            {/* MESSAGE */}
+
+            <div className="loading-message">
+              Your experience is loading...
+            </div>
+
+          </div>
+
+        </div>
 
       </div>
-    </>
+
+
+    </div>
   );
 };
 

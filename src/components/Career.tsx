@@ -44,7 +44,21 @@ const Career = () => {
                 <div className="career-role">
                   <h4>{exp.position}</h4>
 
-                  <h5>{exp.company}</h5>
+                  <div className="career-company-row">
+  <h5>{exp.company}</h5>
+
+  {exp.company === "SKAITE Technologies" && (
+    <a
+      href="https://skaitetechnologies.in/"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="career-company-link"
+      aria-label="Visit SKAITE Technologies website"
+    >
+      Visit Website ↗
+    </a>
+  )}
+</div>
 
                   <span className="career-period">
                     {exp.period}

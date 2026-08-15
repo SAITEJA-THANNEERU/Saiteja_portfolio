@@ -59,21 +59,29 @@
     padding-bottom: 40px;
   }
 
-  .landing-intro {
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-    transform: none !important;
-    padding-top: 40px;
-    margin-bottom: 20px;
-    z-index: 22;
-    text-align: center;
-    width: 100% !important;
-    order: 1;
-    height: auto !important;
-  }
+.landing-intro {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+
+  /* Move the entire name block slightly down */
+  padding-top: 85px;
+
+  margin-bottom: 35px;
+
+  z-index: 22;
+
+  text-align: center;
+
+  width: 100% !important;
+
+  order: 1;
+
+  height: auto !important;
+}
 
   .landing-intro h1 {
     word-spacing: 0.1em;
@@ -88,26 +96,37 @@
     margin-bottom: 5px;
   }
 
-  .landing-info {
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-    transform: none !important;
-    text-align: center;
-    margin-top: 6px;
-    z-index: 22;
-    background: transparent;
-    padding-bottom: 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    height: auto !important;
-    width: 100% !important;
-    order: 3;
-  }
+.landing-info {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+
+  text-align: center;
+
+  /* Move roles slightly lower */
+  margin-top: 18px;
+
+  z-index: 22;
+
+  background: transparent;
+
+  padding-bottom: 50px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 10px;
+
+  height: auto !important;
+
+  width: 100% !important;
+
+  order: 3;
+}
 
   .landing-info h3 {
     text-align: center;

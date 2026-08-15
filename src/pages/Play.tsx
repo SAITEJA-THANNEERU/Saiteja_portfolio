@@ -1123,7 +1123,7 @@ useEffect(() => {
               </div>
 
               <div className="player-rating">
-                RATING: 1600
+                 CHESS MASTER
               </div>
 
               <div className="player-color">
@@ -1165,7 +1165,7 @@ useEffect(() => {
               </div>
 
               <div className="player-rating">
-                RATING: 1200
+                CHALLENGER
               </div>
 
               <div className="player-color">
@@ -1411,7 +1411,9 @@ useEffect(() => {
 
         <aside className="right-panel">
 
-          {/* =================================================
+          {
+          
+          /* =================================================
               MOVE HISTORY
               ================================================= */}
 
@@ -1431,8 +1433,8 @@ useEffect(() => {
 
             <div className="move-history-columns">
               <span>#</span>
-              <span>WHITE</span>
-              <span>BLACK</span>
+              <span>YOU</span>
+              <span>SAI TEJA</span>
             </div>
 
             <div
@@ -1457,10 +1459,14 @@ useEffect(() => {
                   },
                   (_, index) => {
 
-                    const whiteMove =
+                    // The user always makes the first move.
+                    // Therefore the left column is always the user
+                    // and the right column is always Sai Teja,
+                    // regardless of which chess color they selected.
+                    const userMove =
                       moveHistory[index * 2];
 
-                    const blackMove =
+                    const saiTejaMove =
                       moveHistory[index * 2 + 1];
 
                     const latestRow =
@@ -1482,12 +1488,12 @@ useEffect(() => {
                           {index + 1}.
                         </span>
 
-                        <span className="move-san white-move">
-                          {whiteMove?.san || "—"}
+                        <span className="move-san user-move">
+                          {userMove?.san || "—"}
                         </span>
 
-                        <span className="move-san black-move">
-                          {blackMove?.san || "—"}
+                        <span className="move-san saiteja-move">
+                          {saiTejaMove?.san || "—"}
                         </span>
 
                       </div>

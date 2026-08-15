@@ -133,7 +133,7 @@ export const certifications: Certification[] = [
     credentialId: "ADD_CREDENTIAL_ID",
     certificateImage:
       "/certifications/images/sql_dev_gym.png",
-    certificatePdf: "ADD_CERTIFICATE_URL",
+    certificatePdf: "https://devgym.oracle.com/pls/apex/f?p=10001:29:13813466855894:::29:P29_CLASS_ID:5481&cs=1Nx3TDJgh0w-ygq3icYMX7urIWoNPCEJuXLH5pqVOkknGnq2I33EJh57LsiiynySdqwMpwClQNviXsLC73e3-0Q",
     skills: [
       "SQL",
       "Oracle Database",
@@ -243,7 +243,7 @@ export const certifications: Certification[] = [
     credentialId: "ADD_CREDENTIAL_ID",
     certificateImage:
       "/certifications/images/amazon%20cloud%20computing%20101.png",
-    certificatePdf: "ADD_CERTIFICATE_URL",
+    certificatePdf: "https://www.credly.com/badges/39de96b2-5164-427f-af81-d419575327f7",
     skills: [
       "Cloud Computing",
       "AWS",

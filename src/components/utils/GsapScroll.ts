@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
  * CHARACTER SCROLL SYSTEM
  * ============================================================
  *
- * Character lifecycle on ALL devices:
+ * Character lifecycle:
  *
  * LANDING
  *   ↓
@@ -28,11 +28,6 @@ gsap.registerPlugin(ScrollTrigger);
  * hidden
  *
  * Scrolling upward reverses the visibility automatically.
- *
- * Desktop / Laptop / Tablet / Mobile all use the same
- * ScrollTrigger lifecycle.
- *
- * Only device-specific POSITIONING is different.
  * ============================================================
  */
 
@@ -58,7 +53,7 @@ export function setCharTimeline(
   const isDesktop = window.innerWidth > 1024;
 
   /*
-   * Make sure every device starts with the character visible.
+   * Make sure the character starts visible.
    */
   gsap.set(characterModel, {
     x: 0,
@@ -80,7 +75,6 @@ export function setCharTimeline(
 
   /* ==========================================================
      LANDING TIMELINE
-     SAME ON ALL DEVICES
   ========================================================== */
 
   const tl1 = gsap.timeline({
@@ -96,7 +90,6 @@ export function setCharTimeline(
 
   /* ==========================================================
      ABOUT TIMELINE
-     SAME ON ALL DEVICES
   ========================================================== */
 
   const tl2 = gsap.timeline({
@@ -112,7 +105,6 @@ export function setCharTimeline(
 
   /* ==========================================================
      WHAT I BUILD TIMELINE
-     SAME ON ALL DEVICES
   ========================================================== */
 
   const tl3 = gsap.timeline({
@@ -211,7 +203,6 @@ export function setCharTimeline(
 
   /* ==========================================================
      LANDING ANIMATION
-     ALL DEVICES
   ========================================================== */
 
   tl1
@@ -236,13 +227,6 @@ export function setCharTimeline(
       0
     )
 
-    /*
-     * Desktop / Laptop:
-     * move character toward the left.
-     *
-     * Mobile / Tablet:
-     * keep character centered.
-     */
     .fromTo(
       characterModel,
       {
@@ -291,19 +275,17 @@ export function setCharTimeline(
      DESKTOP LANDING POSITION
   ========================================================== */
 
-  /*
-   * This keeps the desktop/laptop movement exactly as before.
-   *
-   * Mobile/tablet do not need this extra position controller.
-   */
-
   if (isDesktop) {
     ScrollTrigger.create({
       id: "character-landing-position",
+
       trigger: ".landing-section",
+
       start: "top top",
       end: "bottom top",
+
       scrub: true,
+
       invalidateOnRefresh: true,
 
       onUpdate: (self) => {
@@ -316,7 +298,6 @@ export function setCharTimeline(
 
   /* ==========================================================
      ABOUT ANIMATION
-     ALL DEVICES
   ========================================================== */
 
   tl2
@@ -458,21 +439,18 @@ export function setCharTimeline(
 
   /* ==========================================================
      WHAT I BUILD
-     ALL DEVICES
   ========================================================== */
 
   tl3
-    .to(
-      characterModel,
-      {
-        y: 0,
-        opacity: 1,
-        visibility: "visible",
-        duration: 2,
-        ease: "power2.out",
-      },
-      0
-    )
+.to(
+  characterModel,
+  {
+    y: 0,
+    duration: 2,
+    ease: "power2.out",
+  },
+  0
+)
 
     .to(
       character.rotation,
@@ -485,193 +463,112 @@ export function setCharTimeline(
       0
     );
 
-  /* ==========================================================
-     CHARACTER VISIBILITY
-     SAME RULE FOR EVERY DEVICE
-  ========================================================== */
+ /* ==========================================================
+   CHARACTER VISIBILITY
+   WHAT I BUILD → CAREER
+========================================================== */
+
+/*
+ * The Career section is now the hard visibility boundary.
+ *
+ * When Career starts entering the viewport:
+ *     character = hidden
+ *
+ * When scrolling back above Career:
+ *     character = visible
+ *
+ * This works independently from the Career animation itself,
+ * so the character cannot remain rendered over Career content.
+ */
+
+/* ----------------------------------------------------------
+   REMOVE EXISTING VISIBILITY TRIGGER
+---------------------------------------------------------- */
+
+const existingCharacterVisibility =
+  ScrollTrigger.getById("character-visibility");
+
+if (existingCharacterVisibility) {
+  existingCharacterVisibility.kill();
+}
+
+
+/* ----------------------------------------------------------
+   INITIAL CHARACTER STATE
+---------------------------------------------------------- */
+
+gsap.set(characterModel, {
+  opacity: 1,
+  visibility: "visible",
+  pointerEvents: "none",
+});
+
+
+/* ----------------------------------------------------------
+   CAREER VISIBILITY BOUNDARY
+---------------------------------------------------------- */
+
+ScrollTrigger.create({
+  id: "character-visibility",
+
+  trigger: ".career-section",
 
   /*
-   * IMPORTANT:
+   * As soon as the Career section starts entering
+   * the viewport, hide the character.
    *
-   * This controls ONLY character visibility.
+   * "top bottom" means:
    *
-   * It does NOT modify:
-   *
-   * - character rotation
-   * - camera animation
-   * - neck animation
-   * - monitor animation
-   * - screen-light animation
-   * - What I Build animation
-   *
-   * The character stays visible until the TOP of the
-   * Career section reaches the TOP of the viewport.
-   *
-   * At that exact point:
-   *
-   *     Career top <= viewport top
-   *              ↓
-   *     Character disappears
-   *
-   * When scrolling back upward:
-   *
-   *     Career top > viewport top
-   *              ↓
-   *     Character appears again
+   * Career top reaches viewport bottom
+   *             ↓
+   * Character disappears
    */
+
+  start: "top bottom",
 
   /*
-   * Remove any previous visibility trigger.
-   *
-   * This is important during Vite hot reloads and prevents
-   * multiple visibility controllers fighting each other.
+   * Keep the trigger active through the Career section.
    */
-  const existingCharacterVisibility =
-    ScrollTrigger.getById("character-visibility");
 
-  if (existingCharacterVisibility) {
-    existingCharacterVisibility.kill();
-  }
+  end: "bottom top",
 
-  /* ==========================================================
-     CHARACTER VISIBILITY TRIGGER
-  ========================================================== */
+  invalidateOnRefresh: true,
 
-  ScrollTrigger.create({
-    id: "character-visibility",
+  /*
+   * --------------------------------------------------------
+   * SCROLLING DOWN
+   * --------------------------------------------------------
+   *
+   * Career begins entering viewport.
+   */
 
-    /*
-     * Use the actual Career section as the trigger.
-     */
-    trigger: ".career-section",
+  onEnter: () => {
+    gsap.set(characterModel, {
+      opacity: 0,
+      visibility: "hidden",
+      pointerEvents: "none",
+    });
+  },
 
-    /*
-     * Start tracking when Career enters the viewport.
-     */
-    start: "top bottom",
+  /*
+   * --------------------------------------------------------
+   * SCROLLING UP
+   * --------------------------------------------------------
+   *
+   * User leaves the Career section and returns toward
+   * What I Build.
+   *
+   * Bring the character back.
+   */
 
-    /*
-     * Stop tracking after Career has completely passed
-     * through the viewport.
-     */
-    end: "bottom top",
-
-    invalidateOnRefresh: true,
-
-    /*
-     * Check the REAL position of Career on every scroll
-     * update.
-     *
-     * This avoids relying on onEnter timing alone.
-     */
-    onUpdate: (self) => {
-      const careerSection =
-        self.trigger as HTMLElement;
-
-      if (!careerSection) {
-        return;
-      }
-
-      /*
-       * Get the actual position relative to the viewport.
-       */
-      const careerTop =
-        careerSection.getBoundingClientRect().top;
-
-      /*
-       * ======================================================
-       * CAREER HAS REACHED THE TOP
-       * ======================================================
-       *
-       * This is the exact point where the character should
-       * disappear.
-       */
-      if (careerTop <= 0) {
-        gsap.set(characterModel, {
-          opacity: 0,
-          visibility: "hidden",
-        });
-
-        return;
-      }
-
-      /*
-       * ======================================================
-       * CAREER HAS NOT REACHED THE TOP YET
-       * ======================================================
-       *
-       * Keep the character visible.
-       */
-      gsap.set(characterModel, {
-        opacity: 1,
-        visibility: "visible",
-      });
-    },
-
-    /*
-     * ========================================================
-     * SCROLLING BACK UP
-     * ========================================================
-     *
-     * When Career moves back below the viewport top,
-     * the character becomes visible again.
-     */
-    onLeaveBack: () => {
-      gsap.set(characterModel, {
-        opacity: 1,
-        visibility: "visible",
-      });
-    },
-
-    /*
-     * ========================================================
-     * CAREER COMPLETELY PASSED
-     * ========================================================
-     *
-     * Once Career has completely moved through the viewport,
-     * keep the character hidden.
-     */
-    onLeave: () => {
-      gsap.set(characterModel, {
-        opacity: 0,
-        visibility: "hidden",
-      });
-    },
-
-    /*
-     * ========================================================
-     * PAGE REFRESH
-     * ========================================================
-     *
-     * Correct the initial state if the page is refreshed
-     * while Career is already visible.
-     */
-    onRefresh: () => {
-      const careerSection =
-        document.querySelector(
-          ".career-section"
-        ) as HTMLElement | null;
-
-      if (!careerSection) {
-        return;
-      }
-
-      const careerTop =
-        careerSection.getBoundingClientRect().top;
-
-      if (careerTop <= 0) {
-        gsap.set(characterModel, {
-          opacity: 0,
-          visibility: "hidden",
-        });
-      } else {
-        gsap.set(characterModel, {
-          opacity: 1,
-          visibility: "visible",
-        });
-      }
-    },
-  });
+  onLeaveBack: () => {
+    gsap.set(characterModel, {
+      opacity: 1,
+      visibility: "visible",
+      pointerEvents: "none",
+    });
+  },
+});
 
   /* ==========================================================
      STORE CLEANUP INFORMATION
@@ -681,6 +578,7 @@ export function setCharTimeline(
     intensityInterval;
 }
 
+
 /* ============================================================
    GLOBAL PAGE ANIMATIONS
 ============================================================ */
@@ -689,10 +587,15 @@ export function setAllTimeline() {
   const careerTimeline = gsap.timeline({
     scrollTrigger: {
       id: "career-animation",
+
       trigger: ".career-section",
+
       start: "top 50%",
+
       end: "bottom 30%",
+
       scrub: 1.5,
+
       invalidateOnRefresh: true,
     },
   });
@@ -702,6 +605,7 @@ export function setAllTimeline() {
   ========================================================== */
 
   careerTimeline
+
     .fromTo(
       ".career-timeline",
       {
@@ -771,6 +675,7 @@ export function setAllTimeline() {
      *
      * Preserve existing desktop movement.
      */
+
     careerTimeline.fromTo(
       ".career-section",
       {
@@ -789,6 +694,7 @@ export function setAllTimeline() {
      *
      * Keep Career in its normal position.
      */
+
     careerTimeline.fromTo(
       ".career-section",
       {
