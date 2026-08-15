@@ -14,14 +14,14 @@ export const config = {
         location: "Hyderabad, India"
     },
 
-    about: {
-        title: "About Me",
-        description: `I'm Sai Teja Thanneeru, a Software Engineer passionate about building scalable software, intelligent AI-powered applications, and modern digital products.
+about: {
+  title: "About Me",
+  description: `I'm Sai Teja Thanneeru, a Software Engineer focused on building intelligent, data-driven, and scalable digital solutions.
 
-With a strong foundation in Software Engineering, Full-Stack Development, and Applied Artificial Intelligence, I enjoy transforming complex ideas into clean, efficient, and production-ready solutions. My experience spans frontend development, backend systems, cloud technologies, databases, REST APIs, and AI-driven applications.
+As a graduate, I work across software development, data analytics, and artificial intelligence, turning ideas and complex problems into practical applications that create real-world value. My experience includes full-stack development, AI-powered applications, data-driven systems, databases, APIs, and modern web technologies.
 
-I continuously explore emerging technologies while focusing on writing maintainable code, designing scalable architectures, and delivering software that creates real-world impact. Whether developing AI platforms, SaaS products, or full-stack applications, I strive to build solutions that are innovative, reliable, and user-centric.`
-    },
+I enjoy working across the complete development journey - understanding problems, analyzing data, designing solutions, building reliable software, and continuously improving it. Driven by curiosity, consistency, and continuous learning, I aim to create technology that is not only technically strong and scalable, but genuinely useful to the people who use it.`
+},
    experiences: [
 
 {

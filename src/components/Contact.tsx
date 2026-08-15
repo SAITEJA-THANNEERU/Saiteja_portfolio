@@ -380,11 +380,10 @@ const socialLinks = [
                 <div className="contact-cta-divider" />
 
                 <strong>
-                  Let's build something
-                  <br />
-                  amazing together!
-                </strong>
-
+  Let's work
+  <br />
+  together!
+</strong>
               </div>
 
               <div className="contact-handshake">
