@@ -33,20 +33,19 @@ const INITIAL_GREETING: ChatMessage = {
 };
 
 /**
- * Strips markdown symbols and inserts natural punctuation pauses
- * so speech synthesis pronounces warm, professional, conversational sentences.
+ * Strips markdown symbols (bold, italic, list dashes, headings, code)
+ * so speech synthesis pronounces clear, natural sentences.
  */
 function cleanTextForSpeech(text: string): string {
   return text
     .replace(/\*\*(.*?)\*\*/g, "$1")
     .replace(/\*(.*?)\*/g, "$1")
-    .replace(/#{1,6}\s+/g, ". ")
-    .replace(/^[-*•]\s+/gm, ". ")
+    .replace(/#{1,6}\s+/g, "")
+    .replace(/^[-*•]\s+/gm, "")
     .replace(/`{1,3}[^`]*`{1,3}/g, "")
     .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
     .replace(/\n+/g, ". ")
     .replace(/\s+/g, " ")
-    .replace(/\.\s*\./g, ".")
     .trim();
 }
 
@@ -96,7 +95,7 @@ const ChatWithSai = () => {
     };
   }, [stopTypingAnimation, stopSpeaking]);
 
-  // Handle SpeechSynthesis speech triggering with optimized voice selection, rate, and pitch
+  // Handle SpeechSynthesis speech triggering
   const speakMessage = useCallback(
     (index: number, text: string) => {
       if (typeof window === "undefined" || !("speechSynthesis" in window)) {
@@ -117,36 +116,24 @@ const ChatWithSai = () => {
 
       const utterance = new SpeechSynthesisUtterance(cleaned);
 
-      // Preload / refresh voices
+      // Select natural English voice if available
       const voices = window.speechSynthesis.getVoices();
-
-      // Priority 1: Indian English (en-IN) for localized warmth and clarity
-      // Priority 2: High-quality Natural / Google / Microsoft / Samantha / Rishi / Neerja voices
-      // Priority 3: Any English voice
       const preferredVoice =
-        voices.find((v) => v.lang === "en-IN" || v.lang.startsWith("en-IN")) ||
         voices.find(
           (v) =>
             v.lang.startsWith("en") &&
             (v.name.includes("Natural") ||
               v.name.includes("Google") ||
-              v.name.includes("Microsoft") ||
               v.name.includes("Samantha") ||
               v.name.includes("Daniel") ||
-              v.name.includes("David") ||
-              v.name.includes("Rishi") ||
-              v.name.includes("Neerja") ||
-              v.name.includes("Prabhat"))
-        ) ||
-        voices.find((v) => v.lang.startsWith("en")) ||
-        voices[0];
+              v.name.includes("David"))
+        ) || voices.find((v) => v.lang.startsWith("en")) || voices[0];
 
       if (preferredVoice) {
         utterance.voice = preferredVoice;
       }
 
-      // Optimized conversational rate (0.96) and natural pitch (1.0)
-      utterance.rate = 0.96;
+      utterance.rate = 1.0;
       utterance.pitch = 1.0;
 
       utterance.onstart = () => {
@@ -539,7 +526,7 @@ const ChatWithSai = () => {
                           ) : (
                             <>
                               <FiVolume2 style={{ fontSize: "11px" }} />
-                              <span style={{ marginLeft: "4px" }}>Play Voice</span>
+                              <span style={{ marginLeft: "4px" }}>Listen</span>
                             </>
                           )}
                         </button>

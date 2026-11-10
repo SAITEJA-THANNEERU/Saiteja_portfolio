@@ -1,33 +1,17 @@
 import { GoogleGenAI } from '@google/genai';
 import { retrieveRelevantKnowledge } from '../src/data/portfolioKnowledge';
+import type { Request, Response } from 'express';
 
-// Minimal serverless request/response interfaces for full Vercel & Express compatibility
-interface ServerlessRequest {
-  method?: string;
-  headers?: Record<string, string | string[] | undefined>;
-  body?: unknown;
-  query?: Record<string, string | string[] | undefined>;
-  url?: string;
-}
-
-interface ServerlessResponse {
-  status: (statusCode: number) => ServerlessResponse;
-  json: (data: unknown) => ServerlessResponse | void;
-  send?: (data: unknown) => ServerlessResponse | void;
-  setHeader: (name: string, value: string | string[]) => void;
-  end: (chunk?: unknown) => void;
-  headersSent?: boolean;
-}
-
+// In-memory session conversation store (sessions expire after 2 hours of inactivity)
 interface SessionData {
   messages: Array<{ role: 'user' | 'assistant'; content: string }>;
   lastSubject?: string;
   lastUpdated: number;
 }
 
-// In-memory cache for warm container instances (2-hour TTL)
 const sessionStore = new Map<string, SessionData>();
 
+// Periodic session cleanup
 setInterval(() => {
   const now = Date.now();
   const TWO_HOURS = 2 * 60 * 60 * 1000;
@@ -38,53 +22,18 @@ setInterval(() => {
   }
 }, 15 * 60 * 1000);
 
-export default async function handler(req: ServerlessRequest, res: ServerlessResponse) {
-  // 1. CORS headers for cross-origin or local preview compatibility
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, x-session-id'
-  );
-
-  if (req.method === 'OPTIONS') {
-    res.status(200);
-    res.end();
-    return;
-  }
-
+export default async function handler(req: Request, res: Response) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
-    // 2. Safe Body Parsing (handles both pre-parsed JSON objects and raw JSON strings)
-    let parsedBody: Record<string, unknown> = {};
-    if (typeof req.body === 'string') {
-      try {
-        parsedBody = JSON.parse(req.body);
-      } catch {
-        return res.status(400).json({ error: 'Invalid JSON body' });
-      }
-    } else if (req.body && typeof req.body === 'object') {
-      parsedBody = req.body as Record<string, unknown>;
-    }
+    const { message, sessionId, clearSession, messages: clientMessages } = req.body || {};
 
-    const { message, sessionId, clearSession, messages: clientMessages } = parsedBody;
+    // Generate or use visitor session ID for strict session isolation
+    const activeSessionId = String(sessionId || req.headers['x-session-id'] || 'default-session');
 
-    // 3. Isolated Session Handling (never shared across visitors)
-    const headerSessionId = req.headers?.['x-session-id'];
-    const rawSessionId = typeof sessionId === 'string' && sessionId.trim()
-      ? sessionId.trim()
-      : typeof headerSessionId === 'string' && headerSessionId.trim()
-        ? headerSessionId.trim()
-        : `session_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
-
-    // Sanitize session ID to alphanumeric characters, dashes, and underscores
-    const activeSessionId = rawSessionId.replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 64);
-
-    // 4. Handle Clearing Session
+    // Handle clearing the session
     if (clearSession) {
       sessionStore.delete(activeSessionId);
       return res.status(200).json({
@@ -93,7 +42,6 @@ export default async function handler(req: ServerlessRequest, res: ServerlessRes
         choices: [
           {
             message: {
-              role: 'assistant',
               content: "I've cleared our chat history! How can I help you explore Sai Teja's portfolio today?",
             },
           },
@@ -101,66 +49,31 @@ export default async function handler(req: ServerlessRequest, res: ServerlessRes
       });
     }
 
-    // 5. Determine and Validate Incoming Message
+    // Determine incoming message text
     let userText = '';
     if (typeof message === 'string' && message.trim()) {
       userText = message.trim();
     } else if (Array.isArray(clientMessages) && clientMessages.length > 0) {
-      const lastUserMsg = [...clientMessages].reverse().find(
-        (m) => m && typeof m === 'object' && (m as { role?: string }).role === 'user'
-      );
-      if (lastUserMsg && typeof (lastUserMsg as { content?: string }).content === 'string') {
-        userText = (lastUserMsg as { content: string }).content.trim();
-      }
+      const lastMsg = [...clientMessages].reverse().find((m) => m && m.role === 'user');
+      userText = lastMsg?.content ? String(lastMsg.content).trim() : '';
     }
 
     if (!userText) {
       return res.status(400).json({ error: 'No user message provided' });
     }
 
-    // Protect against excessively large inputs (max 1000 characters)
-    if (userText.length > 1000) {
-      userText = userText.substring(0, 1000);
-    }
-
-    // 6. Resilient Session History Reconstitution (works across serverless cold starts)
-    let validatedHistory: Array<{ role: 'user' | 'assistant'; content: string }> = [];
-    if (Array.isArray(clientMessages)) {
-      validatedHistory = clientMessages
-        .filter(
-          (m): m is { role: 'user' | 'assistant'; content: string } =>
-            Boolean(m) &&
-            typeof m === 'object' &&
-            ((m as { role: string }).role === 'user' || (m as { role: string }).role === 'assistant') &&
-            typeof (m as { content: unknown }).content === 'string' &&
-            (m as { content: string }).content.trim().length > 0 &&
-            // Exclude the initial default greeting from LLM prompt tokens
-            !(m as { content: string }).content.includes("Hello! I'm IGRIS, Sai Teja's AI portfolio assistant")
-        )
-        // Bound to the last 8 conversational turns
-        .slice(-8);
-    }
-
-    // Sync with warm in-memory session cache
+    // Retrieve or initialize visitor session
     let session = sessionStore.get(activeSessionId);
     if (!session) {
-      session = { messages: validatedHistory, lastUpdated: Date.now() };
+      session = { messages: [], lastUpdated: Date.now() };
       sessionStore.set(activeSessionId, session);
-    } else {
-      // Prefer client-supplied history if longer / more up-to-date
-      if (validatedHistory.length > session.messages.length) {
-        session.messages = validatedHistory;
-      }
-      session.lastUpdated = Date.now();
     }
+    session.lastUpdated = Date.now();
 
     const cleanQuery = userText.toLowerCase().replace(/[^a-z0-9\s]/g, '').trim();
 
-    // 7. Casual Conversational Intent Recognition (greetings, arise, polite inquiries)
-    const isGreeting = [
-      'hi', 'hello', 'hey', 'hlo', 'hello igris', 'hi igris', 'hey igris',
-      'good morning', 'good afternoon', 'good evening', 'greetings', 'namaste',
-    ].includes(cleanQuery);
+    // Check for casual conversational intents (greetings, arise, how are you, thanks, bye)
+    const isGreeting = ['hi', 'hello', 'hey', 'hlo', 'hello igris', 'hi igris', 'good morning', 'good afternoon', 'good evening'].includes(cleanQuery);
     const isArise = cleanQuery.includes('arise');
     const isHowAreYou = cleanQuery.includes('how are you') || cleanQuery.includes('whats up') || cleanQuery.includes('what is up');
     const isThanks = cleanQuery.includes('thank you') || cleanQuery.includes('thanks') || cleanQuery.includes('thx');
@@ -183,8 +96,9 @@ export default async function handler(req: ServerlessRequest, res: ServerlessRes
     if (assistantReply) {
       session.messages.push({ role: 'user', content: userText });
       session.messages.push({ role: 'assistant', content: assistantReply });
-      if (session.messages.length > 20) session.messages = session.messages.slice(-20);
-
+      if (session.messages.length > 20) {
+        session.messages = session.messages.slice(-20);
+      }
       return res.status(200).json({
         sessionId: activeSessionId,
         choices: [
@@ -201,60 +115,32 @@ export default async function handler(req: ServerlessRequest, res: ServerlessRes
     const lowerQuery = userText.toLowerCase();
     const queryWords = lowerQuery.split(/[\s,?.!-]+/).filter((w) => w.length > 2);
 
-    // 8. Robust Contextual Subject Extraction across recent conversation turns
-    const scanForSubject = (text: string): string | undefined => {
-      const lower = text.toLowerCase();
-      if (lower.includes('factoryops') || lower.includes('factory ops')) return 'FactoryOps';
-      if (lower.includes('scorera')) return 'Scorera';
-      if (lower.includes('game portal')) return 'Game Portal';
-      if (lower.includes('mypg')) return 'MyPG';
-      if (lower.includes('ultimate choice')) return 'Ultimate Choice';
-      if (lower.includes('fitness')) return 'Fitness Tracking Web App';
-      return undefined;
-    };
-
-    // First check current query
-    const subjectFromQuery = scanForSubject(userText);
-    if (subjectFromQuery) {
-      session.lastSubject = subjectFromQuery;
-    } else if (!session.lastSubject) {
-      // Scan reverse history to extract context on fresh serverless instances
-      for (const m of [...session.messages].reverse()) {
-        const found = scanForSubject(m.content);
-        if (found) {
-          session.lastSubject = found;
-          break;
-        }
-      }
+    // Track active project/subject across follow-ups in this visitor session
+    if (lowerQuery.includes('factoryops') || lowerQuery.includes('factory ops')) {
+      session.lastSubject = 'FactoryOps';
+    } else if (lowerQuery.includes('scorera')) {
+      session.lastSubject = 'Scorera';
+    } else if (lowerQuery.includes('game portal')) {
+      session.lastSubject = 'Game Portal';
+    } else if (lowerQuery.includes('mypg')) {
+      session.lastSubject = 'MyPG';
+    } else if (lowerQuery.includes('ultimate choice')) {
+      session.lastSubject = 'Ultimate Choice';
+    } else if (lowerQuery.includes('fitness')) {
+      session.lastSubject = 'Fitness Tracking Web App';
     }
 
-    // 9. RAG Knowledge Retrieval with Contextual Follow-up Enrichment
-    const isFollowUpQuery =
-      lowerQuery.startsWith('which') ||
-      lowerQuery.startsWith('what about') ||
-      lowerQuery.startsWith('how about') ||
-      lowerQuery.includes('in that') ||
-      lowerQuery.includes('in this') ||
-      lowerQuery.includes('tech stack') ||
-      lowerQuery.includes('technologies') ||
-      lowerQuery.includes('database') ||
-      lowerQuery.includes('architecture');
-
-    const queryForSearch =
-      isFollowUpQuery && session.lastSubject
-        ? `${session.lastSubject} ${userText}`
-        : userText;
-
+    // 1. RAG Knowledge Retrieval:
+    // If the query is an explicit follow-up without topic words, use the active session subject
+    const isFollowUpQuery = lowerQuery.startsWith('which') || lowerQuery.startsWith('what about') || lowerQuery.startsWith('how about') || lowerQuery.includes('in that') || lowerQuery.includes('in this');
+    const queryForSearch = isFollowUpQuery && session.lastSubject ? `${session.lastSubject} ${userText}` : userText;
     const retrievedDocs = retrieveRelevantKnowledge(queryForSearch, 4);
 
-    const retrievedContextText =
-      retrievedDocs.length > 0
-        ? retrievedDocs
-            .map((doc, idx) => `[Source ${idx + 1}: ${doc.title} (${doc.category})]\n${doc.content}`)
-            .join('\n\n')
-        : 'No specific portfolio document matched this query.';
+    const retrievedContextText = retrievedDocs.length > 0
+      ? retrievedDocs.map((doc, idx) => `[Source ${idx + 1}: ${doc.title} (${doc.category})]\n${doc.content}`).join('\n\n')
+      : 'No specific portfolio document matched this query.';
 
-    // 10. Strict IGRIS Persona & Identity System Instruction
+    // 2. Strict IGRIS System Prompt & Identity Rules
     const IGRIS_SYSTEM_INSTRUCTION = `You are IGRIS, Sai Teja Thanneeru's personal AI portfolio assistant.
 
 Identity & Tone:
@@ -291,16 +177,16 @@ ${retrievedContextText}
 Recent conversation history:
 ${session.messages.slice(-6).map((m) => `${m.role === 'user' ? 'Visitor' : 'IGRIS'}: ${m.content}`).join('\n')}`;
 
-    // 11. Read & Validate External LLM API Keys (ignoring placeholders)
+    // API Keys check (ignoring placeholders like 'your_..._here')
     const rawGroq = process.env.GROQ_API_KEY;
     const rawGemini = process.env.GEMINI_API_KEY;
     const rawOpenRouter = process.env.OPENROUTER_API_KEY;
 
-    const GROQ_API_KEY = rawGroq && !rawGroq.includes('your_') && rawGroq.trim() !== '' ? rawGroq.trim() : undefined;
-    const GEMINI_API_KEY = rawGemini && !rawGemini.includes('your_') && rawGemini.trim() !== '' ? rawGemini.trim() : undefined;
-    const OPENROUTER_API_KEY = rawOpenRouter && !rawOpenRouter.includes('your_') && rawOpenRouter.trim() !== '' ? rawOpenRouter.trim() : undefined;
+    const GROQ_API_KEY = rawGroq && !rawGroq.includes('your_') && rawGroq.trim() !== '' ? rawGroq : undefined;
+    const GEMINI_API_KEY = rawGemini && !rawGemini.includes('your_') && rawGemini.trim() !== '' ? rawGemini : undefined;
+    const OPENROUTER_API_KEY = rawOpenRouter && !rawOpenRouter.includes('your_') && rawOpenRouter.trim() !== '' ? rawOpenRouter : undefined;
 
-    // --- Provider 1: Groq API (Primary Provider) ---
+    // --- Provider 1: Groq API (Preferred by user) ---
     if (GROQ_API_KEY && !assistantReply) {
       try {
         const groqMessages = [
@@ -308,10 +194,6 @@ ${session.messages.slice(-6).map((m) => `${m.role === 'user' ? 'Visitor' : 'IGRI
           ...session.messages.slice(-6).map((m) => ({ role: m.role, content: m.content })),
           { role: 'user', content: userText },
         ];
-
-        // 7-second timeout to prevent serverless function invocation timeout
-        const groqController = new AbortController();
-        const groqTimeoutId = setTimeout(() => groqController.abort(), 7000);
 
         const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
           method: 'POST',
@@ -325,77 +207,55 @@ ${session.messages.slice(-6).map((m) => `${m.role === 'user' ? 'Visitor' : 'IGRI
             temperature: 0.2,
             max_tokens: 650,
           }),
-          signal: groqController.signal,
         });
 
-        clearTimeout(groqTimeoutId);
-
         if (groqRes.ok) {
-          const groqData = (await groqRes.json()) as { choices?: Array<{ message?: { content?: string } }> };
-          const reply = groqData?.choices?.[0]?.message?.content;
-          if (typeof reply === 'string' && reply.trim()) {
-            assistantReply = reply;
-          }
+          const groqData = await groqRes.json();
+          assistantReply = groqData?.choices?.[0]?.message?.content || null;
         } else {
-          console.warn('Groq API returned error status:', groqRes.status);
+          console.warn('Groq API error:', groqRes.status, await groqRes.text());
         }
       } catch (groqErr) {
-        console.warn('Groq request failed, trying next provider:', groqErr);
+        console.warn('Groq request failed, falling back to next provider:', groqErr);
       }
     }
 
-    // --- Provider 2: Google Gemini API (Secondary Provider) ---
+    // --- Provider 2: Gemini API (@google/genai SDK) ---
     if (GEMINI_API_KEY && !assistantReply) {
       try {
-        const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
+        const ai = new GoogleGenAI({
+          apiKey: GEMINI_API_KEY,
+          httpOptions: {
+            headers: {
+              'User-Agent': 'aistudio-build',
+            },
+          },
+        });
+
         const contents = `${IGRIS_SYSTEM_INSTRUCTION}\n\nVisitor: ${userText}\nIGRIS:`;
 
-        // Try gemini-2.5-flash with timeout protection
-        const geminiPromise = ai.models.generateContent({
-          model: 'gemini-2.5-flash',
+        const geminiRes = await ai.models.generateContent({
+          model: 'gemini-3.8-flash',
           contents,
         });
 
-        const timeoutPromise = new Promise<never>((_, reject) =>
-          setTimeout(() => reject(new Error('Gemini API call timed out')), 7000)
-        );
-
-        const geminiRes = await Promise.race([geminiPromise, timeoutPromise]);
-
-        if (geminiRes && geminiRes.text && geminiRes.text.trim()) {
+        if (geminiRes && geminiRes.text) {
           assistantReply = geminiRes.text;
         }
       } catch (geminiErr) {
-        console.warn('Gemini primary call failed, trying backup model:', geminiErr);
-        // Fallback to gemini-1.5-flash if 2.5-flash is unavailable for the key
-        try {
-          const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
-          const contents = `${IGRIS_SYSTEM_INSTRUCTION}\n\nVisitor: ${userText}\nIGRIS:`;
-          const geminiRes = await ai.models.generateContent({
-            model: 'gemini-1.5-flash',
-            contents,
-          });
-          if (geminiRes && geminiRes.text && geminiRes.text.trim()) {
-            assistantReply = geminiRes.text;
-          }
-        } catch (geminiFallbackErr) {
-          console.warn('Gemini fallback model also failed:', geminiFallbackErr);
-        }
+        console.warn('Gemini API call failed, trying backup:', geminiErr);
       }
     }
 
-    // --- Provider 3: OpenRouter API (Backup Provider) ---
+    // --- Provider 3: OpenRouter API ---
     if (OPENROUTER_API_KEY && !assistantReply) {
       try {
-        const orController = new AbortController();
-        const orTimeoutId = setTimeout(() => orController.abort(), 7000);
-
         const openrouterRes = await fetch('https://openrouter.ai/api/v1/chat/completions', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
-            'HTTP-Referer': process.env.APP_URL || 'https://portfolio.saiteja.dev',
+            'HTTP-Referer': process.env.APP_URL || 'http://localhost:3000',
             'X-Title': 'Sai Teja Portfolio - IGRIS Assistant',
           },
           body: JSON.stringify({
@@ -407,19 +267,11 @@ ${session.messages.slice(-6).map((m) => `${m.role === 'user' ? 'Visitor' : 'IGRI
             ],
             max_tokens: 650,
           }),
-          signal: orController.signal,
         });
 
-        clearTimeout(orTimeoutId);
-
         if (openrouterRes.ok) {
-          const orData = (await openrouterRes.json()) as { choices?: Array<{ message?: { content?: string } }> };
-          const reply = orData?.choices?.[0]?.message?.content;
-          if (typeof reply === 'string' && reply.trim()) {
-            assistantReply = reply;
-          }
-        } else {
-          console.warn('OpenRouter API returned error status:', openrouterRes.status);
+          const orData = await openrouterRes.json();
+          assistantReply = orData?.choices?.[0]?.message?.content || null;
         }
       } catch (orErr) {
         console.warn('OpenRouter call failed:', orErr);
@@ -427,81 +279,25 @@ ${session.messages.slice(-6).map((m) => `${m.role === 'user' ? 'Visitor' : 'IGRI
     }
 
     // --- Provider 4: High-Fidelity Conversational RAG Engine ---
-    // Executes direct natural responses following IGRIS persona when external LLMs are unconfigured or unavailable
+    // Executes direct natural responses following IGRIS persona when external LLM keys are unconfigured
     if (!assistantReply) {
-      const isWhoAreYou =
-        lowerQuery.includes('who are you') ||
-        lowerQuery.includes('what is your name') ||
-        lowerQuery.includes('what are you');
-      const isWhoIsSaiTeja =
-        (lowerQuery.includes('who is sai teja') ||
-          lowerQuery.includes('tell me about sai teja') ||
-          lowerQuery.includes('about sai teja') ||
-          lowerQuery.includes('who is he')) &&
-        !lowerQuery.includes('project') &&
-        !lowerQuery.includes('skill');
-      const isSkills =
-        lowerQuery.includes('skill') ||
-        lowerQuery.includes('tech stack') ||
-        lowerQuery.includes('technologies does he know') ||
-        lowerQuery.includes('what are his technical');
+      const isWhoAreYou = lowerQuery.includes('who are you') || lowerQuery.includes('what is your name') || lowerQuery.includes('what are you');
+      const isWhoIsSaiTeja = (lowerQuery.includes('who is sai teja') || lowerQuery.includes('tell me about sai teja') || lowerQuery.includes('about sai teja') || lowerQuery.includes('who is he')) && !lowerQuery.includes('project') && !lowerQuery.includes('skill');
+      const isSkills = lowerQuery.includes('skill') || lowerQuery.includes('tech stack') || lowerQuery.includes('technologies does he know') || lowerQuery.includes('what are his technical');
       const isFactoryOps = lowerQuery.includes('factoryops') || lowerQuery.includes('factory ops');
       const isSOP = lowerQuery.includes('sop') || lowerQuery.includes('sop assistant');
-      const isDatabaseInProject =
-        (lowerQuery.includes('database') || lowerQuery.includes('db') || lowerQuery.includes('storage')) &&
-        (session.lastSubject !== undefined || isFactoryOps);
-      const isTechInProject =
-        (lowerQuery.includes('which technologies') ||
-          lowerQuery.includes('what technologies') ||
-          lowerQuery.includes('tech stack') ||
-          lowerQuery.includes('tools')) &&
-        (session.lastSubject !== undefined || isFactoryOps);
-      const isOtherProjects =
-        lowerQuery.includes('other project') ||
-        lowerQuery.includes('another project') ||
-        lowerQuery.includes('what projects') ||
-        lowerQuery.includes('what else has he') ||
-        lowerQuery.includes('projects has he developed');
-      const isExperience =
-        lowerQuery.includes('experience') ||
-        lowerQuery.includes('career') ||
-        lowerQuery.includes('internship') ||
-        lowerQuery.includes('worked') ||
-        lowerQuery.includes('companies');
-      const isEducation =
-        lowerQuery.includes('education') ||
-        lowerQuery.includes('college') ||
-        lowerQuery.includes('degree') ||
-        lowerQuery.includes('study') ||
-        lowerQuery.includes('graduation') ||
-        lowerQuery.includes('mrcet');
-      const isCertifications =
-        lowerQuery.includes('certification') ||
-        lowerQuery.includes('certificate') ||
-        lowerQuery.includes('credentials');
+      const isTechInProject = (lowerQuery.includes('which technologies') || lowerQuery.includes('what technologies') || lowerQuery.includes('tech stack') || lowerQuery.includes('tools')) && (session.lastSubject !== undefined || isFactoryOps);
+      const isOtherProjects = lowerQuery.includes('other project') || lowerQuery.includes('what projects') || lowerQuery.includes('what else has he') || lowerQuery.includes('projects has he developed');
+      const isExperience = lowerQuery.includes('experience') || lowerQuery.includes('career') || lowerQuery.includes('internship') || lowerQuery.includes('worked') || lowerQuery.includes('companies');
+      const isEducation = lowerQuery.includes('education') || lowerQuery.includes('college') || lowerQuery.includes('degree') || lowerQuery.includes('study') || lowerQuery.includes('graduation') || lowerQuery.includes('mrcet');
+      const isCertifications = lowerQuery.includes('certification') || lowerQuery.includes('certificate') || lowerQuery.includes('credentials');
 
       if (isWhoAreYou) {
-        assistantReply =
-          "I'm IGRIS, Sai Teja's AI portfolio assistant. I can help you explore his projects, technical skills, education and professional experience. What would you like to know?";
+        assistantReply = "I'm IGRIS, Sai Teja's AI portfolio assistant. I can help you explore his projects, technical skills, education and professional experience. What would you like to know?";
       } else if (isWhoIsSaiTeja) {
-        assistantReply =
-          "Sai Teja is a Computer Science graduate specializing in Data Science. He works across software development, data analytics and artificial intelligence, turning ideas and complex challenges into practical, scalable technology solutions.";
+        assistantReply = "Sai Teja is a Computer Science graduate specializing in Data Science. He works across software development, data analytics and artificial intelligence, turning ideas and complex challenges into practical, scalable technology solutions.";
       } else if (isSOP && (isFactoryOps || session.lastSubject === 'FactoryOps')) {
-        assistantReply =
-          "FactoryOps is designed with role-based dashboards for production monitoring, machine maintenance, incident logging, and work orders. The portfolio does not currently list an AI-powered SOP assistant as a completed feature.";
-      } else if (isDatabaseInProject) {
-        const targetProject = session.lastSubject || (isFactoryOps ? 'FactoryOps' : 'his projects');
-        if (targetProject === 'FactoryOps') {
-          assistantReply = "FactoryOps uses **Supabase**, **SQL Server**, and **PostgreSQL** for its database and backend architecture, connected via REST APIs.";
-        } else if (targetProject === 'Scorera') {
-          assistantReply = "Scorera uses **Supabase** (PostgreSQL) for its backend database and security metadata storage.";
-        } else if (targetProject === 'Game Portal') {
-          assistantReply = "Game Portal uses **Supabase** (PostgreSQL and Supabase Storage) for database management and game asset distribution.";
-        } else if (targetProject === 'MyPG') {
-          assistantReply = "MyPG uses **Firebase Firestore** as its cloud database for managing tenants, rent logs, payments, and attendance.";
-        } else {
-          assistantReply = "Sai Teja uses PostgreSQL, Supabase, Firebase Firestore, and SQL Server for databases across his projects.";
-        }
+        assistantReply = "FactoryOps is designed with role-based dashboards for production monitoring, machine maintenance, incident logging, and work orders. The portfolio does not currently list an AI-powered SOP assistant as a completed feature.";
       } else if (isTechInProject) {
         const targetProject = session.lastSubject || (isFactoryOps ? 'FactoryOps' : 'his projects');
         if (targetProject === 'FactoryOps') {
@@ -547,12 +343,10 @@ ${session.messages.slice(-6).map((m) => `${m.role === 'user' ? 'Visitor' : 'IGRI
 - Android SDK
 - Firebase (Auth, Firestore, Notifications)`;
         } else {
-          assistantReply =
-            'Sai Teja works primarily with React, TypeScript, Java, Python, Supabase, Firebase, PostgreSQL, and Power BI across his projects.';
+          assistantReply = "Sai Teja works primarily with React, TypeScript, Java, Python, Supabase, Firebase, PostgreSQL, and Power BI across his projects.";
         }
       } else if (isFactoryOps) {
-        assistantReply =
-          'FactoryOps is a Smart Factory Operations & Maintenance Platform developed by Sai Teja. It is designed to streamline production monitoring, machine maintenance, incident management, and work order tracking through centralized role-based dashboards and Power BI analytics.\n\nWould you like to explore the technologies or architecture behind it?';
+        assistantReply = "FactoryOps is a Smart Factory Operations & Maintenance Platform developed by Sai Teja. It is designed to streamline production monitoring, machine maintenance, incident management, and work order tracking through centralized role-based dashboards and Power BI analytics.\n\nWould you like to explore the technologies or architecture behind it?";
       } else if (isOtherProjects) {
         assistantReply = `Sai Teja has developed several innovative projects:
 
@@ -605,22 +399,21 @@ Would you like details on any of these?`;
 - **Kaggle**: Python Programming and Intro to Programming.`;
       } else if (retrievedDocs.length > 0 && retrievedDocs[0].content) {
         const topDoc = retrievedDocs[0];
+        // Ensure there is genuine subject overlap before outputting doc content
         const docWords = (topDoc.title + ' ' + topDoc.tags.join(' ')).toLowerCase();
         const hasOverlap = queryWords.some((w) => docWords.includes(w));
 
         if (hasOverlap) {
           assistantReply = `${topDoc.content}\n\nFeel free to ask if you'd like to explore any part of this in more detail!`;
         } else {
-          assistantReply =
-            "I don't have that particular detail in Sai Teja's portfolio. You can ask me about his projects, technical skills or experience instead.";
+          assistantReply = "I don't have that particular detail in Sai Teja's portfolio. You can ask me about his projects, technical skills or experience instead.";
         }
       } else {
-        assistantReply =
-          "I don't have that particular detail in Sai Teja's portfolio. You can ask me about his projects, technical skills or experience instead.";
+        assistantReply = "I don't have that particular detail in Sai Teja's portfolio. You can ask me about his projects, technical skills or experience instead.";
       }
     }
 
-    // Clean up any stray generic robot phrases
+    // Clean up any stray generic robot phrases that an external LLM might output
     assistantReply = assistantReply
       .replace(/^Here('s| is) what I found( about .+)?:\s*/i, '')
       .replace(/^Based on the available information,?\s*/i, '')
@@ -629,10 +422,11 @@ Would you like details on any of these?`;
       .replace(/^Here is a summary of:?\s*/i, '')
       .trim();
 
-    // 12. Update Session State
+    // Update session memory
     session.messages.push({ role: 'user', content: userText });
     session.messages.push({ role: 'assistant', content: assistantReply });
 
+    // Keep session history bounded to last 20 messages for efficiency
     if (session.messages.length > 20) {
       session.messages = session.messages.slice(-20);
     }
