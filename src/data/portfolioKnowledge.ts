@@ -121,7 +121,7 @@ Technologies: Python, Scikit-learn, Pandas, Matplotlib.`
     id: "project-scorera",
     category: "project",
     title: "Scorera - Digital Trust Intelligence Platform",
-    tags: ["scorera", "projects", "trust intelligence", "security", "ai platform", "gemini ai", "supabase"],
+    tags: ["scorera", "projects", "trust intelligence", "security", "ai platform", "gemini ai", "supabase", "database"],
     content: `Project Name: Scorera
 Category: AI • Full Stack
 Technologies: React, TypeScript, Supabase, Gemini AI
@@ -131,7 +131,7 @@ Description: An AI-powered Digital Trust Intelligence Platform that evaluates we
     id: "project-game-portal",
     category: "project",
     title: "Game Portal Platform",
-    tags: ["game portal", "projects", "html5 games", "supabase", "edge functions", "storage"],
+    tags: ["game portal", "projects", "html5 games", "supabase", "edge functions", "storage", "database"],
     content: `Project Name: Game Portal
 Category: Full Stack • Web Platform
 Technologies: React, TypeScript, Supabase, Storage, Edge Functions
@@ -141,7 +141,7 @@ Description: A modern HTML5 game hosting and management platform where administr
     id: "project-factoryops",
     category: "project",
     title: "FactoryOps - Smart Factory Operations Platform",
-    tags: ["factoryops", "factory ops", "smart manufacturing", "power bi", "sql server", "projects", "sop", "sop assistant", "technologies"],
+    tags: ["factoryops", "factory ops", "smart manufacturing", "power bi", "sql server", "postgresql", "supabase", "database", "projects", "sop", "sop assistant", "technologies"],
     content: `Project Name: FactoryOps
 Category: Full Stack • Data Analytics • Smart Manufacturing
 Role & Origin: Developed by Sai Teja as a Smart Factory Operations & Maintenance Platform.
@@ -171,7 +171,7 @@ Description: An interactive decision-based game featuring mystery cards, multipl
     id: "project-mypg",
     category: "project",
     title: "MyPG - Hostel & PG Management",
-    tags: ["mypg", "android", "mobile app", "hostel", "firebase", "java", "projects"],
+    tags: ["mypg", "android", "mobile app", "hostel", "firebase", "firestore", "database", "java", "projects"],
     content: `Project Name: MyPG
 Category: Android • Full Stack
 Technologies: Java, Firebase, Android
