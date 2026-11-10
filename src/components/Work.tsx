@@ -1,73 +1,106 @@
-import { useEffect, useState } from "react";
-import { FiCheck, FiGithub, FiArrowUpRight } from "react-icons/fi";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect, useMemo, useState } from "react";
+import {
+  FiGithub,
+  FiArrowUpRight,
+  FiGrid,
+  FiCpu,
+  FiCode,
+  FiSmartphone,
+  FiBarChart2,
+  FiX,
+} from "react-icons/fi";
+
 import { config } from "../config";
 import "./styles/Work.css";
 
-gsap.registerPlugin(ScrollTrigger);
+type Category = "All" | "AI / ML" | "Full Stack" | "Mobile" | "Data";
 
-const projectFeatures: Record<number, string[]> = {
-  1: [
-    "AI Trust Analysis",
-    "Security Verification",
-    "Risk Scoring",
-  ],
-  2: [
-    "Game Upload & Management",
-    "ZIP Extraction & Hosting",
-    "In-Browser Game Player",
-  ],
-  3: [
-    "Mystery Card Gameplay",
-    "Dynamic Scoring System",
-    "Multiple Game Rounds",
-  ],
-  4: [
-    "Tenant Management",
-    "Rent & Payment Tracking",
-    "Notifications",
-  ],
-  5: [
-    "Calorie Prediction",
-    "Fitness Analytics",
-    "Interactive Dashboard",
-  ],
+const categories: {
+  name: Category;
+  icon: React.ReactNode;
+}[] = [
+  { name: "All", icon: <FiGrid /> },
+  { name: "AI / ML", icon: <FiCpu /> },
+  { name: "Full Stack", icon: <FiCode /> },
+  { name: "Mobile", icon: <FiSmartphone /> },
+  { name: "Data", icon: <FiBarChart2 /> },
+];
+
+const projectCategories: Record<number, Category[]> = {
+  1: ["AI / ML", "Full Stack"],
+  2: ["Full Stack"],
+  3: ["Full Stack"],
+  4: ["Mobile"],
+  5: ["AI / ML", "Data"],
+  6: ["AI / ML"],
+  7: ["AI / ML"],
+  8: ["AI / ML"],
+  9: ["Full Stack", "Data"],
 };
 
+const githubUrl = "https://github.com/SAITEJA-THANNEERU";
+
 const Work = () => {
-  const projects = config.projects.slice(0, 5);
+  const [activeCategory, setActiveCategory] =
+    useState<Category>("All");
 
-  const [activeProject, setActiveProject] = useState(0);
+  const [selectedProject, setSelectedProject] =
+    useState<(typeof config.projects)[number] | null>(null);
 
-  useEffect(() => {
-    const triggers: ScrollTrigger[] = [];
+  const projects = useMemo(() => {
+    return config.projects.filter((project) => {
+      if (activeCategory === "All") return true;
 
-    const projectElements =
-      gsap.utils.toArray<HTMLElement>(".work-project-card");
+      return projectCategories[project.id]?.includes(activeCategory);
+    });
+  }, [activeCategory]);
 
-    projectElements.forEach((element, index) => {
-      const trigger = ScrollTrigger.create({
-        trigger: element,
-        start: "top 48%",
-        end: "bottom 48%",
+  const categoryCounts = useMemo(() => {
+    const counts: Record<Category, number> = {
+      All: config.projects.length,
+      "AI / ML": 0,
+      "Full Stack": 0,
+      Mobile: 0,
+      Data: 0,
+    };
 
-        onEnter: () => {
-          setActiveProject(index);
-        },
-
-        onEnterBack: () => {
-          setActiveProject(index);
-        },
+    config.projects.forEach((project) => {
+      projectCategories[project.id]?.forEach((category) => {
+        counts[category]++;
       });
-
-      triggers.push(trigger);
     });
 
-    return () => {
-      triggers.forEach((trigger) => trigger.kill());
-    };
+    return counts;
   }, []);
+
+  // Close modal using Escape and prevent background scrolling.
+  useEffect(() => {
+    if (!selectedProject) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSelectedProject(null);
+      }
+    };
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedProject]);
+
+  const openProject = (project: (typeof config.projects)[number]) => {
+    setSelectedProject(project);
+  };
+
+  const closeProject = () => {
+    setSelectedProject(null);
+  };
 
   return (
     <section className="work-section" id="work">
@@ -75,195 +108,239 @@ const Work = () => {
 
         {/* HEADER */}
         <div className="work-header">
-          <span className="work-eyebrow">
-            <span>✦</span>
-            MY WORK
-          </span>
+          <div className="work-heading-content">
+            <span className="work-eyebrow">
+              <span className="work-eyebrow-icon">✦</span>
+              MY WORK
+            </span>
 
-          <h2>
-            Featured <span>Projects</span>
-          </h2>
+            <h2 className="work-title">
+              My <span>Projects</span>
+            </h2>
 
-          <p>
-            A selection of my recent work across AI, Full Stack,
-            and Web Applications.
-          </p>
+            <p className="work-description">
+              A collection of projects showcasing my work across
+              software engineering, artificial intelligence,
+              data analytics, and web development.
+            </p>
+          </div>
+
+          {/* CATEGORY FILTERS */}
+          <div className="work-filters">
+            {categories.map((category) => (
+              <button
+                key={category.name}
+                className={`work-filter ${
+                  activeCategory === category.name ? "active" : ""
+                }`}
+                onClick={() => setActiveCategory(category.name)}
+                type="button"
+                aria-pressed={activeCategory === category.name}
+              >
+                <span className="filter-icon">{category.icon}</span>
+                <span>{category.name}</span>
+                <span className="filter-count">
+                  {categoryCounts[category.name]}
+                </span>
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* PROJECTS */}
+        {/* PROJECT GRID */}
         <div className="work-projects">
-
-          {projects.map((project, index) => {
-            const isActive = activeProject === index;
-
-            const features =
-              projectFeatures[project.id] || [
-                "Modern Application",
-                "Responsive Interface",
-                "Practical Solution",
-              ];
+          {projects.map((project) => {
+            const technologies = project.technologies
+              .split(" • ")
+              .map((technology) => technology.trim());
 
             return (
               <article
                 key={project.id}
-                className={`work-project-card ${
-                  isActive ? "is-active" : ""
-                }`}
+                className="work-project-card"
+                role="button"
+                tabIndex={0}
+                aria-label={`Open ${project.title} project details`}
+                onClick={() => openProject(project)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    openProject(project);
+                  }
+                }}
               >
+                <div className="project-image-wrapper">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="project-card-image"
+                    loading="lazy"
+                  />
 
-                {/* =========================
-                    ACTIVE / LARGE PROJECT
-                ========================== */}
+                  <span className="project-card-number">
+                    {String(project.id).padStart(2, "0")}
+                  </span>
 
-                {isActive ? (
-                  <div className="active-project">
+                  <span className="project-expand-hint">
+                    <FiArrowUpRight />
+                  </span>
+                </div>
 
-                    <div className="active-project-content">
+                <div className="project-card-content">
+                  <div className="project-card-heading">
+                    <h3 className="project-card-title">
+                      {project.title}
+                    </h3>
 
-                      <div className="featured-label">
-                        <span>✦</span>
-                        FEATURED PROJECT
-                      </div>
-
-                      <div className="project-number">
-                        {String(index + 1).padStart(2, "0")}
-                      </div>
-
-                      <div className="active-project-title">
-                        <h3>{project.title}</h3>
-
-                        <span>
-                          {project.category}
-                        </span>
-                      </div>
-
-                      <p className="active-project-description">
-                        {project.description}
-                      </p>
-
-                      {/* FEATURES */}
-                      <div className="project-features">
-                        {features.map((feature) => (
-                          <div
-                            className="project-feature"
-                            key={feature}
-                          >
-                            <span className="feature-icon">
-                              <FiCheck />
-                            </span>
-
-                            <span>{feature}</span>
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* TECH STACK */}
-                      <div className="project-stack">
-                        <span className="stack-label">
-                          Tech Stack
-                        </span>
-
-                        <div className="stack-list">
-                          {project.technologies
-                            .split(" • ")
-                            .map((technology) => (
-                              <span
-                                className="stack-pill"
-                                key={technology}
-                              >
-                                {technology}
-                              </span>
-                            ))}
-                        </div>
-                      </div>
-
-                      {/* GITHUB */}
-                      <div className="project-actions">
-                        <a
-                          href="https://github.com/SAITEJA-THANNEERU"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="github-button"
-                          data-cursor="disable"
-                        >
-                          <FiGithub />
-
-                          <span>
-                            View on GitHub
-                          </span>
-
-                          <FiArrowUpRight />
-                        </a>
-                      </div>
-
-                    </div>
-
-                    {/* IMAGE */}
-                    <div className="active-project-image">
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                      />
-                    </div>
-
+                    <span className="project-card-category">
+                      {project.category}
+                    </span>
                   </div>
-                ) : (
 
-                  /* =========================
-                     INACTIVE / SMALL PROJECT
-                  ========================== */
+                  <p className="project-card-description">
+                    {project.description}
+                  </p>
 
-                  <div className="inactive-project">
-
-                    <div className="inactive-number">
-                      {String(index + 1).padStart(2, "0")}
-                    </div>
-
-                    <div className="inactive-image">
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        loading="lazy"
-                      />
-                    </div>
-
-                    <div className="inactive-info">
-
-                      <h3>
-                        {project.title}
-                      </h3>
-
-                      <span className="inactive-category">
-                        {project.category}
+                  <div className="project-card-technologies">
+                    {technologies.map((technology) => (
+                      <span
+                        key={technology}
+                        className="project-tech-badge"
+                      >
+                        {technology}
                       </span>
+                    ))}
+                  </div>
 
-                      <p>
-                        {project.description}
-                      </p>
-
-                    </div>
-
+                  <div className="project-card-actions">
                     <a
-                      href="https://github.com/SAITEJA-THANNEERU"
+                      href={githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inactive-github"
+                      className="project-github-button"
                       aria-label={`View ${project.title} on GitHub`}
                       data-cursor="disable"
+                      onClick={(event) => event.stopPropagation()}
                     >
                       <FiGithub />
+                      <span>View on GitHub</span>
+                      <FiArrowUpRight />
                     </a>
-
                   </div>
-                )}
-
+                </div>
               </article>
             );
           })}
-
         </div>
 
+        {projects.length === 0 && (
+          <div className="work-empty-state">
+            No projects found in this category.
+          </div>
+        )}
       </div>
+
+      {/* =====================================================
+          PROJECT FOCUS MODAL
+         ===================================================== */}
+
+      {selectedProject && (
+        <div
+          className="project-modal-backdrop"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) {
+              closeProject();
+            }
+          }}
+        >
+          <div
+            className="project-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="project-modal-title"
+          >
+            {/* CLOSE BUTTON */}
+            <button
+              className="project-modal-close"
+              type="button"
+              onClick={closeProject}
+              aria-label="Close project details"
+              autoFocus
+            >
+              <FiX />
+            </button>
+
+            {/* LARGE PROJECT IMAGE */}
+            <div className="project-modal-image-wrapper">
+              <img
+                src={selectedProject.image}
+                alt={selectedProject.title}
+                className="project-modal-image"
+              />
+
+              <span className="project-modal-number">
+                PROJECT {String(selectedProject.id).padStart(2, "0")}
+              </span>
+            </div>
+
+            {/* PROJECT INFORMATION */}
+            <div className="project-modal-content">
+              <span className="project-modal-category">
+                {selectedProject.category}
+              </span>
+
+              <h2 id="project-modal-title">
+                {selectedProject.title}
+              </h2>
+
+              <p className="project-modal-description">
+                {selectedProject.description}
+              </p>
+
+              <div className="project-modal-divider" />
+
+              <h3 className="project-modal-tech-heading">
+                Technologies Used
+              </h3>
+
+              <div className="project-modal-technologies">
+                {selectedProject.technologies
+                  .split(" • ")
+                  .map((technology) => technology.trim())
+                  .map((technology) => (
+                    <span
+                      key={technology}
+                      className="project-tech-badge"
+                    >
+                      {technology}
+                    </span>
+                  ))}
+              </div>
+
+              <div className="project-modal-actions">
+                <a
+                  href={githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="project-modal-github"
+                >
+                  <FiGithub />
+                  View on GitHub
+                  <FiArrowUpRight />
+                </a>
+
+                <button
+                  type="button"
+                  className="project-modal-back"
+                  onClick={closeProject}
+                >
+                  Back to Projects
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
