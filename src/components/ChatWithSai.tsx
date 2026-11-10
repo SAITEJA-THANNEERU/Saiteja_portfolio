@@ -29,7 +29,7 @@ const IGRIS_AVATAR = "/images/igris-avatar.png";
 const INITIAL_GREETING: ChatMessage = {
   role: "assistant",
   content:
-    "Hello! I'm IGRIS, Sai Teja's AI portfolio assistant. I can help you explore his background, technical skills, projects, education and professional experience. Ask me anything! 😊",
+    "Hello! I'm IGRIS, Sai Teja's AI assistant. I can help you explore his background, technical skills, projects, education and professional experience. Ask me anything!",
 };
 
 /**
@@ -45,11 +45,11 @@ function cleanTextForSpeech(text: string): string {
     .replace(/`{1,3}[^`]*`{1,3}/g, "")
     .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
     .replace(/\n+/g, ". ")
+    .replace(/[\p{Extended_Pictographic}\uFE0F\u200D\u{1F1E6}-\u{1F1FF}]/gu, "")
     .replace(/\s+/g, " ")
     .replace(/\.\s*\./g, ".")
     .trim();
 }
-
 const ChatWithSai = () => {
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([INITIAL_GREETING]);
   const [chatInput, setChatInput] = useState("");
