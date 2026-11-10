@@ -30,7 +30,7 @@ const Education = () => {
       institution:
         "Malla Reddy College of Engineering & Technology",
       degree: "Bachelor of Technology",
-      field: "Computer Science & Engineering",
+      field: "Computer Science & Engineering(Data Science)",
 
       scoreLabel: "CGPA",
       score: "7.94",
@@ -66,7 +66,7 @@ const Education = () => {
     {
       period: "JUN 2019 — APR 2020",
       institution:
-        "Krishnaveni Talent School - India",
+        "Krishnaveni Talent School",
       degree: "Secondary Education",
       field: "General",
 

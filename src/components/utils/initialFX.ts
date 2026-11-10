@@ -1,12 +1,9 @@
 import { TextSplitter } from "../../utils/textSplitter";
 import gsap from "gsap";
-import { lenis } from "../Navbar";
+
 
 export function initialFX() {
   document.body.style.overflowY = "auto";
-  if (lenis) {
-    lenis.start();
-  }
   document.getElementsByTagName("main")[0].classList.add("main-active");
   gsap.to("body", {
     backgroundColor: "#0b080c",

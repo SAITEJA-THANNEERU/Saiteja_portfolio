@@ -13,7 +13,8 @@ export let lenis: Lenis | null = null;
 const Navbar = () => {
   const profileImage = "/images/mypicnbg.png";
 
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] =
+    useState(false);
 
   /*
    * ==========================================================
@@ -21,87 +22,218 @@ const Navbar = () => {
    * ==========================================================
    */
 
-  const [profileViewerOpen, setProfileViewerOpen] =
-    useState(false);
+  const [
+    profileViewerOpen,
+    setProfileViewerOpen,
+  ] = useState(false);
 
   /*
    * ==========================================================
-   * LENIS + GSAP SMOOTH SCROLL
+   * LENIS + GSAP / NATIVE TOUCH SCROLL
    * ==========================================================
+   *
+   * IMPORTANT:
+   *
+   * Desktop / laptop:
+   *   Lenis + GSAP controls smooth scrolling.
+   *
+   * Mobile / tablet:
+   *   Lenis is NOT initialized.
+   *   The browser owns native touch scrolling.
+   *
+   * This prevents Lenis from interfering with the
+   * browser's touch gesture system.
    */
 
   useEffect(() => {
     const isTouchDevice =
-      window.matchMedia("(pointer: coarse)").matches;
-
-const instance = new Lenis({
-  duration: 1.6,
-
-  easing: (t) =>
-    1 - Math.pow(1 - t, 5),
-
-  orientation: "vertical",
-
-  gestureOrientation: "vertical",
-
-  smoothWheel: !isTouchDevice,
-
-  wheelMultiplier: 0.85,
-
-  touchMultiplier: 1,
-
-  infinite: false,
-});
-
-    lenis = instance;
+      window.matchMedia(
+        "(pointer: coarse)"
+      ).matches;
 
     /*
      * ========================================================
-     * TOUCH DEVICES
+     * MOBILE / TABLET
      * ========================================================
      *
-     * Mobile and tablets use the browser's native touch
-     * scrolling. This avoids fighting with the browser's
-     * natural gesture system.
+     * Do NOT create a Lenis instance on touch devices.
+     *
+     * This is the important part of the fix.
+     *
+     * The browser must be allowed to handle:
+     *
+     *   touchstart
+     *   touchmove
+     *   touchend
+     *   native vertical scrolling
+     *
+     * without a smooth-scroll library intercepting the
+     * scrolling pipeline.
      */
 
     if (isTouchDevice) {
-      instance.stop();
-    } else {
-      instance.start();
+      lenis = null;
+
+      /*
+       * Make the document itself the native scroll owner.
+       *
+       * These are inline values only for touch devices.
+       * Desktop styling is completely untouched.
+       */
+
+      const html =
+        document.documentElement;
+
+      const body =
+        document.body;
+
+      const previousHtmlOverflowY =
+        html.style.overflowY;
+
+      const previousBodyOverflowY =
+        body.style.overflowY;
+
+      const previousHtmlTouchAction =
+        html.style.touchAction;
+
+      const previousBodyTouchAction =
+        body.style.touchAction;
+
+      html.style.overflowY = "auto";
+      body.style.overflowY = "auto";
+
+      /*
+       * Allow normal vertical finger scrolling.
+       *
+       * This does NOT disable the 3D model.
+       * It only tells the browser that vertical
+       * touch movement belongs to page scrolling.
+       */
+
+      html.style.touchAction =
+        "pan-y";
+
+      body.style.touchAction =
+        "pan-y";
+
+      /*
+       * Keep ScrollTrigger synchronized with
+       * native browser scrolling.
+       */
+
+      window.addEventListener(
+        "scroll",
+        ScrollTrigger.update,
+        {
+          passive: true,
+        }
+      );
+
+      /*
+       * Make sure ScrollTrigger has the correct
+       * measurements after the page is ready.
+       */
+
+      requestAnimationFrame(() => {
+        ScrollTrigger.refresh();
+      });
+
+      /*
+       * ======================================================
+       * MOBILE / TABLET CLEANUP
+       * ======================================================
+       */
+
+      return () => {
+        window.removeEventListener(
+          "scroll",
+          ScrollTrigger.update
+        );
+
+        html.style.overflowY =
+          previousHtmlOverflowY;
+
+        body.style.overflowY =
+          previousBodyOverflowY;
+
+        html.style.touchAction =
+          previousHtmlTouchAction;
+
+        body.style.touchAction =
+          previousBodyTouchAction;
+
+        if (lenis === null) {
+          lenis = null;
+        }
+      };
     }
+
+    /*
+     * ========================================================
+     * DESKTOP / LAPTOP
+     * ========================================================
+     *
+     * ONLY desktop gets Lenis.
+     *
+     * Your premium scrolling configuration is preserved.
+     */
+
+    const instance = new Lenis({
+      duration: 1.6,
+
+      easing: (t) =>
+        1 - Math.pow(1 - t, 5),
+
+      orientation: "vertical",
+
+      gestureOrientation:
+        "vertical",
+
+      smoothWheel: true,
+
+      wheelMultiplier: 0.85,
+
+      touchMultiplier: 1,
+
+      infinite: false,
+    });
+
+    lenis = instance;
+
+    instance.start();
 
     /*
      * ========================================================
      * LENIS → GSAP
      * ========================================================
-     *
-     * Keep ScrollTrigger synchronized with Lenis.
      */
 
-    instance.on("scroll", ScrollTrigger.update);
+    instance.on(
+      "scroll",
+      ScrollTrigger.update
+    );
 
-    /*
-     * ========================================================
-     * GSAP TICKER → LENIS
-     * ========================================================
-     *
-     * One animation loop only.
-     * This prevents competing requestAnimationFrame loops.
-     */
-
-    const updateLenis = (time: number) => {
-      instance.raf(time * 1000);
+    const updateLenis = (
+      time: number
+    ) => {
+      instance.raf(
+        time * 1000
+      );
     };
 
-    gsap.ticker.add(updateLenis);
+    gsap.ticker.add(
+      updateLenis
+    );
 
     /*
-     * Prevent GSAP from artificially slowing its ticker.
-     * This makes the Lenis movement more consistent.
+     * Keep the lag-smoothing setting you
+     * changed earlier.
      */
 
-    gsap.ticker.lagSmoothing(500, 33);
+    gsap.ticker.lagSmoothing(
+      500,
+      33
+    );
 
     /*
      * ========================================================
@@ -109,97 +241,110 @@ const instance = new Lenis({
      * ========================================================
      */
 
-    const links = Array.from(
-      document.querySelectorAll<HTMLAnchorElement>(
-        ".desktop-navigation a"
-      )
-    );
+    const links =
+      Array.from(
+        document.querySelectorAll<HTMLAnchorElement>(
+          ".desktop-navigation a"
+        )
+      );
 
-    const linkHandlers = new Map<
-      HTMLAnchorElement,
-      (event: MouseEvent) => void
-    >();
+    const linkHandlers =
+      new Map<
+        HTMLAnchorElement,
+        (event: MouseEvent) => void
+      >();
 
-    links.forEach((element) => {
-      const handler = (event: MouseEvent) => {
-        /*
-         * Mobile navigation keeps normal browser behavior.
-         */
+    links.forEach(
+      (element) => {
+        const handler = (
+          event: MouseEvent
+        ) => {
+          /*
+           * Desktop navigation only.
+           *
+           * Touch devices never reach this
+           * because they use native anchors.
+           */
 
-        if (window.matchMedia("(pointer: coarse)").matches) {
-          return;
-        }
-
-        event.preventDefault();
-
-        const section =
-          element.getAttribute("data-href");
-
-        if (!section) return;
-
-        const target =
-          document.querySelector(section);
-
-        if (!target) return;
-
-        /*
-         * Use Lenis for smooth section navigation.
-         */
-
-        instance.scrollTo(
-          target as HTMLElement,
-          {
-            offset: 0,
-            duration: 1.2,
-            immediate: false,
+          if (
+            window.matchMedia(
+              "(pointer: coarse)"
+            ).matches
+          ) {
+            return;
           }
+
+          event.preventDefault();
+
+          const section =
+            element.getAttribute(
+              "data-href"
+            );
+
+          if (!section) {
+            return;
+          }
+
+          const target =
+            document.querySelector(
+              section
+            );
+
+          if (!target) {
+            return;
+          }
+
+          /*
+           * Keep your existing smooth desktop
+           * section navigation.
+           */
+
+          instance.scrollTo(
+            target as HTMLElement,
+            {
+              offset: 0,
+              duration: 1.2,
+              immediate: false,
+            }
+          );
+        };
+
+        linkHandlers.set(
+          element,
+          handler
         );
-      };
 
-      linkHandlers.set(
-        element,
-        handler
-      );
-
-      element.addEventListener(
-        "click",
-        handler
-      );
-    });
+        element.addEventListener(
+          "click",
+          handler
+        );
+      }
+    );
 
     /*
      * ========================================================
-     * RESIZE
+     * DESKTOP RESIZE
      * ========================================================
-     *
-     * Recalculate Lenis and correctly switch between
-     * desktop and touch-device behavior.
      */
 
-    const handleResize = () => {
-      instance.resize();
+    const handleResize =
+      () => {
+        instance.resize();
 
-      const touchDevice =
-        window.matchMedia("(pointer: coarse)").matches;
-
-      if (touchDevice) {
-        instance.stop();
-      } else {
-        instance.start();
-      }
-
-      ScrollTrigger.refresh();
-    };
+        ScrollTrigger.refresh();
+      };
 
     window.addEventListener(
       "resize",
       handleResize,
-      { passive: true }
+      {
+        passive: true,
+      }
     );
 
     /*
      * ========================================================
-     * CLEANUP
+     * DESKTOP CLEANUP
      * ========================================================
      */
 
@@ -210,7 +355,10 @@ const instance = new Lenis({
       );
 
       linkHandlers.forEach(
-        (handler, element) => {
+        (
+          handler,
+          element
+        ) => {
           element.removeEventListener(
             "click",
             handler
@@ -223,11 +371,15 @@ const instance = new Lenis({
         ScrollTrigger.update
       );
 
-      gsap.ticker.remove(updateLenis);
+      gsap.ticker.remove(
+        updateLenis
+      );
 
       instance.destroy();
 
-      if (lenis === instance) {
+      if (
+        lenis === instance
+      ) {
         lenis = null;
       }
     };
@@ -249,15 +401,21 @@ const instance = new Lenis({
    * ==========================================================
    */
 
-  const openProfileViewer = () => {
-    setMenuOpen(false);
+  const openProfileViewer =
+    () => {
+      setMenuOpen(false);
 
-    setProfileViewerOpen(true);
-  };
+      setProfileViewerOpen(
+        true
+      );
+    };
 
-  const closeProfileViewer = () => {
-    setProfileViewerOpen(false);
-  };
+  const closeProfileViewer =
+    () => {
+      setProfileViewerOpen(
+        false
+      );
+    };
 
   /*
    * ==========================================================
@@ -271,21 +429,38 @@ const instance = new Lenis({
     }
 
     const previousOverflow =
-      document.body.style.overflow;
+      document.body.style
+        .overflow;
 
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow =
+      "hidden";
+
+    /*
+     * Desktop:
+     * Stop Lenis while the profile
+     * viewer is open.
+     *
+     * Mobile/tablet:
+     * lenis is null, so nothing happens.
+     */
 
     if (lenis) {
       lenis.stop();
     }
 
-    const handleEscape = (
-      event: KeyboardEvent
-    ) => {
-      if (event.key === "Escape") {
-        setProfileViewerOpen(false);
-      }
-    };
+    const handleEscape =
+      (
+        event: KeyboardEvent
+      ) => {
+        if (
+          event.key ===
+          "Escape"
+        ) {
+          setProfileViewerOpen(
+            false
+          );
+        }
+      };
 
     document.addEventListener(
       "keydown",
@@ -297,7 +472,9 @@ const instance = new Lenis({
         previousOverflow;
 
       /*
-       * Only restart Lenis on non-touch devices.
+       * Only restart Lenis on desktop.
+       *
+       * Mobile/tablet uses native scrolling.
        */
 
       if (
@@ -314,7 +491,9 @@ const instance = new Lenis({
         handleEscape
       );
     };
-  }, [profileViewerOpen]);
+  }, [
+    profileViewerOpen,
+  ]);
 
   /*
    * ==========================================================
@@ -325,7 +504,8 @@ const instance = new Lenis({
   useEffect(() => {
     if (
       menuOpen &&
-      window.innerWidth <= 768 &&
+      window.innerWidth <=
+        768 &&
       !profileViewerOpen
     ) {
       document.body.classList.add(
@@ -346,6 +526,12 @@ const instance = new Lenis({
     menuOpen,
     profileViewerOpen,
   ]);
+
+  /*
+   * ==========================================================
+   * RENDER
+   * ==========================================================
+   */
 
   return (
     <>
@@ -368,11 +554,12 @@ const instance = new Lenis({
         >
           <img
             src={profileImage}
-            alt={config.developer.fullName}
+            alt={
+              config.developer.fullName
+            }
             className="navbar-profile-image"
           />
         </a>
-
 
         {/* ==================================================
             NAME
@@ -386,7 +573,6 @@ const instance = new Lenis({
         >
           SAI TEJA
         </a>
-
 
         {/* ==================================================
             DESKTOP NAVIGATION
@@ -403,7 +589,9 @@ const instance = new Lenis({
                 data-href="#landingDiv"
                 href="#landingDiv"
               >
-                <HoverLinks text="HOME" />
+                <HoverLinks
+                  text="HOME"
+                />
               </a>
             </li>
 
@@ -412,7 +600,9 @@ const instance = new Lenis({
                 data-href="#about"
                 href="#about"
               >
-                <HoverLinks text="ABOUT" />
+                <HoverLinks
+                  text="ABOUT"
+                />
               </a>
             </li>
 
@@ -421,7 +611,9 @@ const instance = new Lenis({
                 data-href=".what-section"
                 href="#what-build"
               >
-                <HoverLinks text="BUILD" />
+                <HoverLinks
+                  text="BUILD"
+                />
               </a>
             </li>
 
@@ -430,7 +622,9 @@ const instance = new Lenis({
                 data-href="#career"
                 href="#career"
               >
-                <HoverLinks text="CAREER" />
+                <HoverLinks
+                  text="CAREER"
+                />
               </a>
             </li>
 
@@ -439,7 +633,9 @@ const instance = new Lenis({
                 data-href="#education"
                 href="#education"
               >
-                <HoverLinks text="EDUCATION" />
+                <HoverLinks
+                  text="EDUCATION"
+                />
               </a>
             </li>
 
@@ -448,7 +644,9 @@ const instance = new Lenis({
                 data-href="#techstack"
                 href="#techstack"
               >
-                <HoverLinks text="TECH" />
+                <HoverLinks
+                  text="TECH"
+                />
               </a>
             </li>
 
@@ -457,7 +655,9 @@ const instance = new Lenis({
                 data-href="#work"
                 href="#work"
               >
-                <HoverLinks text="WORK" />
+                <HoverLinks
+                  text="WORK"
+                />
               </a>
             </li>
 
@@ -466,7 +666,9 @@ const instance = new Lenis({
                 data-href="#game-hire"
                 href="#game-hire"
               >
-                <HoverLinks text="GAME" />
+                <HoverLinks
+                  text="GAME"
+                />
               </a>
             </li>
 
@@ -475,13 +677,14 @@ const instance = new Lenis({
                 data-href="#contact"
                 href="#contact"
               >
-                <HoverLinks text="CONTACT" />
+                <HoverLinks
+                  text="CONTACT"
+                />
               </a>
             </li>
 
           </ul>
         </nav>
-
 
         {/* ==================================================
             MOBILE MENU BUTTON
@@ -496,7 +699,8 @@ const instance = new Lenis({
           }`}
           onClick={() =>
             setMenuOpen(
-              (previous) => !previous
+              (previous) =>
+                !previous
             )
           }
           aria-label={
@@ -504,7 +708,9 @@ const instance = new Lenis({
               ? "Close navigation menu"
               : "Open navigation menu"
           }
-          aria-expanded={menuOpen}
+          aria-expanded={
+            menuOpen
+          }
         >
           <span />
           <span />
@@ -512,7 +718,6 @@ const instance = new Lenis({
         </button>
 
       </header>
-
 
       {/* ======================================================
           PROFILE IMAGE VIEWER
@@ -524,12 +729,16 @@ const instance = new Lenis({
           role="dialog"
           aria-modal="true"
           aria-label="Profile image viewer"
-          onClick={closeProfileViewer}
+          onClick={
+            closeProfileViewer
+          }
         >
 
           <div
             className="profile-image-viewer-content"
-            onClick={(event) => {
+            onClick={(
+              event
+            ) => {
               event.stopPropagation();
             }}
           >
@@ -538,14 +747,18 @@ const instance = new Lenis({
               type="button"
               className="profile-image-viewer-close"
               aria-label="Close profile image"
-              onClick={closeProfileViewer}
+              onClick={
+                closeProfileViewer
+              }
             >
               ×
             </button>
 
             <img
               src={profileImage}
-              alt={config.developer.fullName}
+              alt={
+                config.developer.fullName
+              }
               draggable={false}
             />
 
@@ -553,7 +766,6 @@ const instance = new Lenis({
 
         </div>
       )}
-
 
       {/* ======================================================
           MOBILE NAVIGATION
@@ -565,7 +777,9 @@ const instance = new Lenis({
             ? "mobile-navigation-open"
             : ""
         }`}
-        aria-hidden={!menuOpen}
+        aria-hidden={
+          !menuOpen
+        }
       >
         <nav aria-label="Mobile navigation">
 
@@ -574,7 +788,9 @@ const instance = new Lenis({
             <li>
               <a
                 href="#landingDiv"
-                onClick={closeMenu}
+                onClick={
+                  closeMenu
+                }
               >
                 HOME
               </a>
@@ -583,7 +799,9 @@ const instance = new Lenis({
             <li>
               <a
                 href="#about"
-                onClick={closeMenu}
+                onClick={
+                  closeMenu
+                }
               >
                 ABOUT
               </a>
@@ -592,7 +810,9 @@ const instance = new Lenis({
             <li>
               <a
                 href="#what-build"
-                onClick={closeMenu}
+                onClick={
+                  closeMenu
+                }
               >
                 WHAT I BUILD
               </a>
@@ -601,7 +821,9 @@ const instance = new Lenis({
             <li>
               <a
                 href="#career"
-                onClick={closeMenu}
+                onClick={
+                  closeMenu
+                }
               >
                 CAREER
               </a>
@@ -610,7 +832,9 @@ const instance = new Lenis({
             <li>
               <a
                 href="#education"
-                onClick={closeMenu}
+                onClick={
+                  closeMenu
+                }
               >
                 EDUCATION
               </a>
@@ -619,7 +843,9 @@ const instance = new Lenis({
             <li>
               <a
                 href="#techstack"
-                onClick={closeMenu}
+                onClick={
+                  closeMenu
+                }
               >
                 TECH STACK
               </a>
@@ -628,16 +854,21 @@ const instance = new Lenis({
             <li>
               <a
                 href="#work"
-                onClick={closeMenu}
+                onClick={
+                  closeMenu
+                }
               >
-                PROJECTS & CERTIFICATIONS
+                PROJECTS &
+                CERTIFICATIONS
               </a>
             </li>
 
             <li>
               <a
                 href="#game-hire"
-                onClick={closeMenu}
+                onClick={
+                  closeMenu
+                }
               >
                 GAME / HIRE
               </a>
@@ -646,7 +877,9 @@ const instance = new Lenis({
             <li>
               <a
                 href="#contact"
-                onClick={closeMenu}
+                onClick={
+                  closeMenu
+                }
               >
                 CONTACT
               </a>
@@ -656,7 +889,6 @@ const instance = new Lenis({
 
         </nav>
       </div>
-
 
       {/* ======================================================
           DECORATIVE ELEMENTS
