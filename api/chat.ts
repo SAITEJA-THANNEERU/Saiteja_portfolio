@@ -1,5 +1,5 @@
 import { GoogleGenAI } from '@google/genai';
-import { retrieveRelevantKnowledge } from '../src/data/portfolioKnowledge';
+import { retrieveRelevantKnowledge } from '../src/data/portfolioKnowledge.js';
 
 // Minimal serverless request/response interfaces for full Vercel & Express compatibility
 interface ServerlessRequest {
@@ -692,3 +692,4 @@ Would you like details on any of these?`;
     });
   }
 }
+
