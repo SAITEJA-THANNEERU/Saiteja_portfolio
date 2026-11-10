@@ -1,0 +1,8 @@
+{
+  "name": "Sai Teja Thanneeru — Portfolio",
+  "description": "Software Engineer portfolio featuring AI, backend, full stack projects, interactive 3D character experience, and AI assistant.",
+  "request_frame_permissions": [],
+  "prompt_capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
