@@ -1,41 +1,43 @@
-import { useState } from "react";
-import { FiExternalLink, FiAward } from "react-icons/fi";
+import React, { useState } from "react";
+import {
+  FiExternalLink,
+  FiAward,
+  FiEye,
+  FiStar,
+} from "react-icons/fi";
+
 import { Certification } from "../data/certifications";
-import "./styles/Certifications.css";
 
 interface CertificationCardProps {
   certification: Certification;
+  onPreview: (certification: Certification) => void;
 }
 
-const CertificationCard = ({ certification }: CertificationCardProps) => {
+const CertificationCard = ({
+  certification,
+  onPreview,
+}: CertificationCardProps) => {
   const [previewFailed, setPreviewFailed] = useState(false);
 
   return (
-    <article
-      className={`cert-card ${
-        certification.featured ? "featured-card" : ""
-      }`}
-    >
-      {/* Featured Badge */}
+    <article className="cert-card">
+
+      {/* Featured badge */}
       {certification.featured && (
-        <div className="cert-featured-badge">
-          <FiAward />
-          <span>Featured</span>
-        </div>
+        <span className="cert-featured-badge">
+          <FiStar />
+          Featured
+        </span>
       )}
 
-      {/* Certificate Image */}
-      <div className="cert-preview">
-        {previewFailed ? (
-          <div
-            className="cert-preview-fallback"
-            role="img"
-            aria-label={`${certification.title} preview unavailable`}
-          >
-            <FiAward />
-            <span>Certificate preview unavailable</span>
-          </div>
-        ) : (
+      {/* Certificate image */}
+      <button
+        type="button"
+        className="cert-preview"
+        onClick={() => onPreview(certification)}
+        aria-label={`Preview ${certification.title}`}
+      >
+        {!previewFailed ? (
           <img
             src={certification.certificateImage}
             alt={`${certification.title} certificate`}
@@ -43,21 +45,30 @@ const CertificationCard = ({ certification }: CertificationCardProps) => {
             loading="lazy"
             onError={() => setPreviewFailed(true)}
           />
+        ) : (
+          <div className="cert-preview-fallback">
+            <FiAward />
+            <span>Preview unavailable</span>
+          </div>
         )}
-      </div>
 
-      {/* Certificate Content */}
+        <span className="cert-preview-action">
+          <FiEye />
+          Preview
+        </span>
+      </button>
+
+      {/* Card content */}
       <div className="cert-content">
 
-        {/* Organization + Certificate Name */}
         <div className="cert-organization">
           <img
             src={certification.organizationLogo}
-            alt={certification.issuingOrganization}
+            alt=""
             className="organization-logo"
           />
 
-          <div>
+          <div className="cert-heading">
             <p className="organization-name">
               {certification.issuingOrganization}
             </p>
@@ -68,52 +79,45 @@ const CertificationCard = ({ certification }: CertificationCardProps) => {
           </div>
         </div>
 
-        {/* Description */}
         <p className="certificate-description">
           {certification.description}
         </p>
 
-        {/* Issue Date */}
         <div className="certificate-meta">
           <div className="meta-item">
-            <span className="meta-label">
-              Issued
-            </span>
-
+            <span className="meta-label">Issued</span>
             <span className="meta-value">
               {certification.issueDate}
             </span>
           </div>
         </div>
 
-        {/* Category */}
         <div className="certificate-category">
           {certification.category}
         </div>
 
-        {/* Skills */}
         <div className="certificate-skills">
-          {certification.skills.map((skill) => (
-            <span
-              key={skill}
-              className="skill-pill"
-            >
+          {certification.skills.slice(0, 3).map((skill) => (
+            <span key={skill} className="skill-pill">
               {skill}
             </span>
           ))}
+
+          {certification.skills.length > 3 && (
+            <span className="skill-pill skill-more">
+              +{certification.skills.length - 3}
+            </span>
+          )}
         </div>
 
-        {/* View Certificate */}
-        <a
-          href={certification.certificatePdf}
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          type="button"
           className="certificate-button"
-          aria-label={`View ${certification.title} certificate`}
+          onClick={() => onPreview(certification)}
         >
           <span>View Certificate</span>
           <FiExternalLink />
-        </a>
+        </button>
 
       </div>
     </article>

@@ -1,18 +1,25 @@
-// Simple text splitter utility to replace GSAP SplitText
+// Text splitter utility compatible with the existing GSAP animations.
+// Preserves spaces between words and supports reverting original HTML.
+
 export class TextSplitter {
   chars: Element[] = [];
   words: Element[] = [];
   lines: Element[] = [];
   elements: Element[] = [];
   selector: string;
-  private originalHTML: Map<Element, string> = new Map();
 
-  constructor(target: string | Element | NodeListOf<Element> | Element[], vars?: { type?: string; linesClass?: string }) {
+  private originalHTML: Map<Element, string> = new Map();
+  private pendingFrames: number[] = [];
+
+  constructor(
+    target: string | Element | NodeListOf<Element> | Element[],
+    vars?: { type?: string; linesClass?: string }
+  ) {
     const type = vars?.type || "chars,words,lines";
     const linesClass = vars?.linesClass || "split-line";
 
-    // Get elements
     let elements: Element[] = [];
+
     if (typeof target === "string") {
       elements = Array.from(document.querySelectorAll(target));
     } else if (target instanceof NodeList) {
@@ -27,11 +34,9 @@ export class TextSplitter {
     this.elements = elements;
 
     elements.forEach((element) => {
-      // Store original HTML for revert
       this.originalHTML.set(element, element.innerHTML);
 
       if (type.includes("chars") && type.includes("words")) {
-        // Split into words first, then chars
         this.splitWords(element);
         this.splitCharsFromWords(element);
       } else if (type.includes("chars")) {
@@ -48,72 +53,84 @@ export class TextSplitter {
 
   private splitChars(element: Element) {
     const text = element.textContent || "";
-    const chars = text.split("");
-    
-    element.innerHTML = chars
-      .map((char) => {
-        if (char === " ") {
-          return '<span class="split-char"> </span>';
-        }
-        if (char === "\n") {
-          return "<br>";
-        }
-        return `<span class="split-char">${char}</span>`;
-      })
-      .join("");
+    const fragment = document.createDocumentFragment();
 
-    this.chars.push(...Array.from(element.querySelectorAll(".split-char")));
+    text.split("").forEach((char) => {
+      if (char === "\n") {
+        fragment.appendChild(document.createElement("br"));
+        return;
+      }
+
+      const span = document.createElement("span");
+      span.className = "split-char";
+      span.textContent = char;
+
+      fragment.appendChild(span);
+      this.chars.push(span);
+    });
+
+    element.replaceChildren(fragment);
   }
 
+  // Keep trailing whitespace inside each word span.
   private splitWords(element: Element) {
     const text = element.textContent || "";
-    const words = text.split(/(\s+)/);
+    const fragment = document.createDocumentFragment();
 
-    element.innerHTML = words
-      .map((word) => {
-        if (word.trim().length === 0) {
-          return word; // Preserve whitespace
-        }
-        return `<span class="split-word">${word}</span>`;
-      })
-      .join("");
+    const tokens = text.match(/\S+\s*/g) || [];
 
-    this.words.push(...Array.from(element.querySelectorAll(".split-word")));
+    tokens.forEach((token) => {
+      const span = document.createElement("span");
+      span.className = "split-word";
+      span.textContent = token;
+
+      fragment.appendChild(span);
+      this.words.push(span);
+    });
+
+    element.replaceChildren(fragment);
   }
 
   private splitCharsFromWords(element: Element) {
     const words = element.querySelectorAll(".split-word");
+
     words.forEach((word) => {
       const text = word.textContent || "";
-      const chars = text.split("");
-      word.innerHTML = chars
-        .map((char) => `<span class="split-char">${char}</span>`)
-        .join("");
-      this.chars.push(...Array.from(word.querySelectorAll(".split-char")));
+      const fragment = document.createDocumentFragment();
+
+      text.split("").forEach((char) => {
+        const span = document.createElement("span");
+        span.className = "split-char";
+        span.textContent = char;
+
+        fragment.appendChild(span);
+        this.chars.push(span);
+      });
+
+      word.replaceChildren(fragment);
     });
   }
 
   private splitLines(element: Element, linesClass: string) {
-    // Use requestAnimationFrame to ensure layout is complete
-    requestAnimationFrame(() => {
-      const items = element.querySelectorAll(".split-word, .split-char");
-      if (items.length === 0) return;
+    const frameId = requestAnimationFrame(() => {
+      const items = element.querySelectorAll(
+        ".split-word, .split-char"
+      );
 
-      let currentLine: Element[] = [];
+      if (!items.length) return;
+
       const lines: Element[][] = [];
-      let currentTop = 0;
+      let currentLine: Element[] = [];
+      let currentTop: number | null = null;
 
       items.forEach((item) => {
         const rect = item.getBoundingClientRect();
-        if (currentTop === 0) {
-          currentTop = rect.top;
-        }
 
-        if (Math.abs(rect.top - currentTop) > 5) {
-          // New line
-          if (currentLine.length > 0) {
-            lines.push([...currentLine]);
+        if (currentTop === null || Math.abs(rect.top - currentTop) > 5) {
+          if (currentLine.length) {
+            lines.push(currentLine);
           }
+
           currentLine = [item];
           currentTop = rect.top;
         } else {
@@ -121,40 +138,54 @@ export class TextSplitter {
         }
       });
 
-      if (currentLine.length > 0) {
+      if (currentLine.length) {
         lines.push(currentLine);
       }
 
-      // Wrap lines
       lines.forEach((line) => {
-        if (line.length === 0) return;
-        const lineWrapper = document.createElement("span");
-        lineWrapper.className = linesClass;
-        lineWrapper.style.display = "block";
+        if (!line.length) return;
+
+        const wrapper = document.createElement("span");
+        wrapper.className = linesClass;
+        wrapper.style.display = "block";
+
         const firstItem = line[0];
-        firstItem.parentNode?.insertBefore(lineWrapper, firstItem);
+
+        firstItem.parentNode?.insertBefore(wrapper, firstItem);
+
         line.forEach((item) => {
-          if (item.parentNode === lineWrapper.parentNode) {
-            lineWrapper.appendChild(item);
+          if (item.parentNode === wrapper.parentNode) {
+            wrapper.appendChild(item);
           }
         });
       });
 
-      this.lines.push(...Array.from(element.querySelectorAll(`.${linesClass}`)));
+      this.lines.push(
+        ...Array.from(element.querySelectorAll(`.${linesClass}`))
+      );
     });
+
+    this.pendingFrames.push(frameId);
   }
 
   revert() {
+    this.pendingFrames.forEach((frameId) => {
+      cancelAnimationFrame(frameId);
+    });
+
+    this.pendingFrames = [];
+
     this.elements.forEach((element) => {
       const original = this.originalHTML.get(element);
+
       if (original !== undefined) {
         element.innerHTML = original;
       }
     });
+
     this.chars = [];
     this.words = [];
     this.lines = [];
     this.originalHTML.clear();
   }
 }
-
