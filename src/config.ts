@@ -22,78 +22,88 @@ As a graduate, I work across software development, data analytics, and artificia
 
 I enjoy working across the complete development journey - understanding problems, analyzing data, designing solutions, building reliable software, and continuously improving it. Driven by curiosity, consistency, and continuous learning, I aim to create technology that is not only technically strong and scalable, but genuinely useful to the people who use it.`
 },
-   experiences: [
+experiences: [
 
-{
-    position: "TechSaksham AI Intern",
-    company: "TechSaksham",
-    period: "Jan 2025 – Apr 2025",
-    location: "Hyderabad, India",
-    description:
-        "Worked on AI-powered applications, Python development, machine learning, data preprocessing, and model development.",
-    responsibilities: [
-        "Developed ML pipelines and preprocessing modules",
-        "Built prototype AI-powered features and integrations",
-        "Collaborated on model evaluation and tuning",
-        "Documented experiments and results"
-    ],
-    technologies: [
-        "Python",
-        "Pandas",
-        "NumPy",
-        "Scikit-learn",
-        "Streamlit"
-    ]
-},
+    {
+        position: "TechSaksham AI Intern",
+        company: "TechSaksham",
+        period: "Jan 2025 – Apr 2025",
+        location: "Hyderabad, India",
+        description:
+            "Worked on AI-powered applications, Python development, machine learning, data preprocessing, and model development.",
+        responsibilities: [
+            "Developed ML pipelines and preprocessing modules",
+            "Built prototype AI-powered features and integrations",
+            "Collaborated on model evaluation and tuning",
+            "Documented experiments and results"
+        ],
+        technologies: [
+            "Python",
+            "Pandas",
+            "NumPy",
+            "Scikit-learn",
+            "Streamlit"
+        ]
+    },
 
-{
-    position: "Data Science Intern",
-    company: "CodSoft",
-    period: "Feb 2025 – Apr 2025",
-    location: "Hyderabad, India",
-    description:
-        "Worked on real-world machine learning and data analytics projects including data preprocessing, model training, evaluation, and visualization.",
-    responsibilities: [
-        "Data cleaning and preprocessing",
-        "Training and evaluating ML models",
-        "Visualizing insights and results",
-        "Collaborating with stakeholders to define requirements"
-    ],
-    technologies: [
-        "Python",
-        "Scikit-learn",
-        "Pandas",
-        "Matplotlib"
-    ]
-},
+    {
+        position: "Data Science Intern",
+        company: "CodSoft",
+        period: "Feb 2025 – Apr 2025",
+        location: "Hyderabad, India",
+        description:
+            "Worked on real-world machine learning and data analytics projects including data preprocessing, model training, evaluation, and visualization.",
+        responsibilities: [
+            "Data cleaning and preprocessing",
+            "Training and evaluating ML models",
+            "Visualizing insights and results",
+            "Collaborating with stakeholders to define requirements"
+        ],
+        technologies: [
+            "Python",
+            "Scikit-learn",
+            "Pandas",
+            "Matplotlib"
+        ]
+    },
 
-{
-    position: "Co-Founder & Software Developer",
-    company: "SKAITE Technologies",
-    period: "2026 – Present",
-    location: "Hyderabad, India",
-    description:
-        "Co-founded SKAITE Technologies, where I build modern web applications and Android applications, transforming ideas into practical, scalable, and user-focused digital products.",
-    responsibilities: [
-        "Co-founded and contributed to the development of digital products",
-        "Built modern web applications and responsive user interfaces",
-        "Developed Android applications and application features",
-        "Designed and implemented scalable software solutions",
-        "Worked across frontend, backend, databases, and APIs"
-    ],
-    technologies: [
-        "React",
-        "TypeScript",
-        "JavaScript",
-        "Java",
-        "Android",
-        "Supabase",
-        "Firebase",
-        "REST APIs"
-    ]
-}
+    {
+        position: "Co-Founder & Software Developer",
+        company: "SKAITE Technologies",
+        period: "2026 – Present",
+        location: "Hyderabad, India",
+        description:
+            "Co-founded SKAITE Technologies, where I build modern web applications and Android applications, transforming ideas into practical, scalable, and user-focused digital products.",
+        responsibilities: [
+            "Co-founded and contributed to the development of digital products",
+            "Built modern web applications and responsive user interfaces",
+            "Developed Android applications and application features",
+            "Designed and implemented scalable software solutions",
+            "Worked across frontend, backend, databases, and APIs"
+        ],
+        technologies: [
+            "React",
+            "TypeScript",
+            "JavaScript",
+            "Java",
+            "Android",
+            "Supabase",
+            "Firebase",
+            "REST APIs"
+        ]
+    },
+
+    {
+        position: "Data Science with AI Intern",
+        company: "Vajra.ai",
+        period: "Sep 2026 – Present",
+        location: "Hyderabad, India",
+        description:
+            "Working as a Data Science with AI Intern in the Technology team, gaining practical experience in data science and artificial intelligence through technology-focused work."
+    }
 
 ],
+
     projects: [
   {
     id: 1,
@@ -136,8 +146,18 @@ I enjoy working across the complete development journey - understanding problems
       "A digital hostel and PG management application for managing tenants, rent, payments, attendance, and notifications."
   },
 
+
+    {
+        id: 5,
+        title: "FactoryOps",
+        category: "Full Stack • Data Analytics • Smart Manufacturing",
+        technologies: "React • TypeScript • Supabase • SQL Server • Power BI",
+        image: "/images/projects/factory-ops.png",
+        description:
+            "A Smart Factory Operations & Maintenance Platform designed to streamline production monitoring, machine maintenance, incident management, work orders, and operational insights through centralized role-based dashboards."
+    },
   {
-    id: 5,
+    id: 6,
     title: "Fitness Tracking Web App",
     category: "Machine Learning • Data",
     technologies: "Python • Streamlit • Scikit-learn • Pandas",
@@ -147,7 +167,7 @@ I enjoy working across the complete development journey - understanding problems
   },
 
   {
-    id: 6,
+    id: 7,
     title: "Liver Cirrhosis Detection",
     category: "Machine Learning • Computer Vision",
     technologies: "Python • OpenCV • Machine Learning",
@@ -157,7 +177,7 @@ I enjoy working across the complete development journey - understanding problems
   },
 
   {
-    id: 7,
+    id: 8,
     title: "Intelligent Facial Recognition",
     category: "Computer Vision",
     technologies: "Python • OpenCV",
@@ -167,7 +187,7 @@ I enjoy working across the complete development journey - understanding problems
   },
 
   {
-    id: 8,
+    id: 9,
     title: "Handwritten Text Recognition",
     category: "OCR • Computer Vision",
     technologies: "Python • OpenCV • OCR",

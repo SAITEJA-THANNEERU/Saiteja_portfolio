@@ -206,7 +206,7 @@ const CallToAction = () => {
             </span>
 
             <span className="cta-text">
-              TALK WITH SAI
+              TALK WITH MY ASSISTANT
             </span>
 
             <span className="cta-arrow cta-arrow-down">
