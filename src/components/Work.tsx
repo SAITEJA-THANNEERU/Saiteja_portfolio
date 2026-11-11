@@ -38,8 +38,6 @@ const projectCategories: Record<number, Category[]> = {
   9: ["Full Stack", "Data"],
 };
 
-const githubUrl = "https://github.com/SAITEJA-THANNEERU";
-
 const Work = () => {
   const [activeCategory, setActiveCategory] =
     useState<Category>("All");
@@ -212,20 +210,23 @@ const Work = () => {
                     ))}
                   </div>
 
+                  {/* PROJECT GITHUB LINK */}
                   <div className="project-card-actions">
-                    <a
-                      href={githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="project-github-button"
-                      aria-label={`View ${project.title} on GitHub`}
-                      data-cursor="disable"
-                      onClick={(event) => event.stopPropagation()}
-                    >
-                      <FiGithub />
-                      <span>View on GitHub</span>
-                      <FiArrowUpRight />
-                    </a>
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="project-github-button"
+                        aria-label={`View ${project.title} on GitHub`}
+                        data-cursor="disable"
+                        onClick={(event) => event.stopPropagation()}
+                      >
+                        <FiGithub />
+                        <span>View on GitHub</span>
+                        <FiArrowUpRight />
+                      </a>
+                    )}
                   </div>
                 </div>
               </article>
@@ -317,17 +318,20 @@ const Work = () => {
                   ))}
               </div>
 
+              {/* PROJECT GITHUB LINK IN MODAL */}
               <div className="project-modal-actions">
-                <a
-                  href={githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="project-modal-github"
-                >
-                  <FiGithub />
-                  View on GitHub
-                  <FiArrowUpRight />
-                </a>
+                {selectedProject.github && (
+                  <a
+                    href={selectedProject.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="project-modal-github"
+                  >
+                    <FiGithub />
+                    View on GitHub
+                    <FiArrowUpRight />
+                  </a>
+                )}
 
                 <button
                   type="button"
