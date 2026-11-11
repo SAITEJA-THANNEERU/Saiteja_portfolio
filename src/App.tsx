@@ -6,6 +6,8 @@ const CharacterModel = lazy(() => import("./components/Character"));
 const MainContainer = lazy(() => import("./components/MainContainer"));
 const MyWorks = lazy(() => import("./pages/MyWorks"));
 const Play = lazy(() => import("./pages/Play"));
+const ResumePreview = lazy(() => import("./pages/ResumePreview"));
+
 import { LoadingProvider } from "./context/LoadingProvider";
 
 const App = () => {
@@ -26,6 +28,7 @@ const App = () => {
             </LoadingProvider>
           }
         />
+
         <Route
           path="/myworks"
           element={
@@ -34,6 +37,7 @@ const App = () => {
             </Suspense>
           }
         />
+
         <Route
           path="/play"
           element={
@@ -42,6 +46,17 @@ const App = () => {
             </Suspense>
           }
         />
+
+        {/* Resume Preview Route */}
+        <Route
+          path="/resume-preview"
+          element={
+            <Suspense fallback={<div className="route-loading">Loading resume...</div>}>
+              <ResumePreview />
+            </Suspense>
+          }
+        />
+
         <Route path="*" element={<NavigateToHome />} />
       </Routes>
     </BrowserRouter>
