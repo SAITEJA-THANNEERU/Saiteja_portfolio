@@ -13,8 +13,10 @@ export let lenis: Lenis | null = null;
 const Navbar = () => {
   const profileImage = "/images/mypicnbg.png";
 
-  const [menuOpen, setMenuOpen] =
-    useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const [activeSection, setActiveSection] =
+    useState("#landingDiv");
 
   /*
    * ==========================================================
@@ -29,10 +31,104 @@ const Navbar = () => {
 
   /*
    * ==========================================================
+   * ACTIVE NAVIGATION / SCROLL SPY
+   * ==========================================================
+   */
+
+  useEffect(() => {
+    const links = Array.from(
+      document.querySelectorAll<HTMLAnchorElement>(
+        ".desktop-navigation a[data-href]"
+      )
+    );
+
+    const sections = links
+      .map((link) => {
+        const selector = link.getAttribute("data-href");
+
+        if (!selector) return null;
+
+        const element = document.querySelector(selector);
+
+        if (!element) return null;
+
+        return {
+          selector,
+          element,
+        };
+      })
+      .filter(
+        (
+          item
+        ): item is {
+          selector: string;
+          element: Element;
+        } => item !== null
+      );
+
+    let animationFrame = 0;
+
+    const updateActiveSection = () => {
+      cancelAnimationFrame(animationFrame);
+
+      animationFrame = requestAnimationFrame(() => {
+        const activationPoint = window.innerHeight * 0.35;
+
+        let currentSection = "#landingDiv";
+
+        sections.forEach(({ selector, element }) => {
+          const rect = element.getBoundingClientRect();
+
+          if (rect.top <= activationPoint) {
+            currentSection = selector;
+          }
+        });
+
+        if (
+          window.innerHeight + window.scrollY >=
+          document.documentElement.scrollHeight - 5
+        ) {
+          currentSection =
+            sections[sections.length - 1]?.selector ||
+            currentSection;
+        }
+
+        setActiveSection(currentSection);
+      });
+    };
+
+    window.addEventListener(
+      "scroll",
+      updateActiveSection,
+      { passive: true }
+    );
+
+    window.addEventListener(
+      "resize",
+      updateActiveSection
+    );
+
+    updateActiveSection();
+
+    return () => {
+      cancelAnimationFrame(animationFrame);
+
+      window.removeEventListener(
+        "scroll",
+        updateActiveSection
+      );
+
+      window.removeEventListener(
+        "resize",
+        updateActiveSection
+      );
+    };
+  }, []);
+
+  /*
+   * ==========================================================
    * LENIS + GSAP / NATIVE TOUCH SCROLL
    * ==========================================================
-   *
-   * IMPORTANT:
    *
    * Desktop / laptop:
    *   Lenis + GSAP controls smooth scrolling.
@@ -55,37 +151,13 @@ const Navbar = () => {
      * ========================================================
      * MOBILE / TABLET
      * ========================================================
-     *
-     * Do NOT create a Lenis instance on touch devices.
-     *
-     * This is the important part of the fix.
-     *
-     * The browser must be allowed to handle:
-     *
-     *   touchstart
-     *   touchmove
-     *   touchend
-     *   native vertical scrolling
-     *
-     * without a smooth-scroll library intercepting the
-     * scrolling pipeline.
      */
 
     if (isTouchDevice) {
       lenis = null;
 
-      /*
-       * Make the document itself the native scroll owner.
-       *
-       * These are inline values only for touch devices.
-       * Desktop styling is completely untouched.
-       */
-
-      const html =
-        document.documentElement;
-
-      const body =
-        document.body;
+      const html = document.documentElement;
+      const body = document.body;
 
       const previousHtmlOverflowY =
         html.style.overflowY;
@@ -102,24 +174,8 @@ const Navbar = () => {
       html.style.overflowY = "auto";
       body.style.overflowY = "auto";
 
-      /*
-       * Allow normal vertical finger scrolling.
-       *
-       * This does NOT disable the 3D model.
-       * It only tells the browser that vertical
-       * touch movement belongs to page scrolling.
-       */
-
-      html.style.touchAction =
-        "pan-y";
-
-      body.style.touchAction =
-        "pan-y";
-
-      /*
-       * Keep ScrollTrigger synchronized with
-       * native browser scrolling.
-       */
+      html.style.touchAction = "pan-y";
+      body.style.touchAction = "pan-y";
 
       window.addEventListener(
         "scroll",
@@ -129,20 +185,9 @@ const Navbar = () => {
         }
       );
 
-      /*
-       * Make sure ScrollTrigger has the correct
-       * measurements after the page is ready.
-       */
-
       requestAnimationFrame(() => {
         ScrollTrigger.refresh();
       });
-
-      /*
-       * ======================================================
-       * MOBILE / TABLET CLEANUP
-       * ======================================================
-       */
 
       return () => {
         window.removeEventListener(
@@ -172,10 +217,6 @@ const Navbar = () => {
      * ========================================================
      * DESKTOP / LAPTOP
      * ========================================================
-     *
-     * ONLY desktop gets Lenis.
-     *
-     * Your premium scrolling configuration is preserved.
      */
 
     const instance = new Lenis({
@@ -186,8 +227,7 @@ const Navbar = () => {
 
       orientation: "vertical",
 
-      gestureOrientation:
-        "vertical",
+      gestureOrientation: "vertical",
 
       smoothWheel: true,
 
@@ -213,27 +253,13 @@ const Navbar = () => {
       ScrollTrigger.update
     );
 
-    const updateLenis = (
-      time: number
-    ) => {
-      instance.raf(
-        time * 1000
-      );
+    const updateLenis = (time: number) => {
+      instance.raf(time * 1000);
     };
 
-    gsap.ticker.add(
-      updateLenis
-    );
+    gsap.ticker.add(updateLenis);
 
-    /*
-     * Keep the lag-smoothing setting you
-     * changed earlier.
-     */
-
-    gsap.ticker.lagSmoothing(
-      500,
-      33
-    );
+    gsap.ticker.lagSmoothing(500, 33);
 
     /*
      * ========================================================
@@ -241,85 +267,55 @@ const Navbar = () => {
      * ========================================================
      */
 
-    const links =
-      Array.from(
-        document.querySelectorAll<HTMLAnchorElement>(
-          ".desktop-navigation a"
-        )
-      );
-
-    const linkHandlers =
-      new Map<
-        HTMLAnchorElement,
-        (event: MouseEvent) => void
-      >();
-
-    links.forEach(
-      (element) => {
-        const handler = (
-          event: MouseEvent
-        ) => {
-          /*
-           * Desktop navigation only.
-           *
-           * Touch devices never reach this
-           * because they use native anchors.
-           */
-
-          if (
-            window.matchMedia(
-              "(pointer: coarse)"
-            ).matches
-          ) {
-            return;
-          }
-
-          event.preventDefault();
-
-          const section =
-            element.getAttribute(
-              "data-href"
-            );
-
-          if (!section) {
-            return;
-          }
-
-          const target =
-            document.querySelector(
-              section
-            );
-
-          if (!target) {
-            return;
-          }
-
-          /*
-           * Keep your existing smooth desktop
-           * section navigation.
-           */
-
-          instance.scrollTo(
-            target as HTMLElement,
-            {
-              offset: 0,
-              duration: 1.2,
-              immediate: false,
-            }
-          );
-        };
-
-        linkHandlers.set(
-          element,
-          handler
-        );
-
-        element.addEventListener(
-          "click",
-          handler
-        );
-      }
+    const links = Array.from(
+      document.querySelectorAll<HTMLAnchorElement>(
+        ".desktop-navigation a"
+      )
     );
+
+    const linkHandlers = new Map<
+      HTMLAnchorElement,
+      (event: MouseEvent) => void
+    >();
+
+    links.forEach((element) => {
+      const handler = (event: MouseEvent) => {
+        if (
+          window.matchMedia(
+            "(pointer: coarse)"
+          ).matches
+        ) {
+          return;
+        }
+
+        event.preventDefault();
+
+        const section = element.getAttribute("data-href");
+
+        if (!section) {
+          return;
+        }
+
+        const target = document.querySelector(section);
+
+        if (!target) {
+          return;
+        }
+
+        instance.scrollTo(
+          target as HTMLElement,
+          {
+            offset: 0,
+            duration: 1.2,
+            immediate: false,
+          }
+        );
+      };
+
+      linkHandlers.set(element, handler);
+
+      element.addEventListener("click", handler);
+    });
 
     /*
      * ========================================================
@@ -327,12 +323,11 @@ const Navbar = () => {
      * ========================================================
      */
 
-    const handleResize =
-      () => {
-        instance.resize();
+    const handleResize = () => {
+      instance.resize();
 
-        ScrollTrigger.refresh();
-      };
+      ScrollTrigger.refresh();
+    };
 
     window.addEventListener(
       "resize",
@@ -354,32 +349,23 @@ const Navbar = () => {
         handleResize
       );
 
-      linkHandlers.forEach(
-        (
-          handler,
-          element
-        ) => {
-          element.removeEventListener(
-            "click",
-            handler
-          );
-        }
-      );
+      linkHandlers.forEach((handler, element) => {
+        element.removeEventListener(
+          "click",
+          handler
+        );
+      });
 
       instance.off(
         "scroll",
         ScrollTrigger.update
       );
 
-      gsap.ticker.remove(
-        updateLenis
-      );
+      gsap.ticker.remove(updateLenis);
 
       instance.destroy();
 
-      if (
-        lenis === instance
-      ) {
+      if (lenis === instance) {
         lenis = null;
       }
     };
@@ -401,21 +387,15 @@ const Navbar = () => {
    * ==========================================================
    */
 
-  const openProfileViewer =
-    () => {
-      setMenuOpen(false);
+  const openProfileViewer = () => {
+    setMenuOpen(false);
 
-      setProfileViewerOpen(
-        true
-      );
-    };
+    setProfileViewerOpen(true);
+  };
 
-  const closeProfileViewer =
-    () => {
-      setProfileViewerOpen(
-        false
-      );
-    };
+  const closeProfileViewer = () => {
+    setProfileViewerOpen(false);
+  };
 
   /*
    * ==========================================================
@@ -429,38 +409,19 @@ const Navbar = () => {
     }
 
     const previousOverflow =
-      document.body.style
-        .overflow;
+      document.body.style.overflow;
 
-    document.body.style.overflow =
-      "hidden";
-
-    /*
-     * Desktop:
-     * Stop Lenis while the profile
-     * viewer is open.
-     *
-     * Mobile/tablet:
-     * lenis is null, so nothing happens.
-     */
+    document.body.style.overflow = "hidden";
 
     if (lenis) {
       lenis.stop();
     }
 
-    const handleEscape =
-      (
-        event: KeyboardEvent
-      ) => {
-        if (
-          event.key ===
-          "Escape"
-        ) {
-          setProfileViewerOpen(
-            false
-          );
-        }
-      };
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setProfileViewerOpen(false);
+      }
+    };
 
     document.addEventListener(
       "keydown",
@@ -470,12 +431,6 @@ const Navbar = () => {
     return () => {
       document.body.style.overflow =
         previousOverflow;
-
-      /*
-       * Only restart Lenis on desktop.
-       *
-       * Mobile/tablet uses native scrolling.
-       */
 
       if (
         lenis &&
@@ -491,9 +446,7 @@ const Navbar = () => {
         handleEscape
       );
     };
-  }, [
-    profileViewerOpen,
-  ]);
+  }, [profileViewerOpen]);
 
   /*
    * ==========================================================
@@ -504,8 +457,7 @@ const Navbar = () => {
   useEffect(() => {
     if (
       menuOpen &&
-      window.innerWidth <=
-        768 &&
+      window.innerWidth <= 768 &&
       !profileViewerOpen
     ) {
       document.body.classList.add(
@@ -522,10 +474,7 @@ const Navbar = () => {
         "navbar-menu-open"
       );
     };
-  }, [
-    menuOpen,
-    profileViewerOpen,
-  ]);
+  }, [menuOpen, profileViewerOpen]);
 
   /*
    * ==========================================================
@@ -537,9 +486,7 @@ const Navbar = () => {
     <>
       <header className="header">
 
-        {/* ==================================================
-            PROFILE
-        ================================================== */}
+        {/* PROFILE */}
 
         <a
           href="#landingDiv"
@@ -554,16 +501,12 @@ const Navbar = () => {
         >
           <img
             src={profileImage}
-            alt={
-              config.developer.fullName
-            }
+            alt={config.developer.fullName}
             className="navbar-profile-image"
           />
         </a>
 
-        {/* ==================================================
-            NAME
-        ================================================== */}
+        {/* NAME */}
 
         <a
           href="#landingDiv"
@@ -574,9 +517,7 @@ const Navbar = () => {
           SAI TEJA
         </a>
 
-        {/* ==================================================
-            DESKTOP NAVIGATION
-        ================================================== */}
+        {/* DESKTOP NAVIGATION */}
 
         <nav
           className="desktop-navigation"
@@ -588,10 +529,13 @@ const Navbar = () => {
               <a
                 data-href="#landingDiv"
                 href="#landingDiv"
+                className={
+                  activeSection === "#landingDiv"
+                    ? "active"
+                    : ""
+                }
               >
-                <HoverLinks
-                  text="HOME"
-                />
+                <HoverLinks text="HOME" />
               </a>
             </li>
 
@@ -599,10 +543,13 @@ const Navbar = () => {
               <a
                 data-href="#about"
                 href="#about"
+                className={
+                  activeSection === "#about"
+                    ? "active"
+                    : ""
+                }
               >
-                <HoverLinks
-                  text="ABOUT"
-                />
+                <HoverLinks text="ABOUT" />
               </a>
             </li>
 
@@ -610,10 +557,13 @@ const Navbar = () => {
               <a
                 data-href=".what-section"
                 href="#what-build"
+                className={
+                  activeSection === ".what-section"
+                    ? "active"
+                    : ""
+                }
               >
-                <HoverLinks
-                  text="BUILD"
-                />
+                <HoverLinks text="BUILD" />
               </a>
             </li>
 
@@ -621,10 +571,13 @@ const Navbar = () => {
               <a
                 data-href="#career"
                 href="#career"
+                className={
+                  activeSection === "#career"
+                    ? "active"
+                    : ""
+                }
               >
-                <HoverLinks
-                  text="CAREER"
-                />
+                <HoverLinks text="CAREER" />
               </a>
             </li>
 
@@ -632,10 +585,13 @@ const Navbar = () => {
               <a
                 data-href="#education"
                 href="#education"
+                className={
+                  activeSection === "#education"
+                    ? "active"
+                    : ""
+                }
               >
-                <HoverLinks
-                  text="EDUCATION"
-                />
+                <HoverLinks text="EDUCATION" />
               </a>
             </li>
 
@@ -643,10 +599,13 @@ const Navbar = () => {
               <a
                 data-href="#techstack"
                 href="#techstack"
+                className={
+                  activeSection === "#techstack"
+                    ? "active"
+                    : ""
+                }
               >
-                <HoverLinks
-                  text="TECH"
-                />
+                <HoverLinks text="TECH" />
               </a>
             </li>
 
@@ -654,10 +613,13 @@ const Navbar = () => {
               <a
                 data-href="#work"
                 href="#work"
+                className={
+                  activeSection === "#work"
+                    ? "active"
+                    : ""
+                }
               >
-                <HoverLinks
-                  text="WORK"
-                />
+                <HoverLinks text="WORK" />
               </a>
             </li>
 
@@ -665,10 +627,13 @@ const Navbar = () => {
               <a
                 data-href="#game-hire"
                 href="#game-hire"
+                className={
+                  activeSection === "#game-hire"
+                    ? "active"
+                    : ""
+                }
               >
-                <HoverLinks
-                  text="GAME"
-                />
+                <HoverLinks text="GAME" />
               </a>
             </li>
 
@@ -676,19 +641,20 @@ const Navbar = () => {
               <a
                 data-href="#contact"
                 href="#contact"
+                className={
+                  activeSection === "#contact"
+                    ? "active"
+                    : ""
+                }
               >
-                <HoverLinks
-                  text="CONTACT"
-                />
+                <HoverLinks text="CONTACT" />
               </a>
             </li>
 
           </ul>
         </nav>
 
-        {/* ==================================================
-            MOBILE MENU BUTTON
-        ================================================== */}
+        {/* MOBILE MENU BUTTON */}
 
         <button
           type="button"
@@ -698,19 +664,14 @@ const Navbar = () => {
               : ""
           }`}
           onClick={() =>
-            setMenuOpen(
-              (previous) =>
-                !previous
-            )
+            setMenuOpen((previous) => !previous)
           }
           aria-label={
             menuOpen
               ? "Close navigation menu"
               : "Open navigation menu"
           }
-          aria-expanded={
-            menuOpen
-          }
+          aria-expanded={menuOpen}
         >
           <span />
           <span />
@@ -719,9 +680,7 @@ const Navbar = () => {
 
       </header>
 
-      {/* ======================================================
-          PROFILE IMAGE VIEWER
-      ====================================================== */}
+      {/* PROFILE IMAGE VIEWER */}
 
       {profileViewerOpen && (
         <div
@@ -729,47 +688,33 @@ const Navbar = () => {
           role="dialog"
           aria-modal="true"
           aria-label="Profile image viewer"
-          onClick={
-            closeProfileViewer
-          }
+          onClick={closeProfileViewer}
         >
-
           <div
             className="profile-image-viewer-content"
-            onClick={(
-              event
-            ) => {
+            onClick={(event) => {
               event.stopPropagation();
             }}
           >
-
             <button
               type="button"
               className="profile-image-viewer-close"
               aria-label="Close profile image"
-              onClick={
-                closeProfileViewer
-              }
+              onClick={closeProfileViewer}
             >
               ×
             </button>
 
             <img
               src={profileImage}
-              alt={
-                config.developer.fullName
-              }
+              alt={config.developer.fullName}
               draggable={false}
             />
-
           </div>
-
         </div>
       )}
 
-      {/* ======================================================
-          MOBILE NAVIGATION
-      ====================================================== */}
+      {/* MOBILE NAVIGATION */}
 
       <div
         className={`mobile-navigation ${
@@ -777,20 +722,20 @@ const Navbar = () => {
             ? "mobile-navigation-open"
             : ""
         }`}
-        aria-hidden={
-          !menuOpen
-        }
+        aria-hidden={!menuOpen}
       >
         <nav aria-label="Mobile navigation">
-
           <ul>
 
             <li>
               <a
                 href="#landingDiv"
-                onClick={
-                  closeMenu
+                className={
+                  activeSection === "#landingDiv"
+                    ? "active"
+                    : ""
                 }
+                onClick={closeMenu}
               >
                 HOME
               </a>
@@ -799,9 +744,12 @@ const Navbar = () => {
             <li>
               <a
                 href="#about"
-                onClick={
-                  closeMenu
+                className={
+                  activeSection === "#about"
+                    ? "active"
+                    : ""
                 }
+                onClick={closeMenu}
               >
                 ABOUT
               </a>
@@ -810,9 +758,12 @@ const Navbar = () => {
             <li>
               <a
                 href="#what-build"
-                onClick={
-                  closeMenu
+                className={
+                  activeSection === ".what-section"
+                    ? "active"
+                    : ""
                 }
+                onClick={closeMenu}
               >
                 WHAT I BUILD
               </a>
@@ -821,9 +772,12 @@ const Navbar = () => {
             <li>
               <a
                 href="#career"
-                onClick={
-                  closeMenu
+                className={
+                  activeSection === "#career"
+                    ? "active"
+                    : ""
                 }
+                onClick={closeMenu}
               >
                 CAREER
               </a>
@@ -832,9 +786,12 @@ const Navbar = () => {
             <li>
               <a
                 href="#education"
-                onClick={
-                  closeMenu
+                className={
+                  activeSection === "#education"
+                    ? "active"
+                    : ""
                 }
+                onClick={closeMenu}
               >
                 EDUCATION
               </a>
@@ -843,9 +800,12 @@ const Navbar = () => {
             <li>
               <a
                 href="#techstack"
-                onClick={
-                  closeMenu
+                className={
+                  activeSection === "#techstack"
+                    ? "active"
+                    : ""
                 }
+                onClick={closeMenu}
               >
                 TECH STACK
               </a>
@@ -854,21 +814,26 @@ const Navbar = () => {
             <li>
               <a
                 href="#work"
-                onClick={
-                  closeMenu
+                className={
+                  activeSection === "#work"
+                    ? "active"
+                    : ""
                 }
+                onClick={closeMenu}
               >
-                PROJECTS &
-                CERTIFICATIONS
+                PROJECTS & CERTIFICATIONS
               </a>
             </li>
 
             <li>
               <a
                 href="#game-hire"
-                onClick={
-                  closeMenu
+                className={
+                  activeSection === "#game-hire"
+                    ? "active"
+                    : ""
                 }
+                onClick={closeMenu}
               >
                 GAME / HIRE
               </a>
@@ -877,22 +842,22 @@ const Navbar = () => {
             <li>
               <a
                 href="#contact"
-                onClick={
-                  closeMenu
+                className={
+                  activeSection === "#contact"
+                    ? "active"
+                    : ""
                 }
+                onClick={closeMenu}
               >
                 CONTACT
               </a>
             </li>
 
           </ul>
-
         </nav>
       </div>
 
-      {/* ======================================================
-          DECORATIVE ELEMENTS
-      ====================================================== */}
+      {/* DECORATIVE ELEMENTS */}
 
       <div className="landing-circle1" />
 
