@@ -103,8 +103,7 @@ experiences: [
     }
 
 ],
-
-    projects: [
+projects: [
   {
     id: 1,
     title: "Scorera",
@@ -112,7 +111,8 @@ experiences: [
     technologies: "React • TypeScript • Supabase • Gemini AI",
     image: "/images/projects/scorera.png",
     description:
-      "An AI-powered Digital Trust Intelligence Platform that evaluates websites and online entities using security analysis, reputation scoring, and AI-generated insights."
+      "An AI-powered Digital Trust Intelligence Platform that evaluates websites and online entities using security analysis, reputation scoring, and AI-generated insights.",
+    github: "https://github.com/SAITEJA-THANNEERU/Scorera"
   },
 
   {
@@ -123,7 +123,8 @@ experiences: [
       "React • TypeScript • Supabase • Storage • Edge Functions",
     image: "/images/projects/game-portal.png",
     description:
-      "A modern HTML5 game hosting platform where administrators upload, manage, and deploy browser-based games."
+      "A modern HTML5 game hosting platform where administrators upload, manage, and deploy browser-based games.",
+    github: "https://github.com/SAITEJA-THANNEERU"
   },
 
   {
@@ -133,7 +134,8 @@ experiences: [
     technologies: "React • TypeScript • Tailwind CSS",
     image: "/images/projects/ultimate-choice.png",
     description:
-      "An interactive decision-based game featuring mystery cards, multiple rounds, dynamic scoring, and engaging gameplay."
+      "An interactive decision-based game featuring mystery cards, multiple rounds, dynamic scoring, and engaging gameplay.",
+    github: "https://github.com/SAITEJA-THANNEERU/ULTIMATE_CHOICE_GAME"
   },
 
   {
@@ -143,19 +145,21 @@ experiences: [
     technologies: "Java • Firebase • Android",
     image: "/images/projects/mypg.png",
     description:
-      "A digital hostel and PG management application for managing tenants, rent, payments, attendance, and notifications."
+      "A digital hostel and PG management application for managing tenants, rent, payments, attendance, and notifications.",
+    github: "https://github.com/SAITEJA-THANNEERU/MyPG-Digital-Hostel-PG-Management-System-"
   },
 
+  {
+    id: 5,
+    title: "FactoryOps",
+    category: "Full Stack • Data Analytics • Smart Manufacturing",
+    technologies: "React • TypeScript • Supabase • SQL Server • Power BI",
+    image: "/images/projects/factory-ops.png",
+    description:
+      "A Smart Factory Operations & Maintenance Platform designed to streamline production monitoring, machine maintenance, incident management, work orders, and operational insights through centralized role-based dashboards.",
+    github: "https://github.com/SAITEJA-THANNEERU/FactoryOps"
+  },
 
-    {
-        id: 5,
-        title: "FactoryOps",
-        category: "Full Stack • Data Analytics • Smart Manufacturing",
-        technologies: "React • TypeScript • Supabase • SQL Server • Power BI",
-        image: "/images/projects/factory-ops.png",
-        description:
-            "A Smart Factory Operations & Maintenance Platform designed to streamline production monitoring, machine maintenance, incident management, work orders, and operational insights through centralized role-based dashboards."
-    },
   {
     id: 6,
     title: "Fitness Tracking Web App",
@@ -163,7 +167,8 @@ experiences: [
     technologies: "Python • Streamlit • Scikit-learn • Pandas",
     image: "/images/projects/fitness-tracker.png",
     description:
-      "A machine learning fitness application that estimates calorie expenditure and provides interactive fitness analytics."
+      "A machine learning fitness application that estimates calorie expenditure and provides interactive fitness analytics.",
+    github: "https://github.com/SAITEJA-THANNEERU/ML-Based-Fitness-Tracking-Web-App"
   },
 
   {
@@ -173,7 +178,8 @@ experiences: [
     technologies: "Python • OpenCV • Machine Learning",
     image: "/images/projects/liver-cirrhosis.png",
     description:
-      "A machine learning and image-processing project focused on supporting liver cirrhosis detection."
+      "A machine learning and image-processing project focused on supporting liver cirrhosis detection.",
+    github: "https://github.com/SAITEJA-THANNEERU/Enhancing-Liver-Cirrhosis-Images-through-X-ray"
   },
 
   {
@@ -183,7 +189,8 @@ experiences: [
     technologies: "Python • OpenCV",
     image: "/images/projects/facial-recognition.png",
     description:
-      "A real-time facial recognition system using computer vision and image-processing techniques."
+      "A real-time facial recognition system using computer vision and image-processing techniques.",
+    github: "https://github.com/SAITEJA-THANNEERU/Intelligent-Facial-Recognition-System"
   },
 
   {
@@ -193,10 +200,10 @@ experiences: [
     technologies: "Python • OpenCV • OCR",
     image: "/images/projects/handwritten-ocr.png",
     description:
-      "An OCR-based application that extracts handwritten text from images using image preprocessing and optical character recognition."
+      "An OCR-based application that extracts handwritten text from images using image preprocessing and optical character recognition.",
+    github: "https://github.com/SAITEJA-THANNEERU/HAND-WRITTEN-TEXT-RECOGNITION-USING-OPENCV"
   }
-],
-        contact: {
+],        contact: {
         email: "saitejathanneeru07@gmail.com",
         phone: "+91 9866962125",
         github: "https://github.com/SAITEJA-THANNEERU",
