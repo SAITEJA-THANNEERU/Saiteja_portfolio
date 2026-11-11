@@ -386,6 +386,20 @@
   width: 100%;
 }
 
+/* Active section indicator — controlled by activeSection in Navbar.tsx */
+.desktop-navigation li a.active {
+  color: var(--accentColor);
+}
+
+.desktop-navigation li a.active::after {
+  width: 100%;
+}
+
+/* Keep the active link visually distinct while it is also hovered. */
+.desktop-navigation li a.active:hover {
+  color: var(--accentColor);
+}
+
 
 /* ==========================================================
    MOBILE MENU BUTTON
@@ -975,6 +989,8 @@ body.navbar-menu-open {
    ========================================================== */
 
 
+   
+
 /* ----------------------------------------------------------
    PROFILE IMAGE CLICK
 ---------------------------------------------------------- */
@@ -1025,7 +1041,6 @@ body.navbar-menu-open {
     ease
     both;
 }
-
 
 /* ----------------------------------------------------------
    VIEWER CONTENT
