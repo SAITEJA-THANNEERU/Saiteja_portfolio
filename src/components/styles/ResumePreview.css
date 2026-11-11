@@ -1,0 +1,439 @@
+/* ============================================================
+   RESUME PREVIEW PAGE
+   Responsive dark UI with purple and blue accents
+   Optimized for 100% browser zoom
+   ============================================================ */
+
+.resume-preview-page {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 22px 4%;
+  box-sizing: border-box;
+
+  background:
+    radial-gradient(
+      circle at 15% 15%,
+      rgba(105, 55, 190, 0.13),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 85% 85%,
+      rgba(40, 90, 190, 0.12),
+      transparent 35%
+    ),
+    #080811;
+
+  color: #ffffff;
+  font-family: inherit;
+}
+
+/* HEADER */
+
+.resume-preview-header {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.resume-preview-header h1 {
+  margin: 0;
+  font-size: clamp(22px, 2vw, 30px);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+
+  background: linear-gradient(90deg, #a855f7, #60a5fa);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.resume-preview-header p {
+  margin: 8px 0 0;
+  color: #bdbdd0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.resume-close-button {
+  width: 42px;
+  height: 42px;
+  border: 0;
+  background: transparent;
+  color: #c7c7d5;
+  font-size: 32px;
+  font-weight: 300;
+  cursor: pointer;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.resume-close-button:hover {
+  color: #ffffff;
+  transform: rotate(90deg);
+}
+
+/* MAIN CONTAINER */
+
+.resume-preview-container {
+  width: 100%;
+  max-width: 1500px;
+
+  height: calc(100vh - 145px);
+  height: calc(100svh - 145px);
+  min-height: 540px;
+  max-height: 850px;
+
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+  gap: 28px;
+  align-items: stretch;
+
+  background: rgba(20, 20, 39, 0.83);
+  border: 1px solid rgba(154, 115, 255, 0.55);
+  border-radius: 22px;
+
+  box-shadow:
+    0 0 45px rgba(100, 55, 220, 0.10),
+    inset 0 0 35px rgba(255, 255, 255, 0.015);
+
+  backdrop-filter: blur(18px);
+}
+
+/* PDF PREVIEW */
+
+.resume-document-container {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+
+  overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+
+  background: #171a2b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 15px;
+
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.resume-pdf-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+
+  border: none;
+  border-radius: 5px;
+  background: #ffffff;
+}
+
+.resume-preview-placeholder {
+  align-self: center;
+  max-width: 350px;
+  text-align: center;
+  padding: 30px;
+  color: #a9a9bd;
+}
+
+.resume-preview-placeholder h3 {
+  color: #ffffff;
+  font-size: 22px;
+}
+
+.resume-preview-placeholder p {
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* INFORMATION PANEL */
+
+.resume-information-panel {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 20px 15px;
+  box-sizing: border-box;
+}
+
+.resume-information-panel h2 {
+  margin: 0 0 15px;
+  color: #ffffff;
+
+  font-size: clamp(24px, 2.4vw, 36px);
+  font-weight: 750;
+  letter-spacing: -1px;
+}
+
+.resume-information-panel > p {
+  max-width: 500px;
+  margin: 0;
+
+  color: #bdbdd0;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* FEATURES */
+
+.resume-feature-list {
+  margin: 22px 0;
+  padding: 14px 0;
+
+  list-style: none;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.resume-feature-list li {
+  position: relative;
+
+  margin: 12px 0;
+  padding-left: 32px;
+
+  color: #e1e1ee;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.resume-feature-list li::before {
+  content: "✓";
+
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  width: 21px;
+  height: 21px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  color: #c4b5fd;
+  background: rgba(99, 102, 241, 0.25);
+
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* ACTION BUTTONS */
+
+.resume-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.resume-download-action,
+.resume-open-action {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 650;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.resume-download-action {
+  color: #ffffff;
+  background: linear-gradient(110deg, #6951e8, #8236cb);
+
+  border: 1px solid rgba(178, 155, 255, 0.7);
+
+  box-shadow: 0 5px 22px rgba(111, 65, 220, 0.2);
+}
+
+.resume-download-action:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(125, 75, 255, 0.35);
+}
+
+.resume-open-action {
+  color: #e2e2f0;
+  background: transparent;
+  border: 1px solid rgba(157, 139, 255, 0.7);
+}
+
+.resume-open-action:hover:not(:disabled) {
+  background: rgba(124, 91, 220, 0.13);
+  transform: translateY(-2px);
+}
+
+.resume-download-action:disabled,
+.resume-open-action:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* SHORT DESKTOP SCREENS */
+
+@media (min-width: 1001px) and (max-height: 800px) {
+  .resume-preview-page {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  .resume-preview-header {
+    margin-bottom: 12px;
+  }
+
+  .resume-preview-container {
+    height: calc(100svh - 125px);
+    min-height: 500px;
+    padding: 16px;
+    gap: 22px;
+  }
+
+  .resume-information-panel {
+    padding: 12px;
+  }
+
+  .resume-information-panel h2 {
+    font-size: 27px;
+    margin-bottom: 10px;
+  }
+
+  .resume-information-panel > p {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .resume-feature-list {
+    margin: 15px 0;
+    padding: 10px 0;
+  }
+
+  .resume-feature-list li {
+    margin: 9px 0;
+    font-size: 13px;
+  }
+}
+
+/* TABLET */
+
+@media (max-width: 1000px) {
+  .resume-preview-page {
+    padding: 20px 3%;
+  }
+
+  .resume-preview-container {
+    height: auto;
+    min-height: 0;
+    max-height: none;
+
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+    padding: 18px;
+  }
+
+  .resume-document-container {
+    height: 70vh;
+    min-height: 500px;
+    max-height: 750px;
+  }
+
+  .resume-information-panel {
+    padding: 20px 10px;
+  }
+
+  .resume-information-panel h2 {
+    font-size: 30px;
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+  .resume-preview-page {
+    padding: 15px 12px;
+  }
+
+  .resume-preview-header {
+    margin-bottom: 15px;
+  }
+
+  .resume-preview-header h1 {
+    font-size: 21px;
+  }
+
+  .resume-preview-header p {
+    font-size: 12px;
+  }
+
+  .resume-close-button {
+    width: 36px;
+    height: 36px;
+  }
+
+  .resume-preview-container {
+    padding: 10px;
+    gap: 12px;
+    border-radius: 14px;
+  }
+
+  .resume-document-container {
+    height: 65vh;
+    min-height: 420px;
+    max-height: 600px;
+    padding: 5px;
+  }
+
+  .resume-information-panel {
+    padding: 18px 8px;
+  }
+
+  .resume-information-panel h2 {
+    font-size: 25px;
+  }
+
+  .resume-information-panel > p {
+    font-size: 14px;
+  }
+
+  .resume-feature-list {
+    margin: 18px 0;
+  }
+
+  .resume-feature-list li {
+    font-size: 13px;
+  }
+
+  .resume-download-action,
+  .resume-open-action {
+    min-height: 46px;
+    font-size: 14px;
+  }
+}
